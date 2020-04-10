@@ -20,8 +20,12 @@ class CategoryController extends Controller
     public function index()
     {
         $category = Categories::where('status', 1)->get();
-        // return view('admin.pages.category.list',compact('category'));
-        return response()->json($category);
+        $data=[];
+        foreach ($category as $key => $value) {
+            $value->productType;
+            $data[$key]=$value;
+        }
+        return response()->json(['category'=>$data]);
     }
 
     /**
@@ -153,5 +157,14 @@ class CategoryController extends Controller
         } else {
             return response()->json(['error' => 'Xoa that bai. Mot truong khac dang su dung truong nay xin vui long kiem tra lai', 'productType' => $productType, 'product' => $product]);
         }
+    }
+    public function getProductType(){
+        $category = Categories::all();
+        $data=[];
+        foreach ($category as $key => $value) {
+            $value->productType;
+            $data[$key]=$value;
+        }
+        return response()->json(['category'=>$data]);
     }
 }

@@ -149,4 +149,6 @@ class ProductTypeController extends Controller
        return response()    >json(['error'=>'Xoa that bai. Mot san pham su dung truong nay xin vui long kiem tra lai']);
     }
     }
+
+   
 }

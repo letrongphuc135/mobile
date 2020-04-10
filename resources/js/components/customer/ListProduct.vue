@@ -87,7 +87,7 @@
                                                     :src="product.image"
                                                     alt=""><a
                                                     class="ps-shoe__overlay"
-                                                    href="product-detail.html"></a>
+                                                    href="product-detail"></a>
                                                 </div>
                                                 <div class="ps-shoe__content">
                                                     <div class="ps-shoe__variants">

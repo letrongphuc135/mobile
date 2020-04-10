@@ -29,17 +29,16 @@
                     </div>
                     <div class="navigation__column center">
                         <ul class="main-menu menu">
-                            <li class="menu-item menu-item-has-children dropdown"><a href="index.html"><i class="fas fa-mobile-alt">Dien thoai</i></a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item"><a href="index.html">Homepage #1</a></li>
-                                    <li class="menu-item"><a href="#">Homepage #2</a></li>
-                                    <li class="menu-item"><a href="#">Homepage #3</a></li>
+                             <li class="menu-item menu-item-has-children dropdown" v-for="(category, index) in categories" :key="index"><a href="index.html">{{category.name}}</a>
+                                <ul class="sub-menu" >
+                                    <li class="menu-item" v-for="(productType, indexPro) in category.product_type" :key="indexPro"><a href="">{{productType.name}}</a></li>
+                                   
                                 </ul>
                             </li>
-                            <li class="menu-item menu-item-has-children has-mega-menu"><a href="#">Men</a>
+                            <!--<li class="menu-item menu-item-has-children has-mega-menu" v-for="(category, index) in categories" :key="index"><a href="#">{{category.name}}</a>
                                 <div class="mega-menu">
                                     <div class="mega-wrap">
-                                        <div class="mega-column">
+                                         <div class="mega-column">
                                             <ul class="mega-item mega-features">
                                                 <li><a href="product-listing.html">NEW RELEASES</a></li>
                                                 <li><a href="product-listing.html">FEATURES SHOES</a></li>
@@ -50,51 +49,13 @@
                                                 <li><a href="product-listing.html">FAN GEAR</a></li>
                                             </ul>
                                         </div>
-                                        <div class="mega-column">
-                                            <h4 class="mega-heading">Shoes</h4>
+                                        <div class="mega-column" >
+                                            <h4 class="mega-heading">Hãng Sản Xuất</h4>
                                             <ul class="mega-item">
-                                                <li><a href="product-listing.html">All Shoes</a></li>
-                                                <li><a href="product-listing.html">Running</a></li>
-                                                <li><a href="product-listing.html">Training & Gym</a></li>
-                                                <li><a href="product-listing.html">Basketball</a></li>
-                                                <li><a href="product-listing.html">Football</a></li>
-                                                <li><a href="product-listing.html">Soccer</a></li>
-                                                <li><a href="product-listing.html">Baseball</a></li>
+                                                <li v-for="(productType, indexPro) in category.product_type" :key="indexPro"><a href="product-listing.html">{{productType.name}}</a></li>
                                             </ul>
                                         </div>
-                                        <div class="mega-column">
-                                            <h4 class="mega-heading">CLOTHING</h4>
-                                            <ul class="mega-item">
-                                                <li><a href="product-listing.html">Compression & Nike Pro</a></li>
-                                                <li><a href="product-listing.html">Tops & T-Shirts</a></li>
-                                                <li><a href="product-listing.html">Polos</a></li>
-                                                <li><a href="product-listing.html">Hoodies & Sweatshirts</a></li>
-                                                <li><a href="product-listing.html">Jackets & Vests</a></li>
-                                                <li><a href="product-listing.html">Pants & Tights</a></li>
-                                                <li><a href="product-listing.html">Shorts</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="mega-column">
-                                            <h4 class="mega-heading">Accessories</h4>
-                                            <ul class="mega-item">
-                                                <li><a href="product-listing.html">Compression & Nike Pro</a></li>
-                                                <li><a href="product-listing.html">Tops & T-Shirts</a></li>
-                                                <li><a href="product-listing.html">Polos</a></li>
-                                                <li><a href="product-listing.html">Hoodies & Sweatshirts</a></li>
-                                                <li><a href="product-listing.html">Jackets & Vests</a></li>
-                                                <li><a href="product-listing.html">Pants & Tights</a></li>
-                                                <li><a href="product-listing.html">Shorts</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="mega-column">
-                                            <h4 class="mega-heading">BRAND</h4>
-                                            <ul class="mega-item">
-                                                <li><a href="product-listing.html">NIKE</a></li>
-                                                <li><a href="product-listing.html">Adidas</a></li>
-                                                <li><a href="product-listing.html">Dior</a></li>
-                                                <li><a href="product-listing.html">B&G</a></li>
-                                            </ul>
-                                        </div>
+
                                     </div>
                                 </div>
                             </li>
@@ -116,7 +77,7 @@
                                     <li class="menu-item"><a href="contact-us.html">Contact Us #1</a></li>
                                     <li class="menu-item"><a href="contact-us.html">Contact Us #2</a></li>
                                 </ul>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                     <div class="navigation__column right">
@@ -170,7 +131,26 @@
 
 <script>
     export default {
-        name: "Header"
+        name: "Header",
+        data() {
+            return {
+                categories: [],
+                producttypes: [],
+            }
+        },
+         methods: {
+            getAllCategory() {
+                axios.get('/api/admin/category')
+                .then(response => {
+                    console.log(response.data);
+                    this.categories = response.data.category;
+                })
+            },
+        
+        },
+        created() {
+            this.getAllCategory();
+        }
     }
 </script>
 

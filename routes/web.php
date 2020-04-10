@@ -19,8 +19,12 @@ Route::get('/', function () {
     return view('public/index');
 });
 
+Route::get('/product-detail', function () {
+    return view('public/product');
+});
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'HomeController@index')->name('home');
 
-Route::get('{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
+Route::get('{path}', 'HomeController@index')->where('path', '/^[a-z0-9]([0-9a-z_\-\s])');

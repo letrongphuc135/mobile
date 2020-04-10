@@ -35,12 +35,6 @@
 <div id="app">
     <main class="ps-main">
         <mobile></mobile>
-
-
-
-
-
-
     </main>
 </div>
 <!-- Scripts -->

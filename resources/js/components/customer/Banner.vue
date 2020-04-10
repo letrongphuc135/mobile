@@ -11,12 +11,12 @@
                          data-radio="100%">
                         <div class="ps-masonry">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-8"  >
                                     <div class="row" style="margin-bottom: 30px;">
                                         <div class="col-md-6">
-                                            <div class="grid-item__content-wrapper"><a
+                                            <div class="grid-item__content-wrapper" ><a
                                                 class="ps-offer"
-                                                href="product-detail.html"><img
+                                                href="product-detail.html"><img 
                                                 src="assets/customer/images/offer/home-2-1.jpg"
                                                 alt=""></a>
                                             </div>
@@ -67,7 +67,25 @@
 
 <script>
     export default {
-        name: "Banner"
+        name: "Banner",
+        data() {
+            return {
+                banners:[]
+            }
+        },
+        methods: {
+            getAllBanner() {
+                axios.get('/api/getBanner')
+                .then(response => {
+                    console.log(response.data);
+                    this.banners = response.data.banner;
+                })
+            },
+        
+        },
+        created() {
+            this.getAllBanner();
+        }
     }
 </script>
 
