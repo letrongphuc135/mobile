@@ -29,37 +29,36 @@
                     </div>
                     <div class="navigation__column center">
                         <ul class="main-menu menu">
-                             <li class="menu-item menu-item-has-children dropdown" v-for="(category, index) in categories" :key="index"><a href="index.html">{{category.name}}</a>
+                             <!-- <li class="menu-item menu-item-has-children dropdown" v-for="(category, index) in categories" :key="index"><a href="index.html">{{category.name}}</a>
                                 <ul class="sub-menu" >
                                     <li class="menu-item" v-for="(productType, indexPro) in category.product_type" :key="indexPro"><a href="">{{productType.name}}</a></li>
                                    
-                                </ul>
-                            </li>
-                            <!--<li class="menu-item menu-item-has-children has-mega-menu" v-for="(category, index) in categories" :key="index"><a href="#">{{category.name}}</a>
+                                </ul>ss
+                            </li> -->
+                            <li class="menu-item menu-item-has-children has-mega-menu" v-for="(category, index) in categories" :key="index">><a href="#">{{category.name}}</a>
                                 <div class="mega-menu">
-                                    <div class="mega-wrap">
-                                         <div class="mega-column">
+                                    <div class="mega-wrap" v-for="(productType, indexPro) in category.product_type" :key="indexPro">
+                                        <div class="mega-column">
                                             <ul class="mega-item mega-features">
-                                                <li><a href="product-listing.html">NEW RELEASES</a></li>
-                                                <li><a href="product-listing.html">FEATURES SHOES</a></li>
-                                                <li><a href="product-listing.html">BEST SELLERS</a></li>
-                                                <li><a href="product-listing.html">NOW TRENDING</a></li>
-                                                <li><a href="product-listing.html">SUMMER ESSENTIALS</a></li>
-                                                <li><a href="product-listing.html">MOTHER'S DAY COLLECTION</a></li>
-                                                <li><a href="product-listing.html">FAN GEAR</a></li>
+                                                <li><a href="product-listing.html">{{productType.name}}</a></li>
                                             </ul>
                                         </div>
-                                        <div class="mega-column" >
+                                        <div class="mega-column">
+                                            <ul class="mega-item mega-features">
+                                                <li><a href="product-listing.html">{{productType.name}}</a></li>
+                                            </ul>
+                                        </div>
+                                        <!-- <div class="mega-column" >
                                             <h4 class="mega-heading">Hãng Sản Xuất</h4>
                                             <ul class="mega-item">
-                                                <li v-for="(productType, indexPro) in category.product_type" :key="indexPro"><a href="product-listing.html">{{productType.name}}</a></li>
+                                                <li ><a href="product-listing.html"></a></li>
                                             </ul>
-                                        </div>
+                                        </div> -->
 
                                     </div>
                                 </div>
                             </li>
-                            <li class="menu-item"><a href="#">Women</a></li>
+                            <!--<li class="menu-item"><a href="#">Women</a></li>
                             <li class="menu-item"><a href="#">Kids</a></li>
                             <li class="menu-item menu-item-has-children dropdown"><a href="#">News</a>
                                 <ul class="sub-menu">
@@ -140,7 +139,7 @@
         },
          methods: {
             getAllCategory() {
-                axios.get('/api/admin/category')
+                axios.get('/api/getAllCategory')
                 .then(response => {
                     console.log(response.data);
                     this.categories = response.data.category;

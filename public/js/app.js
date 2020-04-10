@@ -2870,7 +2870,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Header",
   data: function data() {
@@ -2883,7 +2882,7 @@ __webpack_require__.r(__webpack_exports__);
     getAllCategory: function getAllCategory() {
       var _this = this;
 
-      axios.get('/api/admin/category').then(function (response) {
+      axios.get('/api/getAllCategory').then(function (response) {
         console.log(response.data);
         _this.categories = response.data.category;
       });
@@ -63975,26 +63974,60 @@ var render = function() {
                   "li",
                   {
                     key: index,
-                    staticClass: "menu-item menu-item-has-children dropdown"
+                    staticClass:
+                      "menu-item menu-item-has-children has-mega-menu"
                   },
                   [
-                    _c("a", { attrs: { href: "index.html" } }, [
+                    _vm._v(">"),
+                    _c("a", { attrs: { href: "#" } }, [
                       _vm._v(_vm._s(category.name))
                     ]),
                     _vm._v(" "),
                     _c(
-                      "ul",
-                      { staticClass: "sub-menu" },
+                      "div",
+                      { staticClass: "mega-menu" },
                       _vm._l(category.product_type, function(
                         productType,
                         indexPro
                       ) {
                         return _c(
-                          "li",
-                          { key: indexPro, staticClass: "menu-item" },
+                          "div",
+                          { key: indexPro, staticClass: "mega-wrap" },
                           [
-                            _c("a", { attrs: { href: "" } }, [
-                              _vm._v(_vm._s(productType.name))
+                            _c("div", { staticClass: "mega-column" }, [
+                              _c(
+                                "ul",
+                                { staticClass: "mega-item mega-features" },
+                                [
+                                  _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: { href: "product-listing.html" }
+                                      },
+                                      [_vm._v(_vm._s(productType.name))]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "mega-column" }, [
+                              _c(
+                                "ul",
+                                { staticClass: "mega-item mega-features" },
+                                [
+                                  _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: { href: "product-listing.html" }
+                                      },
+                                      [_vm._v(_vm._s(productType.name))]
+                                    )
+                                  ])
+                                ]
+                              )
                             ])
                           ]
                         )

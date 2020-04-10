@@ -26,5 +26,5 @@ Route::group(['prefix'=>'admin'],function(){
 Route::get('getindex',function(){
     return view('client.pages.index');
 });
-Route::get('getProductTypeByCategory','CategoryController@getProductType')->name('getProductType');
+Route::get('getAllCategory','CategoryController@getAllCategory')->name('getAllCategory');
 Route::get('getBanner','BannerController@getBanner');

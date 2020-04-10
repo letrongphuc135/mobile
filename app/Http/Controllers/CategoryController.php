@@ -20,12 +20,8 @@ class CategoryController extends Controller
     public function index()
     {
         $category = Categories::where('status', 1)->get();
-        $data=[];
-        foreach ($category as $key => $value) {
-            $value->productType;
-            $data[$key]=$value;
-        }
-        return response()->json(['category'=>$data]);
+        // return view('admin.pages.category.list',compact('category'));
+        return response()->json($category);
     }
 
     /**
@@ -36,6 +32,16 @@ class CategoryController extends Controller
     public function create()
     {
         //return view('admin.pages.category.add');
+    }
+
+    public function getAllCategory(){
+        $category = Categories::where('status', 1)->get();
+        $data=[];
+        foreach ($category as $key => $value) {
+            $value->productType;
+            $data[$key]=$value;
+        }
+        return response()->json(['category'=>$data]);
     }
 
 
