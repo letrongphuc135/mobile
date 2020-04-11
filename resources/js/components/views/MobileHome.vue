@@ -10,6 +10,7 @@
     import Header from "../customer/Header";
     import Footer from "../customer/Footer";
     export default {
+        name: "MobileHome",
         components: {Footer, Header}
     }
 </script>
