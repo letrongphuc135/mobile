@@ -56,13 +56,14 @@ let routes = [
     { path: '/admin/category', component: require('./components/admin/Category').default },
     { path: '/admin/develop', component: require('./components/admin/Develop').default },
     { path: '/admin/producttype', component: require('./components/admin/ProductType').default },
-
+    { path: '/admin/product', component: require('./components/admin/Product').default },
+    { path: '/', component: require('./components/customer/home/Home').default },
 ];
 
 const router = new VueRouter({
     mode: 'history',
     routes // short for `routes: routes`
-})
+});
 
 Vue.filter('myDate', function(created){
     moment.locale();

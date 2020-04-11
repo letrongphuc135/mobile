@@ -128,7 +128,7 @@
 
 <script>
     export default {
-        name: "Product",
+        name: "ListProduct",
         data() {
             return {
                 products: [],

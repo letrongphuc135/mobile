@@ -83,9 +83,15 @@ Z
 *app/Http/Controllers/ProductController.php,f\2\f24bbb9867bf0a5e5b9627ada19ef1f2e10dd225
 Q
 !public/assets/customer/js/main.js,9\d\9d5c1a430d9cb61f057f670498d3ab72df78dbd6
-S
-#storage/logs/laravel-2020-04-07.log,0\d\0dd964ac70bf2643f9144bb351be3a1724d624f1
 >
 config/app.php,7\3\734f7be25e8008acc7129e73cd116d5de913e6fd
 =
 composer.json,3\9\3957b91a0d8450cea0115cfd5af69eac90d75897
+]
+-resources/js/components/admin/ProductType.vue,3\d\3d559f22e3e95ba6b95c00e96ba0bc21164dd91e
+C
+routes/channels.php,0\b\0bfb6f21972af3f30f6c08e68c4d218c7fa15613
+Y
+)resources/js/components/admin/Develop.vue,e\f\ef42cbb456b9601ee5630389b046c00ed8efa2c8
+Y
+)resources/js/components/admin/Product.vue,9\1\91d771bfced061e92e82110ab0df00bd5f1ab4a9
