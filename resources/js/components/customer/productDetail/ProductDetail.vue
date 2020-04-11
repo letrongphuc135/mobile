@@ -754,8 +754,4 @@
 
 <style scoped>
 
-<<<<<<< HEAD
 </style>
-=======
-</style>
->>>>>>> feature/phuc
