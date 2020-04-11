@@ -3899,7 +3899,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "ProductDetail"
+  name: "productDetail",
+  data: function data() {
+    return {
+      productDetail: []
+    };
+  },
+  methods: {
+    getproductDetail: function getproductDetail() {
+      var _this = this;
+
+      axios.get('/api/getDetail/5').then(function (response) {
+        console.log(response.data.productdetail);
+        _this.productDetail = response.data.productdetail;
+      });
+    }
+  },
+  created: function created() {// this.getproductDetail();
+  }
 });
 
 /***/ }),
@@ -84179,12 +84196,9 @@ Vue.component('passport-personal-access-tokens', __webpack_require__(/*! ./compo
 Vue.component('admin', __webpack_require__(/*! ./components/views/AdminMaster */ "./resources/js/components/views/AdminMaster.vue")["default"]);
 Vue.component('example', __webpack_require__(/*! ./components/ExampleComponent */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('mobile', __webpack_require__(/*! ./components/views/MobileHome */ "./resources/js/components/views/MobileHome.vue")["default"]);
-<<<<<<< HEAD
 Vue.component('productDetail', __webpack_require__(/*! ./components/ExampleComponent */ "./resources/js/components/ExampleComponent.vue")["default"]); // Vue.component('productDetail', require('./components/customer/productDetail/ProductDetail').default );
 
-=======
 Vue.component('product', __webpack_require__(/*! ./components/views/ProductDetailView */ "./resources/js/components/views/ProductDetailView.vue")["default"]);
->>>>>>> feature/phuc
 var routes = [{
   path: '/admin',
   component: __webpack_require__(/*! ./components/views/AdminMaster */ "./resources/js/components/views/AdminMaster.vue")["default"],
