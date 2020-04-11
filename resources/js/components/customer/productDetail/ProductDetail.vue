@@ -741,15 +741,15 @@
             getproductDetail() {
                 axios.get('/api/getDetail/5')
                 .then(response => {
-                    console.log(response.data);
-                    this.productDetail = response.data.product;
+                    console.log(response.data.productdetail);
+                    this.productDetail = response.data.productdetail;
                 })
             },
           
         
         },
         created() {
-            this.getproductDetail();
+           // this.getproductDetail();
         }
     }
 </script>

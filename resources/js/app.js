@@ -50,7 +50,8 @@ Vue.component(
 Vue.component('admin', require('./components/views/AdminMaster').default );
 Vue.component('example', require('./components/ExampleComponent').default );
 Vue.component('mobile', require('./components/views/MobileHome').default );
-
+Vue.component('productDetail', require('./components/ExampleComponent').default );
+// Vue.component('productDetail', require('./components/customer/productDetail/ProductDetail').default );
 let routes = [
     { path: '/admin/dashboard', component: require('./components/admin/AdminHome').default },
     { path: '/admin/category', component: require('./components/admin/Category').default },

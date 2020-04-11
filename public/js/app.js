@@ -81267,6 +81267,8 @@ Vue.component('passport-personal-access-tokens', __webpack_require__(/*! ./compo
 Vue.component('admin', __webpack_require__(/*! ./components/views/AdminMaster */ "./resources/js/components/views/AdminMaster.vue")["default"]);
 Vue.component('example', __webpack_require__(/*! ./components/ExampleComponent */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('mobile', __webpack_require__(/*! ./components/views/MobileHome */ "./resources/js/components/views/MobileHome.vue")["default"]);
+Vue.component('productDetail', __webpack_require__(/*! ./components/ExampleComponent */ "./resources/js/components/ExampleComponent.vue")["default"]); // Vue.component('productDetail', require('./components/customer/productDetail/ProductDetail').default );
+
 var routes = [{
   path: '/admin/dashboard',
   component: __webpack_require__(/*! ./components/admin/AdminHome */ "./resources/js/components/admin/AdminHome.vue")["default"]
