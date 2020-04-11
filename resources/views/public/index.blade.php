@@ -34,7 +34,7 @@
 
 <div id="app">
     <main class="ps-main">
-        <mobile></mobile>
+        <router-view></router-view>
     </main>
 </div>
 <!-- Scripts -->

@@ -33,9 +33,11 @@
     <link rel="stylesheet" href="assets/customer/css/style.css">
   </head>
   <body>
-    <main>
-     <example></example>
-    </main>
+  <div id="app">
+      <main class="ps-main">
+          <product></product>
+      </main>
+  </div>
    <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
 <!-- JS Library-->
@@ -76,6 +78,6 @@
 <script type="text/javascript"
         src="assets/customer/plugins/revolution/js/extensions/revolution.extension.actions.min.js"></script>
 <!-- Custom scripts-->
-<script type="text/javascript" src="assets/customer/js/main.js"></script>
+    <script type="text/javascript" src="assets/customer/js/main.js"></script>
   </body>
 </html>

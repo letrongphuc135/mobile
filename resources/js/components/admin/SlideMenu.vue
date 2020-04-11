@@ -86,6 +86,15 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
+                            <router-link to="/admin/product" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Product
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
                             <router-link to="/admin/develop" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>

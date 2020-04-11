@@ -325,6 +325,7 @@
                     <button class="ps-btn" type="button">Submit</button>
                   </div>
                 </div>
+                <div class="menu-toggle"><span></span></div>
               </div>
             </div>
           </div>
@@ -404,7 +405,6 @@
                       </p>
                       <span class="ps-shoe__price">£ 120</span>
                     </div>
-                  </div>
                 </div>
               </div>
               <div class="ps-shoes--carousel">
@@ -449,7 +449,6 @@
                         <del>£220</del> £ 120
                       </span>
                     </div>
-                  </div>
                 </div>
               </div>
               <div class="ps-shoes--carousel">
@@ -489,7 +488,6 @@
                       </p>
                       <span class="ps-shoe__price">£ 120</span>
                     </div>
-                  </div>
                 </div>
               </div>
               <div class="ps-shoes--carousel">
@@ -756,4 +754,8 @@
 
 <style scoped>
 
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> feature/phuc

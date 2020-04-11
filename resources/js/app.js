@@ -52,18 +52,55 @@ Vue.component('example', require('./components/ExampleComponent').default );
 Vue.component('mobile', require('./components/views/MobileHome').default );
 Vue.component('productDetail', require('./components/ExampleComponent').default );
 // Vue.component('productDetail', require('./components/customer/productDetail/ProductDetail').default );
+Vue.component('product', require('./components/views/ProductDetailView').default );
 let routes = [
-    { path: '/admin/dashboard', component: require('./components/admin/AdminHome').default },
-    { path: '/admin/category', component: require('./components/admin/Category').default },
-    { path: '/admin/develop', component: require('./components/admin/Develop').default },
-    { path: '/admin/producttype', component: require('./components/admin/ProductType').default },
+    {
+        path: '/admin',
+        component: require('./components/views/AdminMaster').default,
+        redirect: {path: "/admin/category"},
+        children: [
+            {
+                path: "/admin/category",
+                name: "category",
+                component: require('./components/admin/Category').default
+            },
+            {
+                path: '/admin/develop',
+                component: require('./components/admin/Develop').default
+            },
+            {
+                path: '/admin/producttype',
+                component: require('./components/admin/ProductType').default
+            },
+            {
+                path: '/admin/product',
+                component: require('./components/admin/Product').default
+            },
+        ]
+    },
+    // { path: '/admin/dashboard', component: require('./components/admin/AdminHome').default },
+    // { path: '/admin/category', component: require('./components/admin/Category').default },
+
+    {
+        path: '/',
+        component: require('./components/views/MobileHome').default,
+        redirect: {path: "home"},
+        children: [
+            {
+                path: "home",
+                name: "home",
+                component: require('./components/customer/home/Home').default
+            },
+            // { path: 'product-detail', component: require('./components/customer/productDetail/ProductDetail').default },
+        ]
+    },
 
 ];
 
 const router = new VueRouter({
     mode: 'history',
     routes // short for `routes: routes`
-})
+});
 
 Vue.filter('myDate', function(created){
     moment.locale();
