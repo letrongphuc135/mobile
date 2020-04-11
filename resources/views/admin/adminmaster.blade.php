@@ -17,7 +17,7 @@
 <body class="hold-transition sidebar-mini" >
 <!-- Site wrapper -->
 <div class="wrapper" id="app">
-    <admin></admin>
+    <router-view></router-view>
 
     <footer class="main-footer">
         <div class="float-right d-none d-sm-block">
