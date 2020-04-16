@@ -31,3 +31,6 @@ Route::get('getBanner','BannerController@getBanner');
 Route::get('getDetail/{id}','ProductController@getDetail');
 Route::get('getAllProduct','ProductController@getAllProduct');
 Route::post('getProductTypeByCategoryId/{id}','ProductTypeController@getProductTypeByCategoryId');
+Route::get('getProductTypeByCategoryId/{id}','ProductTypeController@getProductTypeByCategoryId');
+Route::get('getProductImgByProduct','ProductController@getProductImgByProduct');
+Route::resource('upload','PostImageController');

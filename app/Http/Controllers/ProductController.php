@@ -242,6 +242,8 @@ class ProductController extends Controller
             return response()->json(['error'=>'Khong tim thay san pham']);
         }
         $productdetail->ProductImg;
+        $productdetail->Category;
+        $productdetail->ProductType;
         return response()->json(['productdetail'=> $productdetail]);
     }
 
@@ -251,9 +253,15 @@ class ProductController extends Controller
         foreach ($product as $key => $value) {
             $value->Category;
             $value->ProductType;
+        }
+    }
+    public function getProductImgByProduct(){
+        $product = Products::all();
+        $data=[];
+        foreach ($product as $key => $value) {
+            $value->ProductImg;
             $data[$key]=$value;
         }
         return response()->json(['product'=>$data]);
     }
-
 }

@@ -49,7 +49,7 @@
                                         <div class="mega-column">
                                             <!--v-for="(productType, indexPro) in category.product_type" :key="indexPro"-->
                                             <ul class="mega-item" v-for="(productType, indexPro) in category.product_type"
-                                                :key="indexPro" v-if="indexPro % 2 ==0">
+                                                :key="indexPro" v-if="indexPro % 2 == 0">
                                                 <li><a href="product-listing.html">{{productType.name}}</a></li>
                                             </ul>
                                         </div>

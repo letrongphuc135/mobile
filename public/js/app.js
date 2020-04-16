@@ -2324,11 +2324,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Develop",
   data: function data() {
     return {
-      avatar: null
+      avatar: null,
+      filename: null,
+      file: null,
+      success: ''
     };
   },
   methods: {
@@ -2336,13 +2344,35 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var image = e.target.files[0];
+      this.file = image;
+      this.filename = "Selected File: " + e.target.files[0].name;
       var reader = new FileReader();
       reader.readAsDataURL(image);
 
       reader.onload = function (e) {
         _this.avatar = e.target.result;
-        console.log(_this.avatar);
       };
+    },
+    upload: function upload() {
+      var _this2 = this;
+
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+      }; // form data
+
+      var formData = new FormData();
+      formData.append('file', this.file); // send upload request
+
+      axios.post('/api/upload', formData, config).then(function (response) {
+        console.log(response.data.success);
+        _this2.success = response.data.success;
+        _this2.filename = "";
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
@@ -4435,6 +4465,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "productDetail",
   data: function data() {
@@ -4450,6 +4485,14 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/api/admin/product/' + 1).then(function (response) {
         console.log(response.data.product);
         _this.productDetail = response.data.product;
+      });
+    },
+    getAllProduct: function getAllProduct() {
+      var _this2 = this;
+
+      axios.get('/api/getProductImgByProduct').then(function (response) {
+        console.log(response.data.product);
+        _this2.products = response.data.product;
       });
     }
   },
@@ -62970,6 +63013,23 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "form-group" }, [
+          _vm.success !== ""
+            ? _c(
+                "div",
+                {
+                  staticClass: "alert alert-success",
+                  attrs: { role: "alert" }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.success) +
+                      "\n                "
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c("label", [_vm._v("Product image")]),
           _vm._v(" "),
           _c("div", { staticClass: "custom-file" }, [
@@ -62978,8 +63038,13 @@ var render = function() {
               on: { change: _vm.getImage }
             }),
             _vm._v(" "),
-            _c("img", { attrs: { src: _vm.avatar, alt: "" } }),
-            _vm._v(" "),
+            _c("img", {
+              staticStyle: { height: "200px" },
+              attrs: { src: _vm.avatar, alt: "" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", [
             _c(
               "a",
               {
@@ -66916,7 +66981,18 @@ var staticRenderFns = [
             _c("div", { staticClass: "section-title" }, [
               _c("h2", [_vm._v("Related Products")])
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "ps-shoe__favorite", attrs: { href: "#" } }, [
+            _c("i", { staticClass: "ps-icon-heart" })
+          ]),
+          _vm._v(" "),
+          _c("img", { attrs: { src: "images/shoe/1.jpg", alt: "" } }),
+          _vm._v(" "),
+          _c("a", {
+            staticClass: "ps-shoe__overlay",
+            attrs: { href: "product-detail.html" }
+          })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [

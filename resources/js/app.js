@@ -111,7 +111,6 @@ Vue.filter('myDate', function (created) {
     moment.locale();
     return moment(created).format('L');
 });
-
 const app = new Vue({
     el: '#app',
     router

@@ -296,6 +296,11 @@
                                 <h2>Related Products</h2>
                             </div>
                         </div>
+                            <a class="ps-shoe__favorite" href="#">
+                            <i class="ps-icon-heart"></i></a>
+                            <img src="images/shoe/1.jpg" alt="">
+                            <a class="ps-shoe__overlay" href="product-detail.html">
+                            </a>
                     </div>
                     <div class="row">
                         <div class="col-lg-3 col-sm-6">
@@ -398,7 +403,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+              </div>
             <!-- Related Products Section End -->
         </main>
     </div>
@@ -419,6 +424,13 @@
                 .then(response => {
                     console.log(response.data.product);
                     this.productDetail = response.data.product;
+                })
+            },
+             getAllProduct() {
+                axios.get('/api/getProductImgByProduct')
+                .then(response => {
+                    console.log(response.data.product);
+                    this.products = response.data.product;
                 })
             },
         },
