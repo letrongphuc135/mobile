@@ -25,4 +25,9 @@ class HomeController extends Controller
     {
         return view('admin.adminmaster');
     }
+    public function customer()
+    {
+        return view('public.index');
+    }
+
 }

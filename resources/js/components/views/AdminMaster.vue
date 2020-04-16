@@ -35,6 +35,9 @@
 <script>
     import Header from "../admin/HeaderAdmin";
     import SlideMenu from "../admin/SlideMenu";
+    // import ('../../../../node_modules/admin-lte/dist/css/adminlte.min.css');
+    // import ('../../../../node_modules/admin-lte/dist/js/adminlte.js');
+    // import ('../../../../node_modules/admin-lte/plugins/fontawesome-free/css/all.css');
     export default {
         components: {
             Header,

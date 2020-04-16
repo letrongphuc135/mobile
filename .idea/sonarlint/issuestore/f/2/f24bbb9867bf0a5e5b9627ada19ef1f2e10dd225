@@ -1,19 +1,29 @@
 
-d	php:S1142"OReduce the number of returns of this function 4, down to the maximum allowed 3.(¿£¦f
-]	php:S11926"HDefine a constant instead of duplicating this literal "numeric" 4 times.(´ÿĞ†
-_	php:S11926"JDefine a constant instead of duplicating this literal "promotion" 4 times.(´ÿĞ†
-k	php:S11924"QDefine a constant instead of duplicating this literal "required|numeric" 4 times.(õãæûÿÿÿÿ
-c	php:S11924"IDefine a constant instead of duplicating this literal "quantity" 4 times.(õãæûÿÿÿÿ
-a	php:S11923"LDefine a constant instead of duplicating this literal "description" 4 times.(Õşİõ
-j	php:S1192¼"TDefine a constant instead of duplicating this literal "img/upload/product/" 4 times.(»“â
-9php:S125$"Remove this commented out code.(Ë¬ÔW8¸çô¬”.
-b	php:S1192K"HDefine a constant instead of duplicating this literal "message" 3 times.(ï»¹øùÿÿÿÿ
-]	php:S1192Ê"GDefine a constant instead of duplicating this literal "result" 3 times.(ßàÊû
-d	php:S1142."OReduce the number of returns of this function 5, down to the maximum allowed 3.(ã÷ÕÖ
-i	php:S3776"TRefactor this function to reduce its Cognitive Complexity from 20 to the 15 allowed.(¿£¦f
-`	php:S1192K"FDefine a constant instead of duplicating this literal "error" 7 times.(ï»¹øùÿÿÿÿ
-\	php:S11927"GDefine a constant instead of duplicating this literal "image" 12 times.(„ğÖò
-[	php:S1192"GDefine a constant instead of duplicating this literal "status" 5 times.(¼ÉR
-`	php:S11925"FDefine a constant instead of duplicating this literal "price" 4 times.(‘œı¸ıÿÿÿÿ
-:php:S125"Remove this commented out code.(ËÌšÖ8í¥ø¬”.
-:php:S125"Remove this commented out code.(ÛíÆj8ü•­”.
+K	php:S1481ç")Remove this unused "$key" local variable.(‰”ìáøÿÿÿÿ8©Àçô–.
+`	php:S1192L"FDefine a constant instead of duplicating this literal "error" 5 times.(ï»¹øùÿÿÿÿ
+b	php:S11929"FDefine a constant instead of duplicating this literal "image" 3 times.(¾é”÷8©Àçô–.
+:php:S125d"Remove this commented out code.(¡Õ±š8ÇŒõô–.
+a	php:S11925"LDefine a constant instead of duplicating this literal "description" 5 times.(Õşİõ
+L	php:S1481¿"/Remove this unused "$file_name" local variable.(¹¯ƒ8©Àçô–.
+c	php:S11926"IDefine a constant instead of duplicating this literal "quantity" 5 times.(õãæûÿÿÿÿ
+k	php:S11926"QDefine a constant instead of duplicating this literal "required|numeric" 4 times.(õãæûÿÿÿÿ
+]	php:S1192Õ"GDefine a constant instead of duplicating this literal "result" 3 times.(ßàÊû
+]	php:S11928"HDefine a constant instead of duplicating this literal "numeric" 4 times.(´ÿĞ†
+?php:S125N"Remove this commented out code.(ø°ĞÛúÿÿÿÿ8›š‡õ–.
+e	php:S11929"IDefine a constant instead of duplicating this literal "required" 3 times.(¾é”÷8©Àçô–.
+?php:S125X"Remove this commented out code.(Á€ƒùÿÿÿÿ8ÇŒõô–.
+:php:S125l"Remove this commented out code.(“æ…8’®†õ–.
+:php:S125Z"Remove this commented out code.(¤Á¨ã8ÇŒõô–.
+l	php:S1192¸"JDefine a constant instead of duplicating this literal "idProduct" 3 times.(ñ§‹„ÿÿÿÿÿ8©Àçô–.
+i	php:S3776™"TRefactor this function to reduce its Cognitive Complexity from 16 to the 15 allowed.(¿£¦f
+d	php:S1142™"OReduce the number of returns of this function 4, down to the maximum allowed 3.(¿£¦f
+i	php:S1192L"HDefine a constant instead of duplicating this literal "message" 4 times.(ï»¹øùÿÿÿÿ8ïî‡õ–.
+:php:S125"Remove this commented out code.(ËÌšÖ8í¥ø¬”.
+K	php:S1481º")Remove this unused "$key" local variable.(ø®Û©øÿÿÿÿ8©Àçô–.
+9php:S125&"Remove this commented out code.(Ë¬ÔW8¸çô¬”.
+_	php:S11928"JDefine a constant instead of duplicating this literal "promotion" 5 times.(´ÿĞ†
+[	php:S1192"GDefine a constant instead of duplicating this literal "status" 4 times.(¼ÉR
+?php:S125V"Remove this commented out code.(ü¸ç›øÿÿÿÿ8ÇŒõô–.
+`	php:S11927"FDefine a constant instead of duplicating this literal "price" 5 times.(‘œı¸ıÿÿÿÿ
+:php:S125Œ"Remove this commented out code.(ÛíÆj8ü•­”.
+d	php:S1192p"HDefine a constant instead of duplicating this literal "product" 3 times.(ÿ¾©•8’‰Öö–.

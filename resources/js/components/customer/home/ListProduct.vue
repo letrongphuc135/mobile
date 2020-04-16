@@ -20,51 +20,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <!--<div class="ps-section__content pb-50">-->
-                <!--<div class="masonry-wrapper" data-col-md="4" data-col-sm="2" data-col-xs="1"-->
-                <!--data-gap="30" data-radio="100%">-->
-                <!--<div class="ps-masonry">-->
-                <!--<div class="grid-sizer"></div>-->
-                <!--<div class="grid-item kids">-->
-                <!--<div class="grid-item__content-wrapper">-->
-                <!--<div class="ps-shoe mb-30">-->
-                <!--<div class="ps-shoe__thumbnail">-->
-                <!--<div class="ps-badge"><span>New</span></div>-->
-                <!--<div class="ps-badge ps-badge&#45;&#45;sale ps-badge&#45;&#45;2nd">-->
-                <!--<span>-35%</span></div>-->
-                <!--<a class="ps-shoe__favorite" href="#"><i-->
-                <!--class="ps-icon-heart"></i></a><img-->
-                <!--src="https://sudospaces.com/mobilecity-vn/images/2019/08/s10-5g.jpg"-->
-                <!--alt=""><a class="ps-shoe__overlay"-->
-                <!--href="product-detail.html"></a>-->
-                <!--</div>-->
-                <!--<div class="ps-shoe__content">-->
-                <!--<div class="ps-shoe__variants">-->
-                <!--&lt;!&ndash;<div class="ps-shoe__variant normal"><img src="https://sudospaces.com/mobilecity-vn/images/2019/08/s10-5g.jpg" alt=""><img src="images/clothes/2.jpg" alt=""><img src="images/clothes/3.jpg" alt=""><img src="images/clothes/4.jpg" alt=""></div>&ndash;&gt;-->
-                <!--&lt;!&ndash;<select class="ps-rating ps-shoe__rating">&ndash;&gt;-->
-                <!--&lt;!&ndash;<option value="1">1</option>&ndash;&gt;-->
-                <!--&lt;!&ndash;<option value="1">2</option>&ndash;&gt;-->
-                <!--&lt;!&ndash;<option value="1">3</option>&ndash;&gt;-->
-                <!--&lt;!&ndash;<option value="1">4</option>&ndash;&gt;-->
-                <!--&lt;!&ndash;<option value="2">5</option>&ndash;&gt;-->
-                <!--&lt;!&ndash;</select>&ndash;&gt;-->
-                <!--</div>-->
-                <!--<div class="ps-shoe__detail"><a class="ps-shoe__name"-->
-                <!--href="#">Air Jordan 7-->
-                <!--Retro</a>-->
-                <!--<p class="ps-shoe__categories"><a href="#">Men-->
-                <!--shoes</a>,<a href="#"> Nike</a>,<a href="#">-->
-                <!--Jordan</a></p><span class="ps-shoe__price">-->
-                <!--<del>£220</del> £ 120</span>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
                 <div class="ps-section__content pb-50">
                     <div class="masonry-wrapper" data-col-md="3" data-col-sm="2" data-col-xs="1"
                          data-gap="30"
@@ -85,9 +40,9 @@
                                                     <a class="ps-shoe__favorite" href="#"><i
                                                         class="ps-icon-heart"></i></a><img
                                                     :src="product.image"
-                                                    alt=""><a
+                                                    alt=""><router-link
                                                     class="ps-shoe__overlay"
-                                                    href="product-detail"></a>
+                                                    :to="{ name: 'product-detail', params: {name: product.name, id: product.id} }"></router-link>
                                                 </div>
                                                 <div class="ps-shoe__content">
                                                     <div class="ps-shoe__variants">

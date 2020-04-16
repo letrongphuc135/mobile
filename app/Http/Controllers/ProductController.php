@@ -75,36 +75,45 @@ class ProductController extends Controller
         if($validator->fails()){
             return response()->json(['error'=>'true','message' => $validator->errors()],200);
         }
-        $data = $request->only(['name','description','quantity','price','promotion','idCategory','idProductType','status']);
-        if($request->hasFile('image')){
-            $product=Products::create($data);
-            $idproduct=$product->id;
-            $file= $request->image;
-            foreach($file as $value){
-                $file_name= $value->getClientOriginalName();
-                //lấy loại file
-                $file_type= $value->getMimeType();
-                //lấy kích thước file
-                $file_size= $value->getSize();
+//        $data = $request->only(['name','description','quantity','price','promotion','idCategory','idProductType','status']);
+//        if($request->hasFile('image')){
+//            $product=Products::create($data);
+//            $idproduct=$product->id;
+//            $file= $request->image;
+//            foreach($file as $value){
+//                $file_name= $value->getClientOriginalName();
+//                //lấy loại file
+//                $file_type= $value->getMimeType();
+//                //lấy kích thước file
+//                $file_size= $value->getSize();
+//
+//                if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
+//                    if($file_size <= 1048576){
+//                        $file_url = ImgurService::uploadImage($value->getRealPath());
+//                        $product_image['url']=$file_url;
+//                        $product_image['idProduct']=$idproduct;
+//                        ProductImage::create($product_image);
+//                    }else{
+//                        return response()->json(['error'=>'Bạn không thể upload anh quá 1mb']);
+//                    }
+//
+//                }else{
+//                    return response()->json(['error'=>'File bạn chon không phải là hình ảnh']);
+//                }
+//            }
+//        }else{
+//            return response()->json(['error'=>'Bạn chưa chọn hình cho sản phẩm']);
+//        }
 
-                if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
-                    if($file_size <= 1048576){
-                        $file_url = ImgurService::uploadImage($value->getRealPath());
-                        $product_image['url']=$file_url;
-                        $product_image['idProduct']=$idproduct;
-                        ProductImage::create($product_image);
-                    }else{
-                        return response()->json(['error'=>'Bạn không thể upload anh quá 1mb']);
-                    }
-
-                }else{
-                    return response()->json(['error'=>'File bạn chon không phải là hình ảnh']);
-                }
-            }
-        }else{
-            return response()->json(['error'=>'Bạn chưa chọn hình cho sản phẩm']);
+//            return response()->json(['message'=>'Ban da them thanh cong']);
+        $data = $request->all();
+        if (Products::create($data)) {
+            $product = Products::all();
+            return response()->json(['message' => 'Thêm thành công', 'product' => $product]);
+        } else {
+            return response()->json(['message' => 'Thêm thất bại']);
         }
-            return response()->json(['message'=>'Ban da them thanh cong']);  
+
     }
 
     /**
@@ -116,10 +125,8 @@ class ProductController extends Controller
     public function show($id)
     {
         //
-        $category = Categories::where('status',1)->get();
-        $producttype = ProductTypes::where('status',1)->get();
         $product = Products::find($id);
-        return response()->json(['category' => $category, 'producttype' => $producttype, 'product' => $product],200);
+        return response()->json(['product' => $product],200);
     }
 
     /**
@@ -237,4 +244,16 @@ class ProductController extends Controller
         $productdetail->ProductImg;
         return response()->json(['productdetail'=> $productdetail]);
     }
+
+    public function getAllProduct(){
+        $product = Products::all();
+        $data=[];
+        foreach ($product as $key => $value) {
+            $value->Category;
+            $value->ProductType;
+            $data[$key]=$value;
+        }
+        return response()->json(['product'=>$data]);
+    }
+
 }

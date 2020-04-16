@@ -87,6 +87,8 @@ class ProductTypeController extends Controller
     public function show($id)
     {
         //
+        $producttype = ProductTypes::find($id);
+        return response()->json(['producttype' => $producttype]);
     }
 
     /**

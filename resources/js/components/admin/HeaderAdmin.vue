@@ -131,5 +131,6 @@
 </script>
 
 <style scoped>
-
+    @import "~admin-lte/dist/css/adminlte.min.css";
+    @import "~admin-lte/plugins/fontawesome-free/css/all.css";
 </style>
