@@ -1973,8 +1973,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Develop"
+  name: "Develop",
+  props: ['user'],
+  data: function data() {
+    return {
+      file: this.file
+    };
+  },
+  methods: {
+    sentFile: function sentFile(e) {
+      var _this = this;
+
+      var image = e.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(image);
+
+      reader.onload = function (e) {
+        _this.file = e.target.result;
+      };
+    },
+    upload: function upload() {
+      axios.post('/api/upload', {
+        'image': this.file
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -3790,119 +3818,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "productDetail",
   data: function data() {
     return {
-      productDetail: []
+      productDetail: null,
+      products: []
     };
   },
   methods: {
@@ -3913,9 +3834,18 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response.data.productdetail);
         _this.productDetail = response.data.productdetail;
       });
+    },
+    getAllProduct: function getAllProduct() {
+      var _this2 = this;
+
+      axios.get('/api/getProductImgByProduct').then(function (response) {
+        console.log(response.data.product);
+        _this2.products = response.data.product;
+      });
     }
   },
-  created: function created() {// this.getproductDetail();
+  created: function created() {
+    this.getproductDetail();
   }
 });
 
@@ -63042,18 +62972,36 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12" },
-        [
-          _c("passport-clients"),
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", [_vm._v("Product image")]),
           _vm._v(" "),
-          _c("passport-authorized-clients"),
+          _c("strong", [_vm._v("File:")]),
           _vm._v(" "),
-          _c("passport-personal-access-tokens")
-        ],
-        1
-      )
+          _c("input", {
+            ref: "file",
+            staticClass: "form-control",
+            attrs: { type: "file", name: "file", accept: "image/*" },
+            on: { change: _vm.sentFile }
+          }),
+          _vm._v(" "),
+          _c("div", [_c("img", { attrs: { src: _vm.file, height: "300px" } })]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.upload($event)
+                }
+              }
+            },
+            [_vm._v("Submit")]
+          )
+        ])
+      ])
     ])
   ])
 }
@@ -66323,147 +66271,72 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("main", { staticClass: "ps-main" }, [
-        _c("div", { staticClass: "test" }, [
-          _c("div", { staticClass: "container" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-4 col-xs-4 " })
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "ps-product--detail pt-60" }, [
-          _c("div", { staticClass: "ps-container" }, [
-            _c("div", { staticClass: "row" }, [
+  return _c("div", [
+    _c("main", { staticClass: "ps-main" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "ps-product--detail pt-60" }, [
+        _c("div", { staticClass: "ps-container" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-10 col-md-12 col-lg-offset-1" }, [
+              _c("div", { staticClass: "ps-product__thumbnail" }, [
+                _c("div", { staticClass: "ps-product__preview" }, [
+                  _c(
+                    "div",
+                    { staticClass: "ps-product__variants" },
+                    _vm._l(_vm.productDetail.product_img, function(
+                      image_pro,
+                      index
+                    ) {
+                      return _c("div", { key: index, staticClass: "item" }, [
+                        _c("img", { attrs: { src: image_pro.url, alt: "" } })
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ps-product__image" }, [
+                  _c("div", { staticClass: "item" }, [
+                    _c("img", {
+                      staticClass: "zoom",
+                      attrs: {
+                        src: _vm.image_pro.url,
+                        alt: "",
+                        "data-zoom-image": _vm.image_pro.url
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-lg-10 col-md-12 col-lg-offset-1" },
+                { staticClass: "ps-product__thumbnail--mobile" },
                 [
-                  _c("div", { staticClass: "ps-product__thumbnail" }, [
-                    _c("div", { staticClass: "ps-product__preview" }, [
-                      _c("div", { staticClass: "ps-product__variants" }, [
-                        _c("div", { staticClass: "item" }, [
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe-detail/1.jpg",
-                              alt: ""
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "item" }, [
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe-detail/2.jpg",
-                              alt: ""
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "item" }, [
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe-detail/3.jpg",
-                              alt: ""
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "item" }, [
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe-detail/3.jpg",
-                              alt: ""
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "item" }, [
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe-detail/3.jpg",
-                              alt: ""
-                            }
-                          })
-                        ])
-                      ]),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "popup-youtube ps-product__video",
-                          attrs: {
-                            href: "http://www.youtube.com/watch?v=0O2aH4XLbto"
-                          }
-                        },
-                        [
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe-detail/1.jpg",
-                              alt: ""
-                            }
-                          }),
-                          _c("i", { staticClass: "fa fa-play" })
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "ps-product__image" }, [
-                      _c("div", { staticClass: "item" }, [
-                        _c("img", {
-                          staticClass: "zoom",
-                          attrs: {
-                            src: "assets/customer/images/shoe-detail/1.jpg",
-                            alt: "",
-                            "data-zoom-image": "images/shoe-detail/1.jpg"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "item" }, [
-                        _c("img", {
-                          staticClass: "zoom",
-                          attrs: {
-                            src: "assets/customer/images/shoe-detail/2.jpg",
-                            alt: "",
-                            "data-zoom-image": "images/shoe-detail/2.jpg"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "item" }, [
-                        _c("img", {
-                          staticClass: "zoom",
-                          attrs: {
-                            src: "assets/customer/images/shoe-detail/3.jpg",
-                            alt: "",
-                            "data-zoom-image": "images/shoe-detail/3.jpg"
-                          }
-                        })
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "ps-product__thumbnail--mobile" }, [
-                    _c("div", { staticClass: "ps-product__main-img" }, [
-                      _c("img", {
-                        attrs: {
-                          src: "assets/customer/images/shoe-detail/1.jpg",
-                          alt: ""
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c(
+                  _vm._l(_vm.productDetail.product_img, function(
+                    image_pro,
+                    index
+                  ) {
+                    return _c(
                       "div",
                       {
+                        key: index + "-" + image_pro.id,
+                        staticClass: "ps-product__main-img",
+                        class: image_pro.name
+                      },
+                      [_c("img", { attrs: { src: image_pro.url, alt: "" } })]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.productDetail.product_img, function(
+                    image_pro,
+                    index
+                  ) {
+                    return _c(
+                      "div",
+                      {
+                        key: index,
                         staticClass: "ps-product__preview owl-slider",
                         attrs: {
                           "data-owl-auto": "true",
@@ -66472,1382 +66345,567 @@ var staticRenderFns = [
                           "data-owl-gap": "20",
                           "data-owl-nav": "true",
                           "data-owl-dots": "false",
-                          "data-owl-item": "3",
-                          "data-owl-item-xs": "3",
-                          "data-owl-item-sm": "3",
-                          "data-owl-item-md": "3",
-                          "data-owl-item-lg": "3",
+                          "data-owl-item": "4",
+                          "data-owl-item-xs": "4",
+                          "data-owl-item-sm": "4",
+                          "data-owl-item-md": "4",
+                          "data-owl-item-lg": "4",
                           "data-owl-duration": "1000",
                           "data-owl-mousedrag": "on"
                         }
                       },
-                      [
-                        _c("img", {
-                          attrs: {
-                            src: "assets/customer/images/shoe-detail/1.jpg",
-                            alt: ""
-                          }
-                        }),
-                        _c("img", {
-                          attrs: {
-                            src: "assets/customer/images/shoe-detail/2.jpg",
-                            alt: ""
-                          }
-                        }),
-                        _c("img", {
-                          attrs: {
-                            src: "assets/customer/images/shoe-detail/3.jpg",
-                            alt: ""
-                          }
-                        })
-                      ]
+                      [_c("img", { attrs: { src: image_pro.url, alt: "" } })]
                     )
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "ps-product__info" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c("h1", [_vm._v(_vm._s(_vm.productDetail.name))]),
+                _vm._v(" "),
+                _c("p", { staticClass: "ps-product__category" }, [
+                  _c("a", { attrs: { href: "#" } }, [
+                    _vm._v(_vm._s(_vm.productDetail.category.name) + " , ")
                   ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "ps-product__info" }, [
-                    _c("div", { staticClass: "ps-product__rating" }, [
-                      _c("select", { staticClass: "ps-rating" }, [
-                        _c("option", { attrs: { value: "1" } }, [_vm._v("1")]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "1" } }, [_vm._v("2")]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "1" } }, [_vm._v("3")]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "1" } }, [_vm._v("4")]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "2" } }, [_vm._v("5")])
-                      ]),
-                      _c("a", { attrs: { href: "#" } }, [
-                        _vm._v("(Read all 8 reviews)")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("h1", [_vm._v("Air strong  training")]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "ps-product__category" }, [
-                      _c("a", { attrs: { href: "#" } }, [_vm._v(" Men shoes")]),
-                      _vm._v(","),
-                      _c("a", { attrs: { href: "#" } }, [_vm._v(" Nike")]),
-                      _vm._v(","),
-                      _c("a", { attrs: { href: "#" } }, [_vm._v(" Jordan")])
-                    ]),
-                    _vm._v(" "),
-                    _c("h3", { staticClass: "ps-product__price" }, [
-                      _vm._v("£ 115 "),
-                      _c("del", [_vm._v("£ 330")])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "ps-product__block ps-product__quickview"
-                      },
-                      [
-                        _c("h4", [_vm._v("QUICK REVIEW")]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            "The Nike Free RN 2017 Men's Running Sky weighs less than previous versions and features an updated knit material…"
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "ps-product__block ps-product__style" },
-                      [
-                        _c("h4", [_vm._v("CHOOSE YOUR STYLE")]),
-                        _vm._v(" "),
-                        _c("ul", [
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "product-detail.html" } },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src:
-                                      "assets/customer/images/shoe/sidebar/1.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "product-detail.html" } },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src:
-                                      "assets/customer/images/shoe/sidebar/2.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "product-detail.html" } },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src:
-                                      "assets/customer/images/shoe/sidebar/3.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "product-detail.html" } },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src:
-                                      "assets/customer/images/shoe/sidebar/2.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            )
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "ps-product__block ps-product__size" },
-                      [
-                        _c("h4", [
-                          _vm._v("CHOOSE SIZE"),
-                          _c("a", { attrs: { href: "#" } }, [
-                            _vm._v("Size chart")
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          { staticClass: "ps-select selectpicker" },
-                          [
-                            _c("option", { attrs: { value: "1" } }, [
-                              _vm._v("Select Size")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "2" } }, [
-                              _vm._v("4")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("4.5")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("5")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("6")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("6.5")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("7")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("7.5")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("8")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("8.5")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("9")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("9.5")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("10")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("input", {
-                            staticClass: "form-control",
-                            attrs: { type: "number", value: "1" }
-                          })
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "ps-product__shopping" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "ps-btn mb-10",
-                          attrs: { href: "cart.html" }
-                        },
-                        [
-                          _vm._v("Add to cart"),
-                          _c("i", { staticClass: "ps-icon-next" })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "ps-product__actions" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "mr-10",
-                            attrs: { href: "whishlist.html" }
-                          },
-                          [_c("i", { staticClass: "ps-icon-heart" })]
-                        ),
-                        _c("a", { attrs: { href: "compare.html" } }, [
-                          _c("i", { staticClass: "ps-icon-share" })
-                        ])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "clearfix" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "ps-product__content mt-50" }, [
-                    _c(
-                      "ul",
-                      { staticClass: "tab-list", attrs: { role: "tablist" } },
-                      [
-                        _c("li", { staticClass: "active" }, [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "#tab_01",
-                                "aria-controls": "tab_01",
-                                role: "tab",
-                                "data-toggle": "tab"
-                              }
-                            },
-                            [_vm._v("Overview")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "#tab_02",
-                                "aria-controls": "tab_02",
-                                role: "tab",
-                                "data-toggle": "tab"
-                              }
-                            },
-                            [_vm._v("Review")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "#tab_03",
-                                "aria-controls": "tab_03",
-                                role: "tab",
-                                "data-toggle": "tab"
-                              }
-                            },
-                            [_vm._v("PRODUCT TAG")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "#tab_04",
-                                "aria-controls": "tab_04",
-                                role: "tab",
-                                "data-toggle": "tab"
-                              }
-                            },
-                            [_vm._v("ADDITIONAL")]
-                          )
-                        ])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "tab-content mb-60" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane active",
-                        attrs: { role: "tabpanel", id: "tab_01" }
-                      },
-                      [
-                        _c("p", [
-                          _vm._v(
-                            "Caramels tootsie roll carrot cake sugar plum. Sweet roll jelly bear claw liquorice. Gingerbread lollipop dragée cake. Pie topping jelly-o. Fruitcake dragée candy canes tootsie roll. Pastry jelly-o cupcake. Bonbon brownie soufflé muffin."
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            "Sweet roll soufflé oat cake apple pie croissant. Pie gummi bears jujubes cake lemon drops gummi bears croissant macaroon pie. Fruitcake tootsie roll chocolate cake Carrot cake cake bear claw jujubes topping cake apple pie. Jujubes gummi bears soufflé candy canes topping gummi bears cake soufflé cake. Cotton candy soufflé sugar plum pastry sweet roll.."
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane",
-                        attrs: { role: "tabpanel", id: "tab_02" }
-                      },
-                      [
-                        _c("p", { staticClass: "mb-20" }, [
-                          _vm._v("1 review for "),
-                          _c("strong", [_vm._v("Shoes Air Jordan")])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ps-review" }, [
-                          _c("div", { staticClass: "ps-review__thumbnail" }, [
-                            _c("img", {
-                              attrs: {
-                                src: "assets/customer/images/user/1.jpg",
-                                alt: ""
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "ps-review__content" }, [
-                            _c("header", [
-                              _c("select", { staticClass: "ps-rating" }, [
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("1")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("2")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("3")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("4")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "5" } }, [
-                                  _vm._v("5")
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("p", [
-                                _vm._v("By"),
-                                _c("a", { attrs: { href: "" } }, [
-                                  _vm._v(" Alena Studio")
-                                ]),
-                                _vm._v(" - November 25, 2017")
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("p", [
-                              _vm._v(
-                                "Soufflé danish gummi bears tart. Pie wafer icing. Gummies jelly beans powder. Chocolate bar pudding macaroon candy canes chocolate apple pie chocolate cake. Sweet caramels sesame snaps halvah bear claw wafer. Sweet roll soufflé muffin topping muffin brownie. Tart bear claw cake tiramisu chocolate bar gummies dragée lemon drops brownie."
-                              )
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "form",
-                          {
-                            staticClass: "ps-product__review",
-                            attrs: { action: "_action", method: "post" }
-                          },
-                          [
-                            _c("h4", [_vm._v("ADD YOUR REVIEW")]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "col-lg-6 col-md-6 col-sm-6 col-xs-12 "
-                                },
-                                [
-                                  _c("div", { staticClass: "form-group" }, [
-                                    _c("label", [
-                                      _vm._v("Name:"),
-                                      _c("span", [_vm._v("*")])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: { type: "text", placeholder: "" }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "form-group" }, [
-                                    _c("label", [
-                                      _vm._v("Email:"),
-                                      _c("span", [_vm._v("*")])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      staticClass: "form-control",
-                                      attrs: { type: "email", placeholder: "" }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "form-group" }, [
-                                    _c("label", [
-                                      _vm._v("Your rating"),
-                                      _c("span")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("select", { staticClass: "ps-rating" }, [
-                                      _c("option", { attrs: { value: "1" } }, [
-                                        _vm._v("1")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "1" } }, [
-                                        _vm._v("2")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "1" } }, [
-                                        _vm._v("3")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "1" } }, [
-                                        _vm._v("4")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("option", { attrs: { value: "5" } }, [
-                                        _vm._v("5")
-                                      ])
-                                    ])
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "col-lg-8 col-md-8 col-sm-6 col-xs-12 "
-                                },
-                                [
-                                  _c("div", { staticClass: "form-group" }, [
-                                    _c("label", [_vm._v("Your Review:")]),
-                                    _vm._v(" "),
-                                    _c("textarea", {
-                                      staticClass: "form-control",
-                                      attrs: { rows: "6" }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "form-group" }, [
-                                    _c(
-                                      "button",
-                                      { staticClass: "ps-btn ps-btn--sm" },
-                                      [
-                                        _vm._v("Submit"),
-                                        _c("i", { staticClass: "ps-icon-next" })
-                                      ]
-                                    )
-                                  ])
-                                ]
-                              )
-                            ])
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane",
-                        attrs: { role: "tabpanel", id: "tab_03" }
-                      },
-                      [
-                        _c("p", [
-                          _vm._v("Add your tag "),
-                          _c("span", [_vm._v(" *")])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "form",
-                          {
-                            staticClass: "ps-product__tags",
-                            attrs: { action: "_action", method: "post" }
-                          },
-                          [
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: { type: "text", placeholder: "" }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                { staticClass: "ps-btn ps-btn--sm" },
-                                [_vm._v("Add Tags")]
-                              )
-                            ])
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tab-pane",
-                        attrs: { role: "tabpanel", id: "tab_04" }
-                      },
-                      [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("textarea", {
-                            staticClass: "form-control",
-                            attrs: {
-                              rows: "6",
-                              placeholder: "Enter your addition here..."
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "ps-btn",
-                              attrs: { type: "button" }
-                            },
-                            [_vm._v("Submit")]
-                          )
-                        ])
-                      ]
-                    )
+                  _c("a", { attrs: { href: "#" } }, [
+                    _vm._v(_vm._s(_vm.productDetail.product_type.name))
                   ])
-                ]
+                ]),
+                _vm._v(" "),
+                _vm.productDetail.promotion == 0
+                  ? _c("h3", { staticClass: "ps-product__price" }, [
+                      _vm._v(_vm._s(_vm.productDetail.price))
+                    ])
+                  : _c("h3", { staticClass: "ps-product__price" }, [
+                      _vm._v(_vm._s(_vm.productDetail.promotion) + " "),
+                      _c("del", [_vm._v(_vm._s(_vm.productDetail.price))])
+                    ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "ps-product__block ps-product__quickview" },
+                  [
+                    _c("h4", [_vm._v("Mô tả")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.productDetail.description))])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _vm._m(3)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "clearfix" }),
+              _vm._v(" "),
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { staticClass: "tab-content mb-60" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane active",
+                    attrs: { role: "tabpanel", id: "tab_01" }
+                  },
+                  [_c("p", [_vm._v(_vm._s(_vm.productDetail.description))])]
+                ),
+                _vm._v(" "),
+                _vm._m(5),
+                _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _vm._m(7)
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(8)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "test" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-4 col-xs-4 " })
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ps-product__rating" }, [
+      _c("select", { staticClass: "ps-rating" }, [
+        _c("option", { attrs: { value: "1" } }, [_vm._v("1")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "1" } }, [_vm._v("2")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "1" } }, [_vm._v("3")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "1" } }, [_vm._v("4")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2" } }, [_vm._v("5")])
+      ]),
+      _c("a", { attrs: { href: "#" } }, [_vm._v("(Read all 8 reviews)")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ps-product__block ps-product__size" }, [
+      _c("h4", [_vm._v("Chọn số lượng")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { min: "1", type: "number", value: "1" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ps-product__shopping" }, [
+      _c("a", { staticClass: "ps-btn mb-10", attrs: { href: "cart.html" } }, [
+        _vm._v("Add to cart"),
+        _c("i", { staticClass: "ps-icon-next" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ps-product__content mt-50" }, [
+      _c("ul", { staticClass: "tab-list", attrs: { role: "tablist" } }, [
+        _c("li", { staticClass: "active" }, [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#tab_01",
+                "aria-controls": "tab_01",
+                role: "tab",
+                "data-toggle": "tab"
+              }
+            },
+            [_vm._v("Overview")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#tab_02",
+                "aria-controls": "tab_02",
+                role: "tab",
+                "data-toggle": "tab"
+              }
+            },
+            [_vm._v("Review")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#tab_03",
+                "aria-controls": "tab_03",
+                role: "tab",
+                "data-toggle": "tab"
+              }
+            },
+            [_vm._v("PRODUCT TAG")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#tab_04",
+                "aria-controls": "tab_04",
+                role: "tab",
+                "data-toggle": "tab"
+              }
+            },
+            [_vm._v("ADDITIONAL")]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "tab-pane", attrs: { role: "tabpanel", id: "tab_02" } },
+      [
+        _c("p", { staticClass: "mb-20" }, [
+          _vm._v("1 review for "),
+          _c("strong", [_vm._v("Shoes Air Jordan")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ps-review" }, [
+          _c("div", { staticClass: "ps-review__thumbnail" }, [
+            _c("img", {
+              attrs: { src: "assets/customer/images/user/1.jpg", alt: "" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "ps-review__content" }, [
+            _c("header", [
+              _c("select", { staticClass: "ps-rating" }, [
+                _c("option", { attrs: { value: "1" } }, [_vm._v("1")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1" } }, [_vm._v("2")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1" } }, [_vm._v("3")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1" } }, [_vm._v("4")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "5" } }, [_vm._v("5")])
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("By"),
+                _c("a", { attrs: { href: "" } }, [_vm._v(" Alena Studio")]),
+                _vm._v(" - November 25, 2017")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Soufflé danish gummi bears tart. Pie wafer icing. Gummies jelly beans powder. Chocolate bar pudding macaroon candy canes chocolate apple pie chocolate cake. Sweet caramels sesame snaps halvah bear claw wafer. Sweet roll soufflé muffin topping muffin brownie. Tart bear claw cake tiramisu chocolate bar gummies dragée lemon drops brownie."
               )
             ])
           ])
         ]),
         _vm._v(" "),
         _c(
-          "div",
+          "form",
           {
-            staticClass:
-              "ps-section ps-section--top-sales ps-owl-root pt-40 pb-80"
+            staticClass: "ps-product__review",
+            attrs: { action: "_action", method: "post" }
           },
           [
-            _c("div", { staticClass: "ps-container" }, [
-              _c("div", { staticClass: "ps-section__header mb-50" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-lg-9 col-md-9 col-sm-12 col-xs-12 " },
-                    [
-                      _c(
-                        "h3",
-                        {
-                          staticClass: "ps-section__title",
-                          attrs: { "data-mask": "Related item" }
-                        },
-                        [_vm._v("- YOU MIGHT ALSO LIKE")]
-                      )
-                    ]
-                  ),
+            _c("h4", [_vm._v("ADD YOUR REVIEW")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-lg-6 col-md-6 col-sm-6 col-xs-12 " },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Name:"), _c("span", [_vm._v("*")])]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: { type: "text", placeholder: "" }
+                    })
+                  ]),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-lg-3 col-md-3 col-sm-12 col-xs-12 " },
-                    [
-                      _c("div", { staticClass: "ps-owl-actions" }, [
-                        _c(
-                          "a",
-                          { staticClass: "ps-prev", attrs: { href: "#" } },
-                          [
-                            _c("i", { staticClass: "ps-icon-arrow-right" }),
-                            _vm._v("Prev")
-                          ]
-                        ),
-                        _c(
-                          "a",
-                          { staticClass: "ps-next", attrs: { href: "#" } },
-                          [
-                            _vm._v("Next"),
-                            _c("i", { staticClass: "ps-icon-arrow-left" })
-                          ]
-                        )
-                      ])
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "ps-section__content" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "ps-owl--colection owl-slider",
-                    attrs: {
-                      "data-owl-auto": "true",
-                      "data-owl-loop": "true",
-                      "data-owl-speed": "5000",
-                      "data-owl-gap": "30",
-                      "data-owl-nav": "false",
-                      "data-owl-dots": "false",
-                      "data-owl-item": "4",
-                      "data-owl-item-xs": "1",
-                      "data-owl-item-sm": "2",
-                      "data-owl-item-md": "3",
-                      "data-owl-item-lg": "4",
-                      "data-owl-duration": "1000",
-                      "data-owl-mousedrag": "on"
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "ps-shoes--carousel" }, [
-                      _c("div", { staticClass: "ps-shoe" }, [
-                        _c("div", { staticClass: "ps-shoe__thumbnail" }, [
-                          _c("div", { staticClass: "ps-badge" }, [
-                            _c("span", [_vm._v("New")])
-                          ]),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "ps-shoe__favorite",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "ps-icon-heart" })]
-                          ),
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe/1.jpg",
-                              alt: ""
-                            }
-                          }),
-                          _c("a", {
-                            staticClass: "ps-shoe__overlay",
-                            attrs: { href: "product-detail.html" }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ps-shoe__content" }, [
-                          _c("div", { staticClass: "ps-shoe__variants" }, [
-                            _c(
-                              "div",
-                              { staticClass: "ps-shoe__variant normal" },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/2.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/3.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/4.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/5.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              { staticClass: "ps-rating ps-shoe__rating" },
-                              [
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("1")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("2")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("3")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("4")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("5")
-                                ])
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "ps-shoe__detail" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "ps-shoe__name",
-                                attrs: { href: "product-detai.html" }
-                              },
-                              [_vm._v("Air Jordan 7 Retro")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "ps-shoe__categories" }, [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v("Men shoes")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Nike")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Jordan")
-                              ])
-                            ]),
-                            _c("span", { staticClass: "ps-shoe__price" }, [
-                              _vm._v(" £ 120")
-                            ])
-                          ])
-                        ])
-                      ])
-                    ]),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Email:"), _c("span", [_vm._v("*")])]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "ps-shoes--carousel" }, [
-                      _c("div", { staticClass: "ps-shoe" }, [
-                        _c("div", { staticClass: "ps-shoe__thumbnail" }, [
-                          _c("div", { staticClass: "ps-badge" }, [
-                            _c("span", [_vm._v("New")])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "ps-badge ps-badge--sale ps-badge--2nd"
-                            },
-                            [_c("span", [_vm._v("-35%")])]
-                          ),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "ps-shoe__favorite",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "ps-icon-heart" })]
-                          ),
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe/2.jpg",
-                              alt: ""
-                            }
-                          }),
-                          _c("a", {
-                            staticClass: "ps-shoe__overlay",
-                            attrs: { href: "product-detail.html" }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ps-shoe__content" }, [
-                          _c("div", { staticClass: "ps-shoe__variants" }, [
-                            _c(
-                              "div",
-                              { staticClass: "ps-shoe__variant normal" },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/2.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/3.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/4.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/5.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              { staticClass: "ps-rating ps-shoe__rating" },
-                              [
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("1")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("2")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("3")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("4")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("5")
-                                ])
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "ps-shoe__detail" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "ps-shoe__name",
-                                attrs: { href: "product-detai.html" }
-                              },
-                              [_vm._v("Air Jordan 7 Retro")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "ps-shoe__categories" }, [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v("Men shoes")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Nike")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Jordan")
-                              ])
-                            ]),
-                            _c("span", { staticClass: "ps-shoe__price" }, [
-                              _c("del", [_vm._v("£220")]),
-                              _vm._v(" £ 120")
-                            ])
-                          ])
-                        ])
-                      ])
-                    ]),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: { type: "email", placeholder: "" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Your rating"), _c("span")]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "ps-shoes--carousel" }, [
-                      _c("div", { staticClass: "ps-shoe" }, [
-                        _c("div", { staticClass: "ps-shoe__thumbnail" }, [
-                          _c("div", { staticClass: "ps-badge" }, [
-                            _c("span", [_vm._v("New")])
-                          ]),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "ps-shoe__favorite",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "ps-icon-heart" })]
-                          ),
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe/3.jpg",
-                              alt: ""
-                            }
-                          }),
-                          _c("a", {
-                            staticClass: "ps-shoe__overlay",
-                            attrs: { href: "product-detail.html" }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ps-shoe__content" }, [
-                          _c("div", { staticClass: "ps-shoe__variants" }, [
-                            _c(
-                              "div",
-                              { staticClass: "ps-shoe__variant normal" },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/2.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/3.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/4.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/5.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              { staticClass: "ps-rating ps-shoe__rating" },
-                              [
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("1")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("2")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("3")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("4")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("5")
-                                ])
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "ps-shoe__detail" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "ps-shoe__name",
-                                attrs: { href: "product-detai.html" }
-                              },
-                              [_vm._v("Air Jordan 7 Retro")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "ps-shoe__categories" }, [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v("Men shoes")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Nike")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Jordan")
-                              ])
-                            ]),
-                            _c("span", { staticClass: "ps-shoe__price" }, [
-                              _vm._v(" £ 120")
-                            ])
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "ps-shoes--carousel" }, [
-                      _c("div", { staticClass: "ps-shoe" }, [
-                        _c("div", { staticClass: "ps-shoe__thumbnail" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "ps-shoe__favorite",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "ps-icon-heart" })]
-                          ),
-                          _c("img", {
-                            attrs: { src: "images/shoe/4.jpg", alt: "" }
-                          }),
-                          _c("a", {
-                            staticClass: "ps-shoe__overlay",
-                            attrs: { href: "product-detail.html" }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ps-shoe__content" }, [
-                          _c("div", { staticClass: "ps-shoe__variants" }, [
-                            _c(
-                              "div",
-                              { staticClass: "ps-shoe__variant normal" },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/2.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/3.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/4.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/5.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              { staticClass: "ps-rating ps-shoe__rating" },
-                              [
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("1")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("2")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("3")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("4")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("5")
-                                ])
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "ps-shoe__detail" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "ps-shoe__name",
-                                attrs: { href: "product-detai.html" }
-                              },
-                              [_vm._v("Air Jordan 7 Retro")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "ps-shoe__categories" }, [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v("Men shoes")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Nike")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Jordan")
-                              ])
-                            ]),
-                            _c("span", { staticClass: "ps-shoe__price" }, [
-                              _vm._v(" £ 120")
-                            ])
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "ps-shoes--carousel" }, [
-                      _c("div", { staticClass: "ps-shoe" }, [
-                        _c("div", { staticClass: "ps-shoe__thumbnail" }, [
-                          _c("div", { staticClass: "ps-badge" }, [
-                            _c("span", [_vm._v("New")])
-                          ]),
-                          _c(
-                            "a",
-                            {
-                              staticClass: "ps-shoe__favorite",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "ps-icon-heart" })]
-                          ),
-                          _c("img", {
-                            attrs: { src: "images/shoe/5.jpg", alt: "" }
-                          }),
-                          _c("a", {
-                            staticClass: "ps-shoe__overlay",
-                            attrs: { href: "product-detail.html" }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ps-shoe__content" }, [
-                          _c("div", { staticClass: "ps-shoe__variants" }, [
-                            _c(
-                              "div",
-                              { staticClass: "ps-shoe__variant normal" },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/2.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/3.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/4.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/5.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              { staticClass: "ps-rating ps-shoe__rating" },
-                              [
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("1")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("2")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("3")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("4")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("5")
-                                ])
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "ps-shoe__detail" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "ps-shoe__name",
-                                attrs: { href: "product-detai.html" }
-                              },
-                              [_vm._v("Air Jordan 7 Retro")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "ps-shoe__categories" }, [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v("Men shoes")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Nike")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Jordan")
-                              ])
-                            ]),
-                            _c("span", { staticClass: "ps-shoe__price" }, [
-                              _vm._v(" £ 120")
-                            ])
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "ps-shoes--carousel" }, [
-                      _c("div", { staticClass: "ps-shoe" }, [
-                        _c("div", { staticClass: "ps-shoe__thumbnail" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "ps-shoe__favorite",
-                              attrs: { href: "#" }
-                            },
-                            [_c("i", { staticClass: "ps-icon-heart" })]
-                          ),
-                          _c("img", {
-                            attrs: {
-                              src: "assets/customer/images/shoe/6.jpg",
-                              alt: ""
-                            }
-                          }),
-                          _c("a", {
-                            staticClass: "ps-shoe__overlay",
-                            attrs: { href: "product-detail.html" }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "ps-shoe__content" }, [
-                          _c("div", { staticClass: "ps-shoe__variants" }, [
-                            _c(
-                              "div",
-                              { staticClass: "ps-shoe__variant normal" },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/2.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/3.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/4.jpg",
-                                    alt: ""
-                                  }
-                                }),
-                                _c("img", {
-                                  attrs: {
-                                    src: "assets/customer/images/shoe/5.jpg",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "select",
-                              { staticClass: "ps-rating ps-shoe__rating" },
-                              [
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("1")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("2")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("3")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("4")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("5")
-                                ])
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "ps-shoe__detail" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "ps-shoe__name",
-                                attrs: { href: "product-detai.html" }
-                              },
-                              [_vm._v("Air Jordan 7 Retro")]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "ps-shoe__categories" }, [
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v("Men shoes")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Nike")
-                              ]),
-                              _vm._v(","),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v(" Jordan")
-                              ])
-                            ]),
-                            _c("span", { staticClass: "ps-shoe__price" }, [
-                              _vm._v(" £ 120")
-                            ])
-                          ])
-                        ])
-                      ])
+                    _c("select", { staticClass: "ps-rating" }, [
+                      _c("option", { attrs: { value: "1" } }, [_vm._v("1")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "1" } }, [_vm._v("2")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "1" } }, [_vm._v("3")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "1" } }, [_vm._v("4")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "5" } }, [_vm._v("5")])
                     ])
-                  ]
-                )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-lg-8 col-md-8 col-sm-6 col-xs-12 " },
+                [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Your Review:")]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      staticClass: "form-control",
+                      attrs: { rows: "6" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("button", { staticClass: "ps-btn ps-btn--sm" }, [
+                      _vm._v("Submit"),
+                      _c("i", { staticClass: "ps-icon-next" })
+                    ])
+                  ])
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "tab-pane", attrs: { role: "tabpanel", id: "tab_03" } },
+      [
+        _c("p", [_vm._v("Add your tag "), _c("span", [_vm._v(" *")])]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "ps-product__tags",
+            attrs: { action: "_action", method: "post" }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" }
+              }),
+              _vm._v(" "),
+              _c("button", { staticClass: "ps-btn ps-btn--sm" }, [
+                _vm._v("Add Tags")
               ])
             ])
           ]
         )
-      ])
-    ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "tab-pane", attrs: { role: "tabpanel", id: "tab_04" } },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c("textarea", {
+            staticClass: "form-control",
+            attrs: { rows: "6", placeholder: "Enter your addition here..." }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("button", { staticClass: "ps-btn", attrs: { type: "button" } }, [
+            _vm._v("Submit")
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "ps-section ps-section--top-sales ps-owl-root pt-40 pb-80"
+      },
+      [
+        _c("div", { staticClass: "ps-container" }, [
+          _c("div", { staticClass: "ps-section__header mb-50" }, [
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-lg-9 col-md-9 col-sm-12 col-xs-12 " },
+                [
+                  _c(
+                    "h3",
+                    {
+                      staticClass: "ps-section__title",
+                      attrs: { "data-mask": "Related item" }
+                    },
+                    [_vm._v("- YOU MIGHT ALSO LIKE")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-lg-3 col-md-3 col-sm-12 col-xs-12 " },
+                [
+                  _c("div", { staticClass: "ps-owl-actions" }, [
+                    _c("a", { staticClass: "ps-prev", attrs: { href: "#" } }, [
+                      _c("i", { staticClass: "ps-icon-arrow-right" }),
+                      _vm._v("Prev")
+                    ]),
+                    _c("a", { staticClass: "ps-next", attrs: { href: "#" } }, [
+                      _vm._v("Next"),
+                      _c("i", { staticClass: "ps-icon-arrow-left" })
+                    ])
+                  ])
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "ps-section__content" }, [
+            _c(
+              "div",
+              {
+                staticClass: "ps-owl--colection owl-slider",
+                attrs: {
+                  "data-owl-auto": "true",
+                  "data-owl-loop": "true",
+                  "data-owl-speed": "5000",
+                  "data-owl-gap": "30",
+                  "data-owl-nav": "false",
+                  "data-owl-dots": "false",
+                  "data-owl-item": "4",
+                  "data-owl-item-xs": "1",
+                  "data-owl-item-sm": "2",
+                  "data-owl-item-md": "3",
+                  "data-owl-item-lg": "4",
+                  "data-owl-duration": "1000",
+                  "data-owl-mousedrag": "on"
+                }
+              },
+              [
+                _c("div", { staticClass: "ps-shoes--carousel" }, [
+                  _c("div", { staticClass: "ps-shoe" }, [
+                    _c("div", { staticClass: "ps-shoe__thumbnail" }, [
+                      _c("div", { staticClass: "ps-badge" }, [
+                        _c("span", [_vm._v("New")])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "ps-shoe__favorite",
+                          attrs: { href: "#" }
+                        },
+                        [_c("i", { staticClass: "ps-icon-heart" })]
+                      ),
+                      _vm._v(" "),
+                      _c("img", {
+                        attrs: { src: "images/shoe/1.jpg", alt: "" }
+                      }),
+                      _vm._v(" "),
+                      _c("a", {
+                        staticClass: "ps-shoe__overlay",
+                        attrs: { href: "product-detail.html" }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ps-shoe__content" }, [
+                      _c("div", { staticClass: "ps-shoe__variants" }, [
+                        _c("div", { staticClass: "ps-shoe__variant normal" }, [
+                          _c("img", {
+                            attrs: { src: "images/shoe/2.jpg", alt: "" }
+                          }),
+                          _c("img", {
+                            attrs: { src: "images/shoe/3.jpg", alt: "" }
+                          }),
+                          _c("img", {
+                            attrs: { src: "images/shoe/4.jpg", alt: "" }
+                          }),
+                          _c("img", {
+                            attrs: { src: "images/shoe/5.jpg", alt: "" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          { staticClass: "ps-rating ps-shoe__rating" },
+                          [
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("1")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("2")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("3")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("4")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "2" } }, [
+                              _vm._v("5")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "ps-shoe__detail" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "ps-shoe__name",
+                            attrs: { href: "product-detai.html" }
+                          },
+                          [_vm._v("Air Jordan 7 Retro")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "ps-shoe__categories" }, [
+                          _c("a", { attrs: { href: "#" } }, [
+                            _vm._v("Men shoes")
+                          ]),
+                          _vm._v(","),
+                          _c("a", { attrs: { href: "#" } }, [_vm._v(" Nike")]),
+                          _vm._v(","),
+                          _c("a", { attrs: { href: "#" } }, [_vm._v(" Jordan")])
+                        ]),
+                        _c("span", { staticClass: "ps-shoe__price" }, [
+                          _vm._v(" £ 120")
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -84173,9 +83231,11 @@ Vue.component(vform__WEBPACK_IMPORTED_MODULE_0__["HasError"].name, vform__WEBPAC
 Vue.component(vform__WEBPACK_IMPORTED_MODULE_0__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_0__["AlertError"]);
 
 
+ // import CKEditor from 'ckeditor4-vue';
 
 window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a;
-window.Fire = new Vue();
+window.Fire = new Vue(); // Vue.use( CKEditor );
+
 var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.mixin({
   toast: true,
   position: 'top-end',
@@ -84225,12 +83285,20 @@ var routes = [{
   path: '/',
   component: __webpack_require__(/*! ./components/views/MobileHome */ "./resources/js/components/views/MobileHome.vue")["default"],
   redirect: {
-    path: "home"
+    path: "/home"
   },
   children: [{
-    path: "home",
+    path: "/home",
     name: "home",
     component: __webpack_require__(/*! ./components/customer/home/Home */ "./resources/js/components/customer/home/Home.vue")["default"]
+  }, {
+    path: "/product-detail/:id",
+    name: "product-detail",
+    component: __webpack_require__(/*! ./components/customer/productDetail/ProductDetail */ "./resources/js/components/customer/productDetail/ProductDetail.vue")["default"]
+  }, {
+    path: "/product-detail",
+    name: "product-detail",
+    component: __webpack_require__(/*! ./components/customer/productDetail/ProductDetail */ "./resources/js/components/customer/productDetail/ProductDetail.vue")["default"]
   } // { path: 'product-detail', component: require('./components/customer/productDetail/ProductDetail').default },
   ]
 }];
@@ -85831,8 +84899,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\test\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\test\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\mobile\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\mobile\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

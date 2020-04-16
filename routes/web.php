@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/home', function () {
+Route::get('/admin', function () {
     return view('admin/adminmaster');
 });
 
@@ -26,5 +26,5 @@ Route::get('/product-detail', function () {
 Auth::routes();
 
 Route::get('/admin', 'HomeController@index')->name('admin');
-
-Route::get('{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
+Route::get('/admin/{path}', 'HomeController@index');//->where('path', '([A-z\d-\/_.]+)?');
+// Route::post('/file/upload','ProductController@upload');

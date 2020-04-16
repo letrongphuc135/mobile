@@ -29,4 +29,6 @@ Route::get('getindex',function(){
 Route::get('getAllCategory','CategoryController@getAllCategory')->name('getAllCategory');
 Route::get('getBanner','BannerController@getBanner');
 Route::get('getDetail/{id}','ProductController@getDetail');
-Route::post('getProductTypeByCategoryId/{id}','ProductTypeController@getProductTypeByCategoryId');
+Route::get('getProductTypeByCategoryId/{id}','ProductTypeController@getProductTypeByCategoryId');
+Route::get('getProductImgByProduct','ProductController@getProductImgByProduct');
+Route::resource('upload','PostImageController');

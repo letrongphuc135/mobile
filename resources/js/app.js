@@ -12,10 +12,11 @@ Vue.component(AlertError.name, AlertError)
 import VueRouter from 'vue-router';
 import moment from 'moment';
 import Swal from 'sweetalert2'
+// import CKEditor from 'ckeditor4-vue';
 window.Swal = Swal;
 
 window.Fire = new Vue();
-
+// Vue.use( CKEditor );
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -53,6 +54,8 @@ Vue.component('mobile', require('./components/views/MobileHome').default );
 Vue.component('productDetail', require('./components/ExampleComponent').default );
 // Vue.component('productDetail', require('./components/customer/productDetail/ProductDetail').default );
 Vue.component('product', require('./components/views/ProductDetailView').default );
+
+
 let routes = [
     {
         path: '/admin',
@@ -76,6 +79,7 @@ let routes = [
                 path: '/admin/product',
                 component: require('./components/admin/Product').default
             },
+            
         ]
     },
     // { path: '/admin/dashboard', component: require('./components/admin/AdminHome').default },
@@ -84,12 +88,22 @@ let routes = [
     {
         path: '/',
         component: require('./components/views/MobileHome').default,
-        redirect: {path: "home"},
+        redirect: {path: "/home"},
         children: [
             {
-                path: "home",
+                path: "/home",
                 name: "home",
                 component: require('./components/customer/home/Home').default
+            },
+            {
+                path: "/product-detail/:id",
+                name: "product-detail",
+                component: require('./components/customer/productDetail/ProductDetail').default
+            },
+            {
+                path: "/product-detail",
+                name: "product-detail",
+                component: require('./components/customer/productDetail/ProductDetail').default
             },
             // { path: 'product-detail', component: require('./components/customer/productDetail/ProductDetail').default },
         ]
@@ -106,9 +120,6 @@ Vue.filter('myDate', function(created){
     moment.locale();
     return moment(created).format('L');
 });
-
-
-
 const app = new Vue({
     el: '#app',
     router
