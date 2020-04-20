@@ -39,9 +39,18 @@
                             <input type="file" @change="getImage" ref="file" name="file[]" multiple >
                             <button class="btn btn-success" @click.prevent="clearImage">Clear</button>
                         </div>
-                        <span  v-for="(img, index) in listImage" :key="index">
-                            <img :src="img" alt="" style="height: 80px; height: 80px;margin-top:30px">
-                        </span>
+                        <div v-if="this.listUploadImage.length < 1">
+                            <span  v-for="(img, index) in listImage" :key="index">
+                                <img :src="img.url" alt="" style="height: 80px; height: 80px;margin-top:30px">
+                            </span>
+                        </div>  
+                        <div v-if="this.listUploadImage.length > 0">
+                             <span v-for="(img, index) in listUploadImage" :key="index">
+                                <img :src="img" alt="" style="height: 80px; height: 80px;margin-top:30px">
+                            </span>
+                        </div>
+                    
+                       
                 </div>
                 <!--<div class="form-group">-->
                     <!--<label>Product image</label>-->
@@ -114,10 +123,18 @@
         name: "EditProduct",
         data() {
             return {
+                listImage: [],
+                listUploadImage: [],
+                avatar: '',
+                filename: null,
+                file:[],
+                success: '',
+                data:'',
                 editMode: false,
                 categories: [],
                 productTypes: [],
                 product: null,
+                listImage: [],
                 form: new Form({
                     id: '',
                     idCategory: -1,
@@ -128,7 +145,6 @@
                     description: '',
                     quantity: '',
                     price: '',
-                    image: '',
                     promotion: '',
                 }),
                 categoryId: '',
@@ -145,6 +161,36 @@
             openProduct(){
                 this.editMode = false;
                 this.form.reset();
+            },
+             getImage(e){
+                // let image = e.target.files[0];
+                // this.file = image;
+                // this.filename = "Selected File: " + e.target.files[0].name;
+                // let reader = new FileReader();
+                // reader.readAsDataURL(image);
+                // reader.onload = e => {
+                //     this.avatar = e.target.result;
+                // }
+                let image = this.$refs.file.files;
+                var current = this;
+               
+                for(let i=0;i<image.length;i++){
+                    let reader = new FileReader();
+                    reader.readAsDataURL(image[i]);
+                    reader.onload = e => {
+                        current.avatar = e.target.result;
+                         current.listUploadImage.push(current.avatar);
+                    }
+                      console.log(this.avatar);
+                    
+                }
+              
+            },
+             clearImage(){
+                this.avatar = "";
+                console.log("aaaaa");
+                this.listUploadImage = [];
+                this.listImage = [];
             },
             addProduct() {
                 if (this.idCategory < 0){
@@ -166,12 +212,13 @@
             },
             getProductById() {
                 let id = this.$route.params.id;
-                axios.get('/api/admin/product/' +id)
+                axios.get('/api/getProductDetail/' +id)
                 .then(response => {
                     console.log(response.data);
                     this.product = response.data.product;
                     this.form.fill(this.product);
                     this.getAllProductType(this.product.idCategory);
+                    this.listImage = this.product.product_img;
                 });
 
             },

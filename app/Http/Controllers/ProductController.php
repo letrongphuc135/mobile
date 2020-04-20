@@ -215,7 +215,7 @@ class ProductController extends Controller
              }
          }
     }
-    public function getDetail($id){
+    public function getProductDetail($id){
         $productdetail=Products::find($id);
         if(empty($productdetail)){
             return response()->json(['error'=>'Khong tim thay san pham']);
@@ -223,7 +223,7 @@ class ProductController extends Controller
         $productdetail->ProductImg;
         $productdetail->Category;
         $productdetail->ProductType;
-        return response()->json(['productdetail'=> $productdetail]);
+        return response()->json(['product'=> $productdetail]);
     }
 
     public function getAllProduct(){
@@ -252,4 +252,9 @@ class ProductController extends Controller
         $product = Products::where('idCategory', $categoryId)->get();
         return response()->json(['product'=>$product]);
     }
+    // public function getProductById($id){
+    //     $product = Products::find($id);
+    //     $product->ProductImg;
+    //     return response()->json(['product'=>$product]);
+    // }
 }

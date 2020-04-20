@@ -39,7 +39,7 @@
                                                         <span>-35%</span></div>
                                                     <a class="ps-shoe__favorite" href="#"><i
                                                         class="ps-icon-heart"></i></a><img
-                                                    :src="product.image"
+                                                    :src="product.product_img[0].url"
                                                     alt=""><router-link
                                                     class="ps-shoe__overlay"
                                                     :to="{ name: 'product-detail', params: {name: product.name, id: product.id} }"></router-link>
@@ -91,10 +91,10 @@
         },
         methods: {
             getAllProduct() {
-                axios.get('/api/admin/product')
+                axios.get('/api/getAllProduct')
                 .then(response => {
-                    console.log(response.data.data);
-                    this.products = response.data.data;
+                    console.log(response.data.product);
+                    this.products = response.data.product;
                 })
             },
         },

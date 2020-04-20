@@ -28,9 +28,10 @@ Route::get('getindex',function(){
 });
 Route::get('getAllCategory','CategoryController@getAllCategory')->name('getAllCategory');
 Route::get('getBanner','BannerController@getBanner');
-Route::get('getDetail/{id}','ProductController@getDetail');
+Route::get('getProductDetail/{id}','ProductController@getProductDetail');
 Route::get('getAllProduct','ProductController@getAllProduct');
 Route::get('getProductTypeByCategoryId/{id}','ProductTypeController@getProductTypeByCategoryId');
 Route::get('getProductImgByProduct','ProductController@getProductImgByProduct');
 Route::resource('upload','PostImageController');
 Route::get('getProductByCategoryId/{id}','ProductController@getProductByCategoryId');
+Route::get('getProductById/{id}','ProductController@getProductById');

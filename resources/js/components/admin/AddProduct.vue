@@ -162,14 +162,14 @@
                 //     this.avatar = e.target.result;
                 // }
                 let image = this.$refs.file.files;
-                var currrent = this;
+                var current = this;
                
                 for(let i=0;i<image.length;i++){
                     let reader = new FileReader();
                     reader.readAsDataURL(image[i]);
                     reader.onload = e => {
-                        currrent.avatar = e.target.result;
-                         currrent.listImage.push(currrent.avatar);
+                        current.avatar = e.target.result;
+                         current.listImage.push(current.avatar);
                     }
                       console.log(this.avatar);
                      
@@ -188,29 +188,30 @@
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                     }
                 };
-                var currrent = this;
+                var current = this;
                 let formData = new FormData();
                 let image =this.$refs.file.files;
                 this.file = image;
                 for(let i=0;i<image.length;i++){
                     formData.append('file[]',image[i]);
                 }
-                formData.append('name',currrent.form.name);
-                formData.append('description',currrent.form.description);
-                formData.append('quantity',currrent.form.quantity);
-                formData.append('price',currrent.form.price);
-                formData.append('promotion',currrent.form.promotion);
-                formData.append('idCategory',currrent.form.idCategory);
-                formData.append('idProductType',currrent.form.idProductType);
-                formData.append('status',currrent.form.status);
+                formData.append('name',current.form.name);
+                formData.append('description',current.form.description);
+                formData.append('quantity',current.form.quantity);
+                formData.append('price',current.form.price);
+                formData.append('promotion',current.form.promotion);
+                formData.append('idCategory',current.form.idCategory);
+                formData.append('idProductType',current.form.idProductType);
+                formData.append('status',current.form.status);
                  axios.post('/api/admin/product',formData, config)
                 .then(function (response) {
-                    console.log(response);
+                    console.log(response.data.message);
+                    current.$router.push({path: '/admin/product'});
                     Toast.fire({
                         icon: 'success',
-                        title: response.data.message
+                        title: "Them thanh cong"
                     });
-                    this.$route.push({name: 'product'});
+                   
                 })
                 .catch(function (error) {
                     console.log(error);

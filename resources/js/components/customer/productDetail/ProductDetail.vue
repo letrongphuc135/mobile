@@ -31,8 +31,8 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="product-pic-zoom">
-                                        <!--<img class="product-big-img" src="../../../../../public/assets/customer/fashi/img/product-single/product-1.jpg" alt="">-->
-                                        <img class="product-big-img" :src="productDetail.image"
+                                        <!-- <img class="product-big-img" src="../../../../../public/assets/customer/fashi/img/product-single/product-1.jpg" alt=""> -->
+                                        <img class="product-big-img" :src="productDetail.product_img[0].url"
                                              alt="">
                                         <div class="zoom-icon">
                                             <i class="fa fa-search-plus"></i>
@@ -505,7 +505,8 @@
                 var param = this.$route.params.id + "";
                 console.log(param);
                 let id = stringUtil.splitString(param);
-                axios.get('/api/admin/product/' + id)
+                console.log("id " + id);
+                axios.get('/api/getProductDetail/' + id)
                 .then(response => {
                     console.log(response.data.product);
                     this.productDetail = response.data.product;
