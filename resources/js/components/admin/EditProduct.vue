@@ -34,10 +34,14 @@
                            class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Product Image</label>
-                    <input type="text" name="category_name" v-model="form.image"
-                           placeholder="Enter image"
-                           class="form-control">
+                        <label>Product Image</label>
+                        <div>
+                            <input type="file" @change="getImage" ref="file" name="file[]" multiple >
+                            <button class="btn btn-success" @click.prevent="clearImage">Clear</button>
+                        </div>
+                        <span  v-for="(img, index) in listImage" :key="index">
+                            <img :src="img" alt="" style="height: 80px; height: 80px;margin-top:30px">
+                        </span>
                 </div>
                 <!--<div class="form-group">-->
                     <!--<label>Product image</label>-->

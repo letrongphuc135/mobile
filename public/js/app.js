@@ -2160,10 +2160,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AddProduct",
   data: function data() {
     return {
+      listImage: [],
+      avatar: '',
+      filename: null,
+      file: [],
+      success: '',
+      data: '',
       editMode: false,
       categories: [],
       productTypes: [],
@@ -2178,7 +2188,6 @@ __webpack_require__.r(__webpack_exports__);
         description: '',
         quantity: '',
         price: '',
-        image: '',
         promotion: ''
       }),
       categoryId: '',
@@ -2196,12 +2205,60 @@ __webpack_require__.r(__webpack_exports__);
       this.editMode = false;
       this.form.reset();
     },
+    getImage: function getImage(e) {
+      // let image = e.target.files[0];
+      // this.file = image;
+      // this.filename = "Selected File: " + e.target.files[0].name;
+      // let reader = new FileReader();
+      // reader.readAsDataURL(image);
+      // reader.onload = e => {
+      //     this.avatar = e.target.result;
+      // }
+      var image = this.$refs.file.files;
+      var currrent = this;
+
+      for (var i = 0; i < image.length; i++) {
+        var reader = new FileReader();
+        reader.readAsDataURL(image[i]);
+
+        reader.onload = function (e) {
+          currrent.avatar = e.target.result;
+          currrent.listImage.push(currrent.avatar);
+        };
+
+        console.log(this.avatar);
+      }
+    },
+    clearImage: function clearImage() {
+      this.avatar = "";
+      console.log("aaaaa");
+      this.listImage = [];
+    },
     addProduct: function addProduct() {
-      if (this.idCategory < 0) {
-        this.idCategory = null;
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+      };
+      var currrent = this;
+      var formData = new FormData();
+      var image = this.$refs.file.files;
+      this.file = image;
+
+      for (var i = 0; i < image.length; i++) {
+        formData.append('file[]', image[i]);
       }
 
-      this.form.post('/api/admin/product', this.form).then(function (response) {
+      formData.append('name', currrent.form.name);
+      formData.append('description', currrent.form.description);
+      formData.append('quantity', currrent.form.quantity);
+      formData.append('price', currrent.form.price);
+      formData.append('promotion', currrent.form.promotion);
+      formData.append('idCategory', currrent.form.idCategory);
+      formData.append('idProductType', currrent.form.idProductType);
+      formData.append('status', currrent.form.status);
+      axios.post('/api/admin/product', formData, config).then(function (response) {
         console.log(response);
         Toast.fire({
           icon: 'success',
@@ -2211,7 +2268,20 @@ __webpack_require__.r(__webpack_exports__);
         Fire.$emit('afterSaveChange');
       })["catch"](function (error) {
         console.log(error);
-      });
+      }); // this.form.post('/api/admin/product', this.form,formData,config)
+      // .then(function (response) {
+      //     console.log(response.data.data);
+      //     this.data = response.data.data;
+      //     Toast.fire({
+      //         icon: 'success',
+      //         title: response.data.message
+      //     });
+      //     $('#exampleModal').modal('hide');
+      //     Fire.$emit('afterSaveChange');
+      // })
+      // .catch(function (error) {
+      //     console.log(error);
+      // })
     },
     getAllProduct: function getAllProduct() {
       var _this = this;
@@ -2329,50 +2399,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Develop",
   data: function data() {
     return {
-      avatar: null,
+      listImage: [],
+      avatar: '',
       filename: null,
-      file: null,
-      success: ''
+      file: [],
+      success: '',
+      data: ''
     };
   },
   methods: {
     getImage: function getImage(e) {
-      var _this = this;
+      // let image = e.target.files[0];
+      // this.file = image;
+      // this.filename = "Selected File: " + e.target.files[0].name;
+      // let reader = new FileReader();
+      // reader.readAsDataURL(image);
+      // reader.onload = e => {
+      //     this.avatar = e.target.result;
+      // }
+      var image = this.$refs.file.files;
+      var currrent = this;
 
-      var image = e.target.files[0];
-      this.file = image;
-      this.filename = "Selected File: " + e.target.files[0].name;
-      var reader = new FileReader();
-      reader.readAsDataURL(image);
+      for (var i = 0; i < image.length; i++) {
+        var reader = new FileReader();
+        reader.readAsDataURL(image[i]);
 
-      reader.onload = function (e) {
-        _this.avatar = e.target.result;
-      };
+        reader.onload = function (e) {
+          currrent.avatar = e.target.result;
+          currrent.listImage.push(currrent.avatar);
+        };
+
+        console.log(this.avatar);
+      }
     },
-    upload: function upload() {
-      var _this2 = this;
+    upload: function upload(e) {
+      var _this = this;
 
       var config = {
         headers: {
           'content-type': 'multipart/form-data',
           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         }
-      }; // form data
-
+      };
       var formData = new FormData();
-      formData.append('file', this.file); // send upload request
+      var image = this.$refs.file.files;
+      this.file = image;
+
+      for (var i = 0; i < image.length; i++) {
+        formData.append('file[]', image[i]);
+      }
+
+      console.log(formData); // form data
+      // let formData = new FormData();
+      // formData.append('file', this.file);
+      // send upload request
 
       axios.post('/api/upload', formData, config).then(function (response) {
-        console.log(response.data.success);
-        _this2.success = response.data.success;
-        _this2.filename = "";
+        console.log(response.data.data);
+        _this.data = response.data.data; //this.filename = "";
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    clearImage: function clearImage() {
+      this.avatar = "";
+      console.log("aaaaa");
+      this.listImage = [];
     }
   }
 });
@@ -2388,6 +2488,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -2784,6 +2888,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -62705,35 +62811,45 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Product Image")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.image,
-                  expression: "form.image"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                name: "category_name",
-                placeholder: "Enter image"
-              },
-              domProps: { value: _vm.form.image },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "image", $event.target.value)
-                }
-              }
-            })
-          ]),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", [_vm._v("Product Image")]),
+              _vm._v(" "),
+              _c("div", [
+                _c("input", {
+                  ref: "file",
+                  attrs: { type: "file", name: "file[]", multiple: "" },
+                  on: { change: _vm.getImage }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.clearImage($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Clear")]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.listImage, function(img, index) {
+                return _c("span", { key: index }, [
+                  _c("img", {
+                    staticStyle: { height: "80px", "margin-top": "30px" },
+                    attrs: { src: img, alt: "" }
+                  })
+                ])
+              })
+            ],
+            2
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -63010,7 +63126,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "form-group" }, [
           _vm.success !== ""
@@ -63032,34 +63148,58 @@ var render = function() {
           _vm._v(" "),
           _c("label", [_vm._v("Product image")]),
           _vm._v(" "),
-          _c("div", { staticClass: "custom-file" }, [
-            _c("input", {
-              attrs: { type: "file", name: "image" },
-              on: { change: _vm.getImage }
-            }),
-            _vm._v(" "),
-            _c("img", {
-              staticStyle: { height: "200px" },
-              attrs: { src: _vm.avatar, alt: "" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", [
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-success",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.upload($event)
-                  }
-                }
-              },
-              [_vm._v("Upload")]
-            )
-          ])
+          _c(
+            "div",
+            { staticClass: "custom-file" },
+            [
+              _c("div", [
+                _c("input", {
+                  ref: "file",
+                  attrs: { type: "file", name: "file[]", multiple: "" },
+                  on: { change: _vm.getImage }
+                }),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.upload($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Upload")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.clearImage($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Clear")]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.listImage, function(img, index) {
+                return _c("span", { key: index }, [
+                  _c("img", {
+                    staticStyle: { height: "80px", "margin-top": "30px" },
+                    attrs: { src: img, alt: "" }
+                  })
+                ])
+              })
+            ],
+            2
+          )
         ])
       ])
     ])
@@ -63088,7 +63228,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h2", { staticClass: "text-center mb-3" }, [_vm._v("Add product")]),
+    _c("h2", { staticClass: "text-center mb-3" }, [_vm._v("Edit Product")]),
     _vm._v(" "),
     _c(
       "form",
@@ -63242,35 +63382,45 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Product Image")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form.image,
-                  expression: "form.image"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                name: "category_name",
-                placeholder: "Enter image"
-              },
-              domProps: { value: _vm.form.image },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.form, "image", $event.target.value)
-                }
-              }
-            })
-          ]),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", [_vm._v("Product Image")]),
+              _vm._v(" "),
+              _c("div", [
+                _c("input", {
+                  ref: "file",
+                  attrs: { type: "file", name: "file[]", multiple: "" },
+                  on: { change: _vm.getImage }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.clearImage($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Clear")]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.listImage, function(img, index) {
+                return _c("span", { key: index }, [
+                  _c("img", {
+                    staticStyle: { height: "80px", "margin-top": "30px" },
+                    attrs: { src: img, alt: "" }
+                  })
+                ])
+              })
+            ],
+            2
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -63933,7 +64083,7 @@ var render = function() {
               _c("td", [
                 _c("img", {
                   staticStyle: { width: "50px", height: "50px" },
-                  attrs: { src: product.image }
+                  attrs: { src: product.product_img[0].url }
                 })
               ]),
               _vm._v(" "),
@@ -83945,8 +84095,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\test\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\test\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\mobile\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\mobile\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

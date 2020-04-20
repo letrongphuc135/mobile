@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ProductImage;
+use App\Http\Requests\StoreProductRequest;
+use App\Services\ImgurService;
 
 class PostImageController extends Controller
 {
@@ -34,10 +37,20 @@ class PostImageController extends Controller
      */
     public function store(Request $request)
     {
-            $file=$request->file;
-            $file_name=$file->getClientOriginalName();
-            $file->move('assets/upload_file', $file_name);
-        return response()->json(['success' => 'You have successfully uploaded "' . $file_name . '"']);
+        if($request->hasFile('file')){
+            $files=$request->file;
+            $data=[];
+            foreach($files as $key => $value){
+                $file_url = ImgurService::uploadImage($value->getRealPath());
+                $product_image['url']=$file_url;
+                $product_image['idProduct']=31;
+                ProductImage::create($product_image);
+            }
+        }else{
+            return response()->json(['success' => 'Ban chua chon hinh']);
+        }
+        
+        return response()->json(['success' => 'You have successfully uploaded','data'=>$data]);
     }
 
     /**

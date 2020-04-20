@@ -27,7 +27,9 @@
                 <th scope="row">{{index+1}}</th>
                 <td>{{product.name}}</td>
                 <td>{{product.quantity}}</td>
-                <td><img :src="product.image" style="width: 50px; height: 50px"></td>
+                <td >
+                    <img :src="product.product_img[0].url" style="width: 50px; height: 50px">
+                </td>
                 <td>{{product.promotion}}</td>
                 <td>{{product.category.name}}</td>
                 <td>{{product.product_type.name}}</td>

@@ -35,9 +35,13 @@
                 </div>
                 <div class="form-group">
                     <label>Product Image</label>
-                    <input type="text" name="category_name" v-model="form.image"
-                           placeholder="Enter image"
-                           class="form-control">
+                        <div>
+                            <input type="file" @change="getImage" ref="file" name="file[]" multiple >
+                            <button class="btn btn-success" @click.prevent="clearImage">Clear</button>
+                        </div>
+                        <span  v-for="(img, index) in listImage" :key="index">
+                            <img :src="img" alt="" style="height: 80px; height: 80px;margin-top:30px">
+                        </span>
                 </div>
                 <!--<div class="form-group">-->
                     <!--<label>Product image</label>-->
@@ -110,6 +114,12 @@
         name: "AddProduct",
         data() {
             return {
+                listImage: [],
+                avatar: '',
+                filename: null,
+                file:[],
+                success: '',
+                data:'',
                 editMode: false,
                 categories: [],
                 productTypes: [],
@@ -124,7 +134,6 @@
                     description: '',
                     quantity: '',
                     price: '',
-                    image: '',
                     promotion: '',
                 }),
                 categoryId: '',
@@ -143,11 +152,58 @@
                 this.editMode = false;
                 this.form.reset();
             },
-            addProduct() {
-                if (this.idCategory < 0){
-                    this.idCategory = null;
+            getImage(e){
+                // let image = e.target.files[0];
+                // this.file = image;
+                // this.filename = "Selected File: " + e.target.files[0].name;
+                // let reader = new FileReader();
+                // reader.readAsDataURL(image);
+                // reader.onload = e => {
+                //     this.avatar = e.target.result;
+                // }
+                let image = this.$refs.file.files;
+                var currrent = this;
+               
+                for(let i=0;i<image.length;i++){
+                    let reader = new FileReader();
+                    reader.readAsDataURL(image[i]);
+                    reader.onload = e => {
+                        currrent.avatar = e.target.result;
+                         currrent.listImage.push(currrent.avatar);
+                    }
+                      console.log(this.avatar);
+                     
                 }
-                this.form.post('/api/admin/product', this.form)
+              
+            },
+             clearImage(){
+                this.avatar = "";
+                console.log("aaaaa");
+                this.listImage = [];
+            },
+            addProduct() {
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    }
+                };
+                var currrent = this;
+                let formData = new FormData();
+                let image =this.$refs.file.files;
+                this.file = image;
+                for(let i=0;i<image.length;i++){
+                    formData.append('file[]',image[i]);
+                }
+                formData.append('name',currrent.form.name);
+                formData.append('description',currrent.form.description);
+                formData.append('quantity',currrent.form.quantity);
+                formData.append('price',currrent.form.price);
+                formData.append('promotion',currrent.form.promotion);
+                formData.append('idCategory',currrent.form.idCategory);
+                formData.append('idProductType',currrent.form.idProductType);
+                formData.append('status',currrent.form.status);
+                 axios.post('/api/admin/product',formData, config)
                 .then(function (response) {
                     console.log(response);
                     Toast.fire({
@@ -158,7 +214,21 @@
                 })
                 .catch(function (error) {
                     console.log(error);
-                })
+                });
+                // this.form.post('/api/admin/product', this.form,formData,config)
+                // .then(function (response) {
+                //     console.log(response.data.data);
+                //     this.data = response.data.data;
+                //     Toast.fire({
+                //         icon: 'success',
+                //         title: response.data.message
+                //     });
+                //     $('#exampleModal').modal('hide');
+                //     Fire.$emit('afterSaveChange');
+                // })
+                // .catch(function (error) {
+                //     console.log(error);
+                // })
             },
             getAllProductType(id) {
                 this.form.idProductType = -1;
