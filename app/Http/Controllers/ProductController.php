@@ -253,7 +253,9 @@ class ProductController extends Controller
         foreach ($product as $key => $value) {
             $value->Category;
             $value->ProductType;
+            $data[$key]=$value;
         }
+        return response()->json(['product'=>$data]);
     }
     public function getProductImgByProduct(){
         $product = Products::all();
@@ -263,5 +265,10 @@ class ProductController extends Controller
             $data[$key]=$value;
         }
         return response()->json(['product'=>$data]);
+    }
+
+    public function getProductByCategoryId($categoryId){
+        $product = Products::where('idCategory', $categoryId)->get();
+        return response()->json(['product'=>$product]);
     }
 }

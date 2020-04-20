@@ -1,0 +1,16 @@
+{
+    "language": [
+        {
+            "name": "Tiếng Việt",
+            "icon": "vn_flag.jpg",
+            "value": "vn"
+        },
+        {
+            "name": "Tiếng Anh",
+            "icon": "en_flag.jpg",
+            "value": "en"
+        }
+    ],
+    "checkout": "Thanh toán",
+    "viewcart": "Xem giở hàng"
+}

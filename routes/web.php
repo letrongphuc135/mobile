@@ -30,15 +30,17 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@customer')->name('admin');
+Route::get('/', 'IndexController@index');
+Route::get('/home', 'IndexController@index');
 Route::get('/admin', 'HomeController@index')->name('admin');
 
-Route::get('/admin/{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
-
-Route::get('/{path}', 'HomeController@customer')->where('path', '([A-z\d-\/_.]+)?');
-
-Route::get('/test/{path}', 'HomeController@customer')->where('path', '([A-z\d-\/_.]+)?');
-
+//Route::get('/admin/{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
+Route::get('/admin/{path}', 'HomeController@index');
+Route::get('/admin/edit-product/{path}', 'HomeController@index');
+Route::get('/product-detail/{path}', 'IndexController@index');
+Route::get('/product-list/{path}', 'IndexController@index');
+Route::get('/product-list', 'IndexController@index');
+Route::get('/cart', 'IndexController@index');
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });

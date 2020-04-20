@@ -35,7 +35,7 @@
                 <td>
                     <div class="btn-group">
                         <router-link
-                            :to="{name: 'edit-product', params:{product_id: product.id}}"
+                            :to="{name: 'edit-product', params:{id: product.id}}"
                             class="btn btn-outline-warning">Edit
                         </router-link>
                         <button

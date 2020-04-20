@@ -1,0 +1,16 @@
+{
+    "language": [
+        {
+            "name": "Vietnamese",
+            "icon": "vn_flag.jpg",
+            "value": "vn"
+        },
+        {
+            "name": "English",
+            "icon": "en_flag.jpg",
+            "value": "en"
+        }
+    ],
+    "checkout": "Check out",
+    "viewcart": "View cart"
+}

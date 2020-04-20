@@ -10,20 +10,22 @@
                                 York - Hotline: 804-377-3580 - 804-399-3580</p>
                         </div>
                         <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-                            <div class="header__actions"><a href="#">Login & Regiser</a>
-                                <div class="btn-group ps-dropdown"><a class="dropdown-toggle"
-                                                                      href="#"
-                                                                      data-toggle="dropdown"
-                                                                      aria-haspopup="true"
-                                                                      aria-expanded="false">Language<i
-                                    class="fa fa-angle-down"></i></a>
+                            <div class="header__actions">
+                                <div class="login">
+                                    <a href="#">Login & Regiser</a>
+                                </div>
+
+                                <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$t('language[0].name')}}<i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">English</a></li>
-                                        <li><a href="#">Japanese</a></li>
-                                        <li><a href="#">Chinese</a></li>
+                                        <li ><a href="#" v-for="lang in $t('language')" v-bind:key="lang.value"
+                                                @click.prevent="callSetLangActions(lang)" :title="lang.name">{{lang.name }}</a></li>
+                                        <!--<li><a href="#">Japanese</a></li>-->
+                                        <!--<li><a href="#">Chinese</a></li>-->
                                     </ul>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -43,7 +45,7 @@
                                </ul>ss
                            </li> -->
                             <li class="menu-item menu-item-has-children has-mega-menu"
-                                v-for="(category, index) in categories" :key="index">><a href="#">{{category.name}}</a>
+                                v-for="(category, index) in categories" :key="index">><router-link to="/product-list">{{category.name}}</router-link>
                                 <div class="mega-menu" v-if="category.product_type.length > 0">
                                     <div class="mega-wrap">
                                         <div class="mega-column">
@@ -62,35 +64,10 @@
                                         </div>
                                     </div>
 
-                                    <!-- <div class="mega-column" >
-                                        <h4 class="mega-heading">Hãng Sản Xuất</h4>
-                                        <ul class="mega-item">
-                                            <li ><a href="product-listing.html"></a></li>
-                                        </ul>
-                                    </div> -->
-
                                 </div>
 
                             </li>
-                            <!--<li class="menu-item"><a href="#">Women</a></li>
-                            <li class="menu-item"><a href="#">Kids</a></li>
-                            <li class="menu-item menu-item-has-children dropdown"><a href="#">News</a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item menu-item-has-children dropdown"><a href="blog-grid.html">Blog-grid</a>
-                                        <ul class="sub-menu">
-                                            <li class="menu-item"><a href="blog-grid.html">Blog Grid 1</a></li>
-                                            <li class="menu-item"><a href="blog-grid-2.html">Blog Grid 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item"><a href="blog-list.html">Blog List</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item menu-item-has-children dropdown"><a href="#">Contact</a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item"><a href="contact-us.html">Contact Us #1</a></li>
-                                    <li class="menu-item"><a href="contact-us.html">Contact Us #2</a></li>
-                                </ul>
-                            </li> -->
+
                         </ul>
                     </div>
                     <div class="navigation__column right">
@@ -98,47 +75,22 @@
                             <input class="form-control" type="text" placeholder="Search Product…">
                             <button><i class="ps-icon-search"></i></button>
                         </form>
+
+                        <!--Cart order -->
                         <div class="ps-cart"><a class="ps-cart__toggle"
-                                                href="#"><span><i>20</i></span><i
+                                                href="#"><span><i>{{this.$store.state.cartCount}}</i></span><i
                             class="ps-icon-shopping-cart"></i></a>
                             <div class="ps-cart__listing">
                                 <div class="ps-cart__content">
-                                    <div class="ps-cart-item"><a class="ps-cart-item__close"
-                                                                 href="#"></a>
+                                    <div class="ps-cart-item" v-for="(item, index) in this.$store.state.cart" :key="index">
+                                        <a class="ps-cart-item__close" @click="$store.commit('removeFromCart',item)"></a>
                                         <div class="ps-cart-item__thumbnail"><a
                                             href="product-detail.html"></a><img
-                                            src="images/cart-preview/1.jpg" alt=""></div>
+                                            :src="item.product.image" alt=""></div>
                                         <div class="ps-cart-item__content"><a
-                                            class="ps-cart-item__title" href="product-detail.html">Amazin’
-                                            Glazin’</a>
+                                            class="ps-cart-item__title" href="product-detail.html">{{item.product.name}}</a>
                                             <p>
-                                                <span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="ps-cart-item"><a class="ps-cart-item__close"
-                                                                 href="#"></a>
-                                        <div class="ps-cart-item__thumbnail"><a
-                                            href="product-detail.html"></a><img
-                                            src="images/cart-preview/2.jpg" alt=""></div>
-                                        <div class="ps-cart-item__content"><a
-                                            class="ps-cart-item__title" href="product-detail.html">The
-                                            Crusty Croissant</a>
-                                            <p>
-                                                <span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="ps-cart-item"><a class="ps-cart-item__close"
-                                                                 href="#"></a>
-                                        <div class="ps-cart-item__thumbnail"><a
-                                            href="product-detail.html"></a><img
-                                            src="images/cart-preview/3.jpg" alt=""></div>
-                                        <div class="ps-cart-item__content"><a
-                                            class="ps-cart-item__title" href="product-detail.html">The
-                                            Rolling Pin</a>
-                                            <p>
-                                                <span>Quantity:<i>12</i></span><span>Total:<i>£176</i></span>
+                                                <span>Quantity:<i>{{item.quantity}}</i></span><span>Total:<i>£176</i></span>
                                             </p>
                                         </div>
                                     </div>
@@ -147,8 +99,8 @@
                                     <p>Number of items:<span>36</span></p>
                                     <p>Item Total:<span>£528.00</span></p>
                                 </div>
-                                <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">Check
-                                    out<i class="ps-icon-arrow-left"></i></a></div>
+                                <div class="ps-cart__footer" ><router-link class="ps-btn" style="background-color: #e7ab3c" to="/cart">{{$t('viewcart')}}<i class="ps-icon-arrow-left"></i></router-link></div>
+                                <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">{{$t('checkout')}}<i class="ps-icon-arrow-left"></i></a></div>
                             </div>
                         </div>
                         <div class="menu-toggle"><span></span></div>
@@ -178,7 +130,6 @@
         data() {
             return {
                 categories: [],
-                producttypes: [],
             }
         },
         methods: {
@@ -189,8 +140,12 @@
                     this.categories = response.data.category;
                 })
             },
-
+            callSetLangActions(lang) {
+                i18n.locale = lang.value;
+                i18n.fallbackLocale = lang.value;
+            },
         },
+
         created() {
             this.getAllCategory();
         }

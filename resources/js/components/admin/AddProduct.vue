@@ -133,7 +133,8 @@
                     filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
                     filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
                     filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-                    filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+                    filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token=',
+                    autoEmbed_widget: 'customEmbed'
                 }
             }
         },
@@ -153,23 +154,15 @@
                         icon: 'success',
                         title: response.data.message
                     });
-                    $('#exampleModal').modal('hide');
-                    Fire.$emit('afterSaveChange');
+                    this.$route.push({name: 'product'});
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
             },
-            getAllProduct() {
-                axios.get('/api/admin/product')
-                .then(response => {
-                    console.log(response.data);
-                    this.product = response.data;
-                })
-            },
             getAllProductType(id) {
                 this.form.idProductType = -1;
-                axios.post('/api/getProductTypeByCategoryId/'+ id)
+                axios.get('/api/getProductTypeByCategoryId/'+ id)
                 .then(response => {
                     console.log(response.data);
                     this.productTypes = response.data.product_type;
@@ -182,64 +175,10 @@
                     this.categories = response.data;
                 })
             },
-            deleteProduct(id, index) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
-                        var app = this;
-                        axios.delete('/api/admin/producttype/' + id)
-                        .then(function (resp) {
-                            app.categories.splice(index, 1);
-                            console.log(resp)
-                        })
-                        .catch(function (resp) {
-                            alert("Could not delete company");
-                            console.log(resp)
-                        });
-                    }
-
-                })
-            },
-            // getProductById(producttype) {
-            //     this.editMode = true;
-            //     this.form.clear();
-            //     $('#exampleModal').modal('show');
-            //     this.form.fill(producttype);
-            // },
-            // updateProduct() {
-            //     this.form.put('/api/admin/producttype/'+this.form.id)
-            //     .then(function (response) {
-            //         console.log(response);
-            //         Toast.fire({
-            //             icon: 'success',
-            //             title: 'update successfully'
-            //         });
-            //         $('#exampleModal').modal('hide');
-            //         Fire.$emit('afterSaveChange');
-            //     })
-            //     .catch(function (error) {
-            //         console.log(error);
-            //     })
-            // }
         },
         created() {
             this.getAllCategory();
             this.getAllProductType();
-            Fire.$on('afterSaveChange', ()=>{
-                this.getAllProductType();
-            });
             // setInterval(()=>this.getAllCategory(), 5000);
         }
     }

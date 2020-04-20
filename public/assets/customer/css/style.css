@@ -4974,8 +4974,12 @@ textarea.form-control {
 
 /*4. MODULES*/
 .header__actions {
+    width: 35%;
     float: right; }
-.header__actions > a, .header__actions .ps-dropdown > a {
+.header__actions .login{
+    float: left;
+}
+.header__actions > a, .header__actions .ps-dropdown > a, .header__actions .login > a{
     display: inline-block;
     padding: 0 15px;
     font-family: "Archivo Narrow", sans-serif;
