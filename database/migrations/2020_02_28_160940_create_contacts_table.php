@@ -15,7 +15,8 @@ class CreateContactsTable extends Migration
     {
         Schema::create('contact', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idUser');
+            $table->integer('idUser')->unsigned();
+            $table->foreign('idUser')->references('id')->on('users');
             $table->text('message');
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ class CreateContactsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('contact');
     }
 }

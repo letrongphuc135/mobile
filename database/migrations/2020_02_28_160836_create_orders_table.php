@@ -16,7 +16,8 @@ class CreateOrdersTable extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code_order');
-            $table->integer('idUser');
+            $table->integer('idUser')->unsigned();
+            $table->foreign('idUser')->references('id')->on('users');
             $table->string('name');
             $table->string('address');
             $table->string('email');
@@ -35,6 +36,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('order');
     }
 }

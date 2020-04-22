@@ -15,7 +15,8 @@ class CreateProductTypesTable extends Migration
     {
         Schema::create('producttype', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idCategory');
+            $table->integer('idCategory')->unsigned();
+            $table->foreign('idCategory')->references('id')->on('category');
             $table->string('name');
             $table->integer('status')->default(1);
             $table->timestamps();
@@ -29,6 +30,6 @@ class CreateProductTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_types');
+        Schema::dropIfExists('producttype');
     }
 }
