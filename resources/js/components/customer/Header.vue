@@ -86,7 +86,7 @@
                                         <a class="ps-cart-item__close" @click="$store.commit('removeFromCart',item)"></a>
                                         <div class="ps-cart-item__thumbnail"><a
                                             href="product-detail.html"></a><img
-                                            :src="item.product.image" alt=""></div>
+                                            :src="item.product.product_img[0].url" alt=""></div>
                                         <div class="ps-cart-item__content"><a
                                             class="ps-cart-item__title" href="product-detail.html">{{item.product.name}}</a>
                                             <p>

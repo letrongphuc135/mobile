@@ -203,7 +203,7 @@
                 formData.append('idCategory',current.form.idCategory);
                 formData.append('idProductType',current.form.idProductType);
                 formData.append('status',current.form.status);
-                 axios.post('/api/admin/product',formData, config)
+                axios.post('/api/admin/product',formData, config)
                 .then(function (response) {
                     console.log(response.data.message);
                     current.$router.push({path: '/admin/product'});

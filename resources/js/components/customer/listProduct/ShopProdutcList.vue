@@ -165,7 +165,7 @@
                                 <div class="col-lg-3 col-sm-6" v-for="(product, index) in products" :key="index">
                                     <div class="product-item">
                                         <div class="pi-pic">
-                                            <img :src="product.image" alt="">
+                                            <img :src="product.product_img[0].url" alt="">
                                             <div class="sale pp-sale">Sale</div>
                                             <div class="icon">
                                                 <i class="icon_heart_alt"></i>

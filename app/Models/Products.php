@@ -19,4 +19,7 @@ class Products extends Model
     public function ProductImg(){
         return $this->hasMany('App\Models\ProductImage','idProduct','id');
     }
+    public function Specification(){
+        return $this->hasOne('App\Models\Specifications','product_id','id');
+    }
 }

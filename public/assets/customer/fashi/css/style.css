@@ -2070,7 +2070,7 @@ ol {
 }
 
 .product-pic-zoom img {
-	min-width: 100%;
+	min-width: 80%;
 }
 
 .product-pic-zoom .zoom-icon {

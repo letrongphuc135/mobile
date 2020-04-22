@@ -8,6 +8,7 @@ use App\Models\ProductTypes;
 use App\Models\Categories;
 use App\Models\Products;
 use App\Models\ProductImage;
+use App\Models\Specifications;
 use App\Http\Requests\StoreProductRequest;
 use App\Services\ImgurService;
 use File;
@@ -73,11 +74,17 @@ class ProductController extends Controller
     if($validator->fails()){
         return response()->json(['error'=>'true','message' => $validator->errors()],200);
     }
+
+
     $dulieu = $request->only(['name','description','quantity','price','promotion','idCategory','idProductType','status']);
+
     if($request->hasFile('file')){
         $files=$request->file;
         $product=Products::create($dulieu);
         $idproduct=$product->id;
+        $specification['product_id'] = $idproduct;
+        $specification = $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory'. 'sim'. 'battery', 'design']);
+        Specifications::create($specification);
         foreach($files as $key => $value){
             $file_type= $value->getMimeType();
             if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
@@ -249,8 +256,18 @@ class ProductController extends Controller
     }
 
     public function getProductByCategoryId($categoryId){
-        $product = Products::where('idCategory', $categoryId)->get();
-        return response()->json(['product'=>$product]);
+        $products = Products::where('idCategory', $categoryId)->get();
+        if(empty($products)){
+            return response()->json(['error'=>'Khong tim thay san pham']);
+        }
+        $data=[];
+        foreach ($products as $key => $value) {
+            $value->Category;
+            $value->ProductType;
+            $value->ProductImg;
+            $data[$key]=$value;
+        }
+        return response()->json(['product'=> $products]);
     }
     // public function getProductById($id){
     //     $product = Products::find($id);

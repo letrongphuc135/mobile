@@ -35,7 +35,7 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="(item, index) in this.$store.state.cart" :key="index">
-                                    <td class="cart-pic first-row"><img style="width: 170px; height: 170px;" :src="item.product.image" alt=""></td>
+                                    <td class="cart-pic first-row"><img style="width: 170px; height: 170px;" :src="item.product.product_img[0].url" alt=""></td>
                                     <td class="cart-title first-row">
                                         <h2>{{item.product.name}}</h2>
                                     </td>
@@ -56,7 +56,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="cart-buttons">
-                                    <a href="#" class="primary-btn continue-shop">Continue shopping</a>
+                                    <router-link to="/home" class="primary-btn continue-shop">Continue shopping</router-link>
                                     <a href="#" class="primary-btn up-cart">Update cart</a>
                                 </div>
                                 <div class="discount-coupon">
@@ -70,8 +70,8 @@
                             <div class="col-lg-4 offset-lg-4">
                                 <div class="proceed-checkout">
                                     <ul>
-                                        <li class="subtotal">Subtotal <span>$240.00</span></li>
-                                        <li class="cart-total">Total <span>$240.00</span></li>
+                                        <li class="subtotal">Subtotal <span></span></li>
+                                        <li class="cart-total" >Total<span style="font-weight: bold; font-size: 20px">{{formatSubTotalPrice()}}</span></li>
                                     </ul>
                                     <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
                                 </div>
@@ -99,6 +99,16 @@
                 let formatedNumber = price || 0;
                 formatedNumber *= quantity;
                 return stringUtil.formatNumber(formatedNumber);
+            },
+            formatSubTotalPrice() {
+                // let formatedNumber = price || 0;
+                // formatedNumber *= quantity;
+                var total = 0;
+                for(var i = 0; i < this.$store.state.cart.length; i++ ){
+                    var item = this.$store.state.cart[i];
+                    total += item.product.price * item.quantity;
+                }
+                return stringUtil.formatNumber(total);
             },
         }
     }
