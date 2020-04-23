@@ -15,8 +15,10 @@ class CreateOrderDetailsTable extends Migration
     {
         Schema::create('orderdetail', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idOrder');
-            $table->integer('idProduct');
+            $table->integer('idOrder')->unsigned();
+            $table->foreign('idOrder')->references('id')->on('order');
+            $table->integer('idProduct')->unsigned();
+            $table->foreign('idProduct')->references('id')->on('product');
             $table->integer('quantity');
             $table->decimal('price');
             $table->timestamps();
@@ -30,6 +32,6 @@ class CreateOrderDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_details');
+        Schema::dropIfExists('orderdetail');
     }
 }

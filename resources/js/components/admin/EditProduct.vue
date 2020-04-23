@@ -49,8 +49,6 @@
                                 <img :src="img" alt="" style="height: 80px; height: 80px;margin-top:30px">
                             </span>
                         </div>
-                    
-                       
                 </div>
                 <!--<div class="form-group">-->
                     <!--<label>Product image</label>-->
@@ -126,8 +124,6 @@
                 listImage: [],
                 listUploadImage: [],
                 avatar: '',
-                filename: null,
-                file:[],
                 success: '',
                 data:'',
                 editMode: false,
@@ -145,6 +141,7 @@
                     description: '',
                     quantity: '',
                     price: '',
+                    file:[],
                     promotion: '',
                 }),
                 categoryId: '',
@@ -163,14 +160,6 @@
                 this.form.reset();
             },
              getImage(e){
-                // let image = e.target.files[0];
-                // this.file = image;
-                // this.filename = "Selected File: " + e.target.files[0].name;
-                // let reader = new FileReader();
-                // reader.readAsDataURL(image);
-                // reader.onload = e => {
-                //     this.avatar = e.target.result;
-                // }
                 let image = this.$refs.file.files;
                 var current = this;
                
@@ -179,10 +168,8 @@
                     reader.readAsDataURL(image[i]);
                     reader.onload = e => {
                         current.avatar = e.target.result;
-                         current.listUploadImage.push(current.avatar);
-                    }
-                      console.log(this.avatar);
-                    
+                        current.listUploadImage.push(current.avatar);
+                    }       
                 }
               
             },
@@ -238,8 +225,30 @@
                 })
             },
             updateProduct() {
-                const current = this;
-                this.form.put('/api/admin/product/'+this.form.id)
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    }
+                };
+                var current = this;
+                let formData = new FormData();
+                let image =this.$refs.file.files;
+                this.file = image;
+                for(let i=0;i<image.length;i++){
+                    formData.append('file[]',image[i]);
+                }
+                formData.append('name',current.form.name);
+                formData.append('description',current.form.description);
+                formData.append('quantity',current.form.quantity);
+                formData.append('price',current.form.price);
+                formData.append('promotion',current.form.promotion);
+                formData.append('idCategory',current.form.idCategory);
+                formData.append('idProductType',current.form.idProductType);
+                formData.append('status',current.form.status);
+                formData.append('_method', 'PUT')
+                 console.log(formData);
+                axios.post('/api/admin/product/'+this.form.id,formData,config)
                 .then(function (response) {
                     console.log(response);
                     current.$router.push({path: '/admin/product'});
@@ -252,7 +261,7 @@
                 .catch(function (error) {
                     console.log(error);
                 })
-            }
+           },
         },
         created() {
             this.getProductById();

@@ -21,8 +21,10 @@ class CreateProductsTable extends Migration
             $table->integer('quantity');
             $table->decimal('price');
             $table->decimal('promotion');
-            $table->integer('idCategory');
-            $table->integer('idProductType');
+            $table->integer('idCategory')->unsigned();
+            $table->foreign('idCategory')->references('id')->on('category');
+            $table->integer('idProductType')->unsigned();
+            $table->foreign('idProductType')->references('id')->on('producttype');
             $table->integer('status')->default(1);
             $table->timestamps();
         });
@@ -35,6 +37,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('product');
     }
 }

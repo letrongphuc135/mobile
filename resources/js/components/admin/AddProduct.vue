@@ -234,14 +234,6 @@
                 this.form.reset();
             },
             getImage(e){
-                // let image = e.target.files[0];
-                // this.file = image;
-                // this.filename = "Selected File: " + e.target.files[0].name;
-                // let reader = new FileReader();
-                // reader.readAsDataURL(image);
-                // reader.onload = e => {
-                //     this.avatar = e.target.result;
-                // }
                 let image = this.$refs.file.files;
                 var current = this;
                
