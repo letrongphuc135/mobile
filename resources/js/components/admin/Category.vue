@@ -9,6 +9,7 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Name</th>
+                <th scope="col">Slug</th>
                 <th scope="col">Created At</th>
                 <th scope="col">Action</th>
             </tr>
@@ -18,6 +19,7 @@
             <tr v-for="(category, index) in categories" :key="`${index}-${category.id}`">
                 <th scope="row">{{index+1}}</th>
                 <td>{{category.name}}</td>
+                <td>{{category.slug}}</td>
                 <td>{{category.created_at | myDate}}</td>
                 <td>
                     <div class="btn-group">
@@ -60,6 +62,13 @@
                                 <input v-model="form.name" type="text" name="name"
                                        class="form-control"
                                        :class="{ 'is-invalid': form.errors.has('name') }">
+                                <has-error :form="form" field="name"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label>Category slug</label>
+                                <input v-model="form.slug" type="text" name="name"
+                                       class="form-control"
+                                       :class="{ 'is-invalid': form.errors.has('slug') }">
                                 <has-error :form="form" field="name"></has-error>
                             </div>
                             <fieldset class="form-group">
@@ -116,6 +125,7 @@
                     id: '',
                     name: '',
                     status: 1,
+                    slug: '',
                     created_at: ''
                 }),
                 error: null

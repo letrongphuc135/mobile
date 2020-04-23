@@ -82,8 +82,13 @@ class ProductController extends Controller
         $files=$request->file;
         $product=Products::create($dulieu);
         $idproduct=$product->id;
+        $specification = new Specifications();
+        $specification->product_id = $idproduct;
+        $specification->screen = $request->screen;
+//        $specification['product_id'] = $idproduct;
+//        $specification['screen'] = $request->screen;
+        $specification = $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory', 'sim', 'battery', 'design']);
         $specification['product_id'] = $idproduct;
-        $specification = $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory'. 'sim'. 'battery', 'design']);
         Specifications::create($specification);
         foreach($files as $key => $value){
             $file_type= $value->getMimeType();
@@ -166,7 +171,9 @@ class ProductController extends Controller
         }
         $product = Products::find($id);
         $idproduct=$product->id;
-        $data = $request->only(['name','description','quantity','price','promotion','idCategory','idProductType','status']);
+        $data = $request->only(['name', 'description', 'slug', 'quantity','price','promotion','idCategory','idProductType','status']);
+        $specification = $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory', 'sim', 'battery', 'design']);
+        $specification['product_id'] = $idproduct;
         $image=ProductImage::where('idProduct',$id)->get();
             if($request->hasFile('image')){
                 foreach ($image as $key => $giatri) {
@@ -230,6 +237,7 @@ class ProductController extends Controller
         $productdetail->ProductImg;
         $productdetail->Category;
         $productdetail->ProductType;
+        $productdetail->Specification;
         return response()->json(['product'=> $productdetail]);
     }
 

@@ -44,9 +44,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 v-if="editMode" class="modal-title text-success">Edit
-                            category</h5>
+                            product type</h5>
                         <h5 v-else class="modal-title text-success">Add
-                            category</h5>
+                            product type</h5>
                         <button type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -56,10 +56,17 @@
                         <div class="modal-body">
 
                             <div class="form-group">
-                                <label>Category name</label>
+                                <label>ProductType name</label>
                                 <input v-model="form.name" type="text" name="name"
                                        class="form-control"
                                        :class="{ 'is-invalid': form.errors.has('name') }">
+                                <has-error :form="form" field="name"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label>Product type slug</label>
+                                <input v-model="form.slug" type="text" name="name"
+                                       class="form-control"
+                                       :class="{ 'is-invalid': form.errors.has('slug') }">
                                 <has-error :form="form" field="name"></has-error>
                             </div>
                             <div class="form-group">
@@ -127,6 +134,7 @@
                     idCategory: -1,
                     name: '',
                     status: 1,
+                    slug: '',
                     created_at: ''
                 }),
             }

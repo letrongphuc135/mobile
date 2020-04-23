@@ -17,6 +17,7 @@ class CreateProductTypesTable extends Migration
             $table->increments('id');
             $table->integer('idCategory');
             $table->string('name');
+            $table->string('slug');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

@@ -53,22 +53,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-//        $validator=Validator::make($request->all(),
-//            [
-//                'name'=>'required|min:2|max:255'
-//            ],
-//            [
-//                'required'=>'Tên danh mục không được để trống',
-//                'min'=>'Tên danh mục phải từ  2-255 ký tự',
-//                'max'=>'Tên danh mục phải từ  2-255 ký tự',
-//            ]
-//        );
-//        if($validator->fails()){
-//            return response()->json(['error'=>'true','message' => $validator->errors()],200);
-//        }
         $this->validate($request,
             [
-                'name' => 'required|min:2|max:255|unique:category'
+                'name' => 'required|min:2|max:255|unique:category',
+                'slug' => 'required|min:2|max:255|unique:category'
             ],
             [
                 'required' => 'Tên danh mục không được để trống',
@@ -123,12 +111,14 @@ class CategoryController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'name' => 'required|min:2|max:255'
+                'name' => 'required|min:2|max:255|unique',
+                'slug' => 'required|min:2|max:255'
             ],
             [
                 'required' => 'Tên danh mục không được để trống',
                 'min' => 'Tên danh mục phải từ  2-255 ký tự',
                 'max' => 'Tên danh mục phải từ  2-255 ký tự',
+                'unique' => 'Tên đã được sử dụng'
             ]
         );
         if ($validator->fails()) {

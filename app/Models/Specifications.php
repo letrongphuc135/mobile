@@ -8,7 +8,7 @@ class Specifications extends Model
 {
     protected $table ='specifications';
     protected $fillable = [
-       'product_id', 'screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory'. 'sim'. 'battery', 'design'
+       'product_id', 'screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory', 'sim', 'battery', 'design'
     ];
 
     public function Product(){

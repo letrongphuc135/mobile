@@ -8,7 +8,7 @@ class Categories extends Model
 {
     protected $table ='category';
     protected $fillable = [
-        'name', 'status',
+        'name', 'status', 'slug'
     ];
     public function productType(){
     	return $this->hasMany('App\Models\ProductTypes','idCategory','id');
