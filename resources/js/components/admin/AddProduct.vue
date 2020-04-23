@@ -275,7 +275,6 @@
                 formData.append('promotion',current.form.promotion);
                 formData.append('idCategory',current.form.idCategory);
                 formData.append('idProductType',current.form.idProductType);
-                formData.append('status',current.form.status);
                 formData.append('screen',current.form.screen);
                 formData.append('operating_system',current.form.operating_system);
                 formData.append('rear_camera',current.form.rear_camera);
@@ -286,6 +285,7 @@
                 formData.append('sim',current.form.sim);
                 formData.append('battery',current.form.battery);
                 formData.append('design',current.form.design);
+                formData.append('status',current.form.status);
                 axios.post('/api/admin/product',formData, config)
                 .then(function (response) {
                     console.log(response.data.message);

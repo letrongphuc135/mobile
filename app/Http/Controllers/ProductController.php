@@ -76,7 +76,7 @@ class ProductController extends Controller
     }
 
 
-    $dulieu = $request->only(['name','description','quantity','price','promotion','idCategory','idProductType','status']);
+    $dulieu = $request->only(['name','description', 'slug', 'quantity','price','promotion','idCategory','idProductType','status']);
 
     if($request->hasFile('file')){
         $files=$request->file;
