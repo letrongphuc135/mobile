@@ -52,7 +52,7 @@ let routes = [
             },
             {
                 path: "/product-detail",
-                name: "abc",
+                name: "product-detail",
                 component: require(
                     './components/customer/productDetail/ProductDetail').default
             },
@@ -67,7 +67,16 @@ let routes = [
                 name: "cart",
                 component: require('./components/customer/cart/Cart').default
             },
-
+            {
+                path: "/login-user",
+                name: "login",
+                component: require('./components/customer/auth/Login').default
+            },
+            {
+                path: "/register-user",
+                name: "register",
+                component: require('./components/customer/auth/Register').default
+            },
         ]
     },
 

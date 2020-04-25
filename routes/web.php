@@ -41,6 +41,8 @@ Route::get('/product-detail/{path}', 'IndexController@index');
 Route::get('/product-list/{path}', 'IndexController@index');
 Route::get('/product-list', 'IndexController@index');
 Route::get('/cart', 'IndexController@index');
+Route::get('/login-user', 'IndexController@index');
+Route::get('/register-user', 'IndexController@index');
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });

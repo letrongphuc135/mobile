@@ -104,13 +104,13 @@
                             </router-link>
                         </li>
                         <li class="nav-item" @click="logout">
-                            <router-link to="/home" class="nav-link">
+                            <a href="/loginAdmin" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Logout
                                     <span class="right badge badge-danger">New</span>
                                 </p>
-                            </router-link>
+                            </a>
                         </li>
                     </ul>
                 </nav>

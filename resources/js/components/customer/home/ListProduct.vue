@@ -42,7 +42,7 @@
                                                     :src="product.product_img[0].url"
                                                     alt=""><router-link
                                                     class="ps-shoe__overlay"
-                                                    :to="{ name: 'product-detail', params: {name: product.name, id: product.id} }"></router-link>
+                                                    :to="{ name: 'home', params: {name: product.name, id: product.id} }"></router-link>
                                                 </div>
                                                 <div class="ps-shoe__content">
                                                     <div class="ps-shoe__variants">

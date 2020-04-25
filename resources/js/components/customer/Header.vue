@@ -12,7 +12,7 @@
                         <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
                             <div class="header__actions">
                                 <div class="login">
-                                    <a href="#">Login & Regiser</a>
+                                    <router-link to="/login-user">Login & Regiser</router-link>
                                 </div>
 
                                 <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$t('language[0].name')}}<i class="fa fa-angle-down"></i></a>
