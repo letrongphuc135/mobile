@@ -173,7 +173,7 @@
                             'Deleted!',
                             'Your file has been deleted.',
                             'success'
-                        )
+                        );
                         var app = this;
                         axios.delete('/api/admin/category/' + id)
                         .then(function (resp) {

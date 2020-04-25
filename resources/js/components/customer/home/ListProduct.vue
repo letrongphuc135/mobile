@@ -21,52 +21,94 @@
                     </ul>
                 </div>
                 <div class="ps-section__content pb-50">
-                    <div class="masonry-wrapper" data-col-md="3" data-col-sm="2" data-col-xs="1"
-                         data-gap="30"
-                         data-radio="100%">
-                        <div class="ps-masonry">
-                            <div class="grid-sizer"></div>
-                            <div class="row">
-                                <div class="col-md-3" v-for="(product, index) in products"
-                                     :key="`${index}-${product.id}`" :class="product.name">
-                                    <div class="grid-item nike" style="width: 100%">
-                                        <div class="grid-item__content-wrapper">
-                                            <div class="ps-shoe mb-30">
-                                                <div class="ps-shoe__thumbnail">
-                                                    <div class="ps-badge"><span>New</span></div>
-                                                    <div
-                                                        class="ps-badge ps-badge--sale ps-badge--2nd">
-                                                        <span>-35%</span></div>
-                                                    <a class="ps-shoe__favorite" href="#"><i
-                                                        class="ps-icon-heart"></i></a><img
-                                                    :src="product.product_img[0].url"
-                                                    alt=""><router-link
-                                                    class="ps-shoe__overlay"
-                                                    :to="{ name: 'product-detail', params: {name: product.name, id: product.id} }"></router-link>
+                    <!--<div class="masonry-wrapper" data-col-md="3" data-col-sm="2" data-col-xs="1"-->
+                    <!--data-gap="30"-->
+                    <!--data-radio="100%">-->
+                    <!--<div class="ps-masonry">-->
+                    <!--<div class="grid-sizer"></div>-->
+                    <!--<div class="row">-->
+                    <!--<div class="col-md-3" v-for="(product, index) in products"-->
+                    <!--:key="`${index}-${product.id}`" :class="product.name">-->
+                    <!--<div class="grid-item nike" style="width: 100%">-->
+                    <!--<div class="grid-item__content-wrapper">-->
+                    <!--<div class="ps-shoe mb-30">-->
+                    <!--<div class="ps-shoe__thumbnail">-->
+                    <!--<div class="ps-badge"><span>New</span></div>-->
+                    <!--<div-->
+                    <!--class="ps-badge ps-badge&#45;&#45;sale ps-badge&#45;&#45;2nd">-->
+                    <!--<span>-35%</span></div>-->
+                    <!--<a class="ps-shoe__favorite" href="#"><i-->
+                    <!--class="ps-icon-heart"></i></a><img-->
+                    <!--:src="product.product_img[0].url"-->
+                    <!--alt=""><router-link-->
+                    <!--class="ps-shoe__overlay"-->
+                    <!--:to="{ name: 'product-detail', params: {name: product.name, id: product.id} }"></router-link>-->
+                    <!--</div>-->
+                    <!--<div class="ps-shoe__content">-->
+                    <!--<div class="ps-shoe__variants">-->
+                    <!--<div>-->
+                    <!--mo ta ngan dsdsdsdsds dsdsds dsdsds-->
+                    <!--dsdsdssdsds dsdsssdddddddd-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; <select class="ps-rating ps-shoe__rating">-->
+                    <!--<option value="1">1</option>-->
+                    <!--<option value="1">2</option>-->
+                    <!--<option value="1">3</option>-->
+                    <!--<option value="1">4</option>-->
+                    <!--<option value="2">5</option>-->
+                    <!--</select> &ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<div class="ps-shoe__detail"><a-->
+                    <!--class="ps-shoe__name" href="#">Air Jordan 7-->
+                    <!--Retro</a>-->
+                    <!--<p class="ps-shoe__categories"><a href="#">Men-->
+                    <!--shoes</a>,<a href="#"> Nike</a>,<a-->
+                    <!--href="#"> Jordan</a></p><span-->
+                    <!--class="ps-shoe__price">-->
+                    <!--<del>£220</del> £ 120</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <section class="product-shop spad">
+                        <div class="container">
+                            <div class="product-list">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-6"
+                                         v-for="(product, index) in products" :key="index">
+                                        <div class="product-item">
+                                            <div class="pi-pic">
+                                                <img :src="product.product_img[0].url" alt="">
+                                                <div class="sale pp-sale">Sale</div>
+                                                <div class="icon">
+                                                    <i class="icon_heart_alt"></i>
                                                 </div>
-                                                <div class="ps-shoe__content">
-                                                    <div class="ps-shoe__variants">
-                                                        <div>
-                                                            mo ta ngan dsdsdsdsds dsdsds dsdsds
-                                                            dsdsdssdsds dsdsssdddddddd
-                                                        </div>
-                                                        <!-- <select class="ps-rating ps-shoe__rating">
-                                                        <option value="1">1</option>
-                                                        <option value="1">2</option>
-                                                        <option value="1">3</option>
-                                                        <option value="1">4</option>
-                                                        <option value="2">5</option>
-                                                        </select> -->
-                                                    </div>
-                                                    <div class="ps-shoe__detail"><a
-                                                        class="ps-shoe__name" href="#">Air Jordan 7
-                                                        Retro</a>
-                                                        <p class="ps-shoe__categories"><a href="#">Men
-                                                            shoes</a>,<a href="#"> Nike</a>,<a
-                                                            href="#"> Jordan</a></p><span
-                                                            class="ps-shoe__price">
-                <del>£220</del> £ 120</span>
-                                                    </div>
+                                                <ul>
+                                                    <li class="w-icon active"><a href="#"><i
+                                                        class="icon_bag_alt"></i></a></li>
+                                                    <li class="quick-view">
+                                                        <router-link
+                                                            :to="{ name: 'product-detail', params: {name: product.name, id: product.id} }">
+                                                            + Quick View
+                                                        </router-link>
+                                                    </li>
+                                                    <li class="w-icon"><a href="#"><i
+                                                        class="fa fa-random"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="pi-text">
+                                                <div class="catagory-name">Towel</div>
+                                                <a href="#">
+                                                    <h5>{{product.name}}</h5>
+                                                </a>
+                                                <div class="product-price">
+                                                    {{formatPrice(product.price)}}
+                                                    <span>{{formatPrice(product.price)}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +116,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
         </div>
@@ -82,6 +124,9 @@
 </template>
 
 <script>
+    import StringUtil from "../../../utils/StringUtils"
+
+    const stringUtil = new StringUtil();
     export default {
         name: "ListProduct",
         data() {
@@ -97,6 +142,10 @@
                     this.products = response.data.product;
                 })
             },
+            formatPrice(price) {
+                let formatedNumber = price || 0;
+                return stringUtil.formatNumber(formatedNumber);
+            }
         },
         created() {
             this.getAllProduct();

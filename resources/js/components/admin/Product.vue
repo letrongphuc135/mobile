@@ -27,8 +27,11 @@
                 <th scope="row">{{index+1}}</th>
                 <td>{{product.name}}</td>
                 <td>{{product.quantity}}</td>
-                <td >
+                <td v-if="product.product_img.length > 0">
                     <img :src="product.product_img[0].url" style="width: 50px; height: 50px">
+                </td>
+                <td v-else>
+                    <img src="../../../../public/assets/customer/fashi/img/no-image.jpg" alt="" style="width: 50px; height: 50px">
                 </td>
                 <td>{{product.promotion}}</td>
                 <td>{{product.category.name}}</td>

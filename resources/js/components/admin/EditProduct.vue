@@ -16,6 +16,12 @@
 
                 </div>
                 <div class="form-group">
+                    <label>Product slug</label>
+                    <input type="text" name="" v-model="form.slug"
+                           placeholder="Enter slug"
+                           class="form-control">
+                </div>
+                <div class="form-group">
                     <label>Product price</label>
                     <input type="number" name="" v-model="form.price"
                            placeholder="Enter price"
@@ -36,61 +42,61 @@
                 <h3>Thông số kĩ thuật</h3>
                 <div class="form-group">
                     <label>Product Srceen</label>
-                    <input type="text" name="category_name" v-model="form.screen"
+                    <input type="text" name="category_name" v-model="form.specification.screen"
                            placeholder="Enter Srceen"
                            class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Operating System</label>
-                    <input type="text" name="category_name" v-model="form.operating_system"
+                    <input type="text" name="category_name" v-model="form.specification.operating_system"
                            placeholder="Enter Operating System"
                            class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Rear Camera</label>
-                    <input type="text" name="category_name" v-model="form.rear_camera"
+                    <input type="text" name="category_name" v-model="form.specification.rear_camera"
                            placeholder="Enter Rear Camera"
                            class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Front Camera</label>
-                    <input type="text" name="category_name" v-model="form.front_camera"
+                    <input type="text" name="category_name" v-model="form.specification.front_camera"
                            placeholder="Enter Front Camera"
                            class="form-control">
                 </div>
                 <div class="form-group">
                     <label>CPU</label>
-                    <input type="text" name="category_name" v-model="form.cpu"
+                    <input type="text" name="category_name" v-model="form.specification.cpu"
                            placeholder="Enter CPU"
                            class="form-control">
                 </div>
                 <div class="form-group">
                     <label>RAM</label>
-                    <input type="text" name="category_name" v-model="form.ram"
+                    <input type="text" name="category_name" v-model="form.specification.ram"
                            placeholder="Enter RAM"
                            class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Internal memory</label>
-                    <input type="text" name="category_name" v-model="form.internal_memory"
+                    <input type="text" name="category_name" v-model="form.specification.internal_memory"
                            placeholder="Enter Internal memory"
                            class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Sim</label>
-                    <input type="text" name="category_name" v-model="form.sim"
+                    <input type="text" name="category_name" v-model="form.specification.sim"
                            placeholder="Enter Sim"
                            class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Battery</label>
-                    <input type="text" name="category_name" v-model="form.battery"
+                    <input type="text" name="category_name" v-model="form.specification.battery"
                            placeholder="Enter Battery"
                            class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Design</label>
-                    <input type="text" name="category_name" v-model="form.design"
+                    <input type="text" name="category_name" v-model="form.specification.design"
                            placeholder="Enter Design"
                            class="form-control">
                 </div>
@@ -196,6 +202,7 @@
                     id: '',
                     idCategory: -1,
                     name: '',
+                    slug: '',
                     status: 1,
                     created_at: '',
                     idProductType: -1,
@@ -203,17 +210,21 @@
                     quantity: '',
                     price: '',
                     file:[],
-                    promotion: '',
-                    screen:'',
-                    operating_system: '',
-                    rear_camera: '',
-                    front_camera: '',
-                    cpu: '',
-                    ram: '',
-                    internal_memory: '',
-                    sim: '',
-                    battery: '',
-                    design: '',
+                    specification: {
+                        screen: '',
+                        operating_system: '',
+                        rear_camera: '',
+                        front_camera: '',
+                        cpu: '',
+                        ram:'',
+                        internal_memory: '',
+                        sim: '',
+                        battery: '',
+                        design: '',
+                        status: 1,
+                        created_at: '',
+                        updated_at: ''
+                    }
                 }),
                 categoryId: '',
                 editorConfig: {
@@ -313,6 +324,7 @@
                 formData.append('description',current.form.description);
                 formData.append('quantity',current.form.quantity);
                 formData.append('price',current.form.price);
+                formData.append('slug',current.form.slug);
                 formData.append('promotion',current.form.promotion);
                 formData.append('idCategory',current.form.idCategory);
                 formData.append('idProductType',current.form.idProductType);

@@ -49,17 +49,17 @@
     // import ('../../../../public/assets/customer/fashi/js/main.js');
 
 
-    import ('../../../../public/assets/customer/plugins/jquery/dist/jquery.min.js');
-    import ('../../../../public/assets/customer/plugins/bootstrap/dist/js/bootstrap.min.js');
-    import ('../../../../public/assets/customer/plugins/jquery-bar-rating/dist/jquery.barrating.min.js');
-    import ('../../../../public/assets/customer/plugins/owl-carousel/owl.carousel.min.js');
-    import ('../../../../public/assets/customer/plugins/gmap3.min.js');
-    import ('../../../../public/assets/customer/plugins/isotope.pkgd.min.js');
-    import ('../../../../public/assets/customer/plugins/bootstrap-select/dist/js/bootstrap-select.min.js');
-    import ('../../../../public/assets/customer/plugins/jquery.matchHeight-min.js');
-    import ('../../../../public/assets/customer/plugins/slick/slick/slick.min.js');
-    import ('../../../../public/assets/customer/plugins/jquery-ui/jquery-ui.min.js');
-    import ('../../../../public/assets/customer/plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js');
+    // import ('../../../../public/assets/customer/plugins/jquery/dist/jquery.min.js');
+    // import ('../../../../public/assets/customer/plugins/bootstrap/dist/js/bootstrap.min.js');
+    // import ('../../../../public/assets/customer/plugins/jquery-bar-rating/dist/jquery.barrating.min.js');
+    // import ('../../../../public/assets/customer/plugins/owl-carousel/owl.carousel.min.js');
+    // import ('../../../../public/assets/customer/plugins/gmap3.min.js');
+    // import ('../../../../public/assets/customer/plugins/isotope.pkgd.min.js');
+    // import ('../../../../public/assets/customer/plugins/bootstrap-select/dist/js/bootstrap-select.min.js');
+    // import ('../../../../public/assets/customer/plugins/jquery.matchHeight-min.js');
+    // import ('../../../../public/assets/customer/plugins/slick/slick/slick.min.js');
+    // import ('../../../../public/assets/customer/plugins/jquery-ui/jquery-ui.min.js');
+    // import ('../../../../public/assets/customer/plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js');
 
     export default {
         name: "MobileHome",

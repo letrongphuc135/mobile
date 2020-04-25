@@ -67,7 +67,11 @@ let routes = [
                 name: "cart",
                 component: require('./components/customer/cart/Cart').default
             },
-
+            {
+                path: "/owl",
+                name: "owl",
+                component: require('./components/customer/home/Owl').default
+            },
         ]
     },
 

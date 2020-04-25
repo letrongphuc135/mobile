@@ -44,7 +44,6 @@ Vue.filter('myDate', function (created) {
     return moment(created).format('L');
 });
 
-
 window.i18n = i18n;
 const app = new Vue({
     el: '#app',

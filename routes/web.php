@@ -27,6 +27,9 @@
 //Route::get('/product-detail', function () {
 //    return view('public/product');
 //});
+Route::get('/owl2', function () {
+    return view('public/owl');
+});
 
 Auth::routes();
 
@@ -41,6 +44,7 @@ Route::get('/product-detail/{path}', 'IndexController@index');
 Route::get('/product-list/{path}', 'IndexController@index');
 Route::get('/product-list', 'IndexController@index');
 Route::get('/cart', 'IndexController@index');
+Route::get('/owl', 'IndexController@index');
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });

@@ -39,7 +39,7 @@
                                         </div>
                                     </div>
                                     <div class="product-thumbs">
-                                        <div class="product-thumbs-track ps-slider owl-carousel">
+                                        <div  class="product-thumbs-track ps-slider owl-carousel">
                                             <div class="pt active"
                                                  data-imgbigurl="img/product-single/product-1.jpg">
                                                 <img
@@ -154,14 +154,13 @@
                                     <ul class="nav" role="tablist">
                                         <li>
                                             <a class="active" data-toggle="tab" href="#tab-1"
-                                               role="tab">DESCRIPTION</a>
+                                               role="tab">{{$t('product.description')}}</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
+                                            <a data-toggle="tab" href="#tab-2" role="tab">{{$t('product.specifications')}}</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#tab-3" role="tab">Customer
-                                                Reviews (02)</a>
+                                            <a data-toggle="tab" href="#tab-3" role="tab">{{$t('product.customer_review')}}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -190,68 +189,74 @@
                                                     <div class="col-lg-9">
                                                         <table>
                                                             <tr>
-                                                                <td class="p-catagory">Customer
-                                                                    Rating
+                                                                <td class="p-catagory">{{$t('product.screen')}}
                                                                 </td>
                                                                 <td>
-                                                                    <div class="pd-rating">
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star"></i>
-                                                                        <i class="fa fa-star-o"></i>
-                                                                        <span>(5)</span>
+                                                                    <div class="p-stock">{{productDetail.specification.screen}}
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="p-catagory">Price</td>
+                                                                <td class="p-catagory">{{$t('product.operating_system')}}</td>
                                                                 <td>
-                                                                    <div class="p-price">$495.00
+                                                                    <div class="p-stock">{{productDetail.specification.operating_system}}
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="p-catagory">Add To Cart
-                                                                </td>
+                                                                <td class="p-catagory">{{$t('product.rear_camera')}}</td>
                                                                 <td>
-                                                                    <div class="cart-add">+ add to
-                                                                        cart
+                                                                    <div class="p-stock">{{productDetail.specification.rear_camera}}
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="p-catagory">
-                                                                    Availability
-                                                                </td>
+                                                                <td class="p-catagory">{{$t('product.front_camera')}}</td>
                                                                 <td>
-                                                                    <div class="p-stock">22 in
-                                                                        stock
+                                                                    <div class="p-stock">{{productDetail.specification.front_camera}}
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="p-catagory">Weight</td>
+                                                                <td class="p-catagory">cpu</td>
                                                                 <td>
-                                                                    <div class="p-weight">1,3kg
+                                                                    <div class="p-stock">{{productDetail.specification.cpu}}
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="p-catagory">Size</td>
+                                                                <td class="p-catagory">ram</td>
                                                                 <td>
-                                                                    <div class="p-size">Xxl</div>
+                                                                    <div class="p-stock">{{productDetail.specification.ram}}
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="p-catagory">Color</td>
-                                                                <td><span class="cs-color"></span>
+                                                                <td class="p-catagory">{{$t('product.internal_memory')}}</td>
+                                                                <td>
+                                                                    <div class="p-stock">{{productDetail.specification.internal_memory}}
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="p-catagory">Sku</td>
+                                                                <td class="p-catagory">sim</td>
                                                                 <td>
-                                                                    <div class="p-code">00012</div>
+                                                                    <div class="p-stock">{{productDetail.specification.sim}}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="p-catagory">{{$t('product.battery')}}</td>
+                                                                <td>
+                                                                    <div class="p-stock">{{productDetail.specification.battery}}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="p-catagory">{{$t('product.design')}}</td>
+                                                                <td>
+                                                                    <div class="p-stock">{{productDetail.specification.design}}
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         </table>

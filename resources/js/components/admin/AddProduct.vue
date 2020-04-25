@@ -1,10 +1,10 @@
 <template>
     <div>
         <h2 class="text-center mb-3">Add product</h2>
-        <form @submit.prevent="editMode ? updateProduct() : addProduct()">
+        <form @submit.prevent="addProduct()">
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Product name</label>
+                    <label>Category name</label>
                     <input v-model="form.name" type="text" name="name"
                            class="form-control"
                            :class="{ 'is-invalid': form.errors.has('name') }">
@@ -26,7 +26,9 @@
                     <label>Product price</label>
                     <input type="number" name="" v-model="form.price"
                            placeholder="Enter price"
+                           :class="{ 'is-invalid': form.errors.has('price') }"
                            class="form-control">
+                    <has-error :form="form" field="name"></has-error>
                 </div>
                 <div class="form-group">
                     <label>Product promotion</label>
@@ -167,22 +169,28 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Close
-                </button>
+                <router-link to="/product" type="button" class="btn btn-secondary"
+                        data-dismiss="modal" >Close
+                </router-link>
                 <button type="submit" class="btn btn-primary">Save
                     changes
                 </button>
             </div>
         </form>
+       <LoadingAnition :isLoading="isLoading"></LoadingAnition>
     </div>
 </template>
 
 <script>
+    import LoadingAnition from "../customer/LoadingAnimation";
     export default {
         name: "AddProduct",
+        components: {
+            LoadingAnition
+        },
         data() {
             return {
+                isLoading: false,
                 listImage: [],
                 avatar: '',
                 filename: null,
@@ -243,7 +251,7 @@
                     reader.onload = e => {
                         current.avatar = e.target.result;
                          current.listImage.push(current.avatar);
-                    }
+                    };
                       console.log(this.avatar);
                      
                 }
@@ -255,6 +263,18 @@
                 this.listImage = [];
             },
             addProduct() {
+                // this.form.post('/api/admin/product', this.form)
+                // .then(function (response) {
+                //     console.log(response);
+                //     Toast.fire({
+                //         icon: 'success',
+                //         title: response.data.message
+                //     });
+                // })
+                // .catch(function (error) {
+                //     console.log(error);
+                // })
+                this.isLoading = true;
                 const config = {
                     headers: {
                         'content-type': 'multipart/form-data',
@@ -272,6 +292,7 @@
                 formData.append('description',current.form.description);
                 formData.append('quantity',current.form.quantity);
                 formData.append('price',current.form.price);
+                formData.append('slug',current.form.slug);
                 formData.append('promotion',current.form.promotion);
                 formData.append('idCategory',current.form.idCategory);
                 formData.append('idProductType',current.form.idProductType);
@@ -289,30 +310,18 @@
                 axios.post('/api/admin/product',formData, config)
                 .then(function (response) {
                     console.log(response.data.message);
+                    this.isLoading = false;
                     current.$router.push({path: '/admin/product'});
                     Toast.fire({
                         icon: 'success',
                         title: "Them thanh cong"
                     });
-                   
+
                 })
                 .catch(function (error) {
+                    this.isLoading = false;
                     console.log(error);
                 });
-                // this.form.post('/api/admin/product', this.form,formData,config)
-                // .then(function (response) {
-                //     console.log(response.data.data);
-                //     this.data = response.data.data;
-                //     Toast.fire({
-                //         icon: 'success',
-                //         title: response.data.message
-                //     });
-                //     $('#exampleModal').modal('hide');
-                //     Fire.$emit('afterSaveChange');
-                // })
-                // .catch(function (error) {
-                //     console.log(error);
-                // })
             },
             getAllProductType(id) {
                 this.form.idProductType = -1;

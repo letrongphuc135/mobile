@@ -116,6 +116,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Category",
   data: function data() {
@@ -126,6 +135,7 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         name: '',
         status: 1,
+        slug: '',
         created_at: ''
       }),
       error: null
@@ -257,6 +267,8 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(category.name))]),
             _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(category.slug))]),
+            _vm._v(" "),
             _c("td", [_vm._v(_vm._s(_vm._f("myDate")(category.created_at)))]),
             _vm._v(" "),
             _c("td", [
@@ -369,6 +381,42 @@ var render = function() {
                                 return
                               }
                               _vm.$set(_vm.form, "name", $event.target.value)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "name" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", [_vm._v("Category slug")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.slug,
+                              expression: "form.slug"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: { "is-invalid": _vm.form.errors.has("slug") },
+                          attrs: { type: "text", name: "name" },
+                          domProps: { value: _vm.form.slug },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.form, "slug", $event.target.value)
                             }
                           }
                         }),
@@ -496,6 +544,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Id")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Slug")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Created At")]),
         _vm._v(" "),
