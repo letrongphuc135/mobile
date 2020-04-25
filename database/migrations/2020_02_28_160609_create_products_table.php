@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->integer('quantity');
-            $table->decimal('price');
-            $table->decimal('promotion');
+            $table->double('price');
+            $table->double('promotion');
             $table->integer('idCategory')->unsigned();
             $table->foreign('idCategory')->references('id')->on('category');
             $table->integer('idProductType')->unsigned();

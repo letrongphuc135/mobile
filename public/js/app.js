@@ -3383,8 +3383,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SildeMenu"
+  name: "SildeMenu",
+  methods: {
+    logout: function logout() {
+      axios.get('/api/logout').then(function (response) {
+        console.log(response.data);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -67690,6 +67706,32 @@ var render = function() {
                         _c("p", [
                           _vm._v(
                             "\n                                Develop\n                                "
+                          ),
+                          _c(
+                            "span",
+                            { staticClass: "right badge badge-danger" },
+                            [_vm._v("New")]
+                          )
+                        ])
+                      ]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  { staticClass: "nav-item", on: { click: _vm.logout } },
+                  [
+                    _c(
+                      "router-link",
+                      { staticClass: "nav-link", attrs: { to: "/home" } },
+                      [
+                        _c("i", { staticClass: "nav-icon fas fa-th" }),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(
+                            "\n                                Logout\n                                "
                           ),
                           _c(
                             "span",

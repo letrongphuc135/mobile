@@ -37,7 +37,7 @@ Route::get('getProductByCategoryId/{id}','ProductController@getProductByCategory
 Route::get('getProductById/{id}','ProductController@getProductById');
 
 //dk,dn
-Route::post('login','UserController@loginClient')->name('login');
-Route::post('registerClient','UserController@registerClient')->name('register');
-Route::get('logout','UserController@logout')->name('logout');
-Route::get('checklogin','UserController@checklogin')->name('checklogin');
+Route::post('login','UserController@loginClient');
+Route::post('registerClient','UserController@registerClient');
+Route::get('logout','UserController@logout');
+Route::get('checklogin','UserController@checklogin');

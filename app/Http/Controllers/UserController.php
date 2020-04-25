@@ -82,4 +82,26 @@ class UserController extends Controller
         return response()->json(['message'=>'Ban chua đang nhap']);
        }
    }
+   public function loginAdmin(Request $request){
+    $this->validate($request,
+      [
+        'email'=>'required|email',
+        'password'=>'required|min:6|max:255',
+      ],
+      [
+        'email.required'=>'Email không được bỏ trống',
+        'email.email'=>'Phải có đúng định dạng email',
+        'password.required'=>'Mật khẩu không được bỏ trống',
+        'password.min'=>'Mật Khẩu phải có tối thiểu 6 ký tự',
+        'password.max'=>'Mật khẩu phải có tối đa 255 ký tự',
+      ]
+    );
+    $data=array('email' =>$request->email ,'password'=>$request->password );
+    if(Auth::attempt($data)){
+      return redirect('/admin')->with('thongbao','Dang nhap thanh cong');
+    }
+    else {
+       return back()->with('error','Vui long kiem tra lai tai khoan cua ban');
+    }
+  }
 }

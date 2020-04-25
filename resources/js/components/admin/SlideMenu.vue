@@ -103,6 +103,15 @@
                                 </p>
                             </router-link>
                         </li>
+                        <li class="nav-item" @click="logout">
+                            <router-link to="/home" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Logout
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </router-link>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -114,7 +123,16 @@
 
 <script>
     export default {
-        name: "SildeMenu"
+        name: "SildeMenu",
+        methods: {
+             logout() {
+                axios.get('/api/logout')
+                .then(response => {
+                    console.log(response.data);
+
+                })
+            }
+        }
     }
 </script>
 
