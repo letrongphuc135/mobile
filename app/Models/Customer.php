@@ -11,6 +11,6 @@ class Customer extends Model
         'idUser','email', 'address', 'phone',
     ];
     public function User(){
-    	return $this->belongsTo('App\Models\User','idUser','id');
+    	return $this->belongsTo('App\User','idUser','id');
     }
 }

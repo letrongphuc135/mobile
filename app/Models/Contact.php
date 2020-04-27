@@ -11,6 +11,6 @@ class Contact extends Model
         'idUser', 'message',
     ];
     public function User(){
-    	return $this->belongsTo('App\Models\User','idUser','id');
+    	return $this->belongsTo('App\User','idUser','id');
     }
 }

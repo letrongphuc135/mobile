@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\User;
 use Auth;
 use Hash;
 use Validator;
@@ -39,7 +39,7 @@ class UserController extends Controller
       }else{
           $user=User::create($data);
           Auth::login($user);
-          return response()->json(['message'=>'Dang ky thanh cong','Tai khoan cua ban la:'=>Auth::user()]);
+          return response()->json(['message'=>'Dang ky thanh cong','data'=>Auth::user()]);
       }
    	 
     }
@@ -62,7 +62,7 @@ class UserController extends Controller
       }
       $data=array('email' =>$request->email ,'password'=>$request->password );
       if(Auth::attempt($data)){
-        return response()->json(['message'=>'Dang nhap thanh cong','Tai khoan cua ban la:'=>Auth::user()]);
+        return response()->json(['message'=>'Dang nhap thanh cong','data'=>Auth::user()]);
       }
       else {
          return response()->json(['message'=>'Dang nhap that bai']);
@@ -76,8 +76,7 @@ class UserController extends Controller
     }
     public function checklogin(){
         if(Auth::check()){
-
-           return response()->json(['message'=>'Dang nhap thanh cong','Tai khoan cua ban la:']);
+           return response()->json(['message'=>'Dang nhap thanh cong','data'=>Auth::user()]);
        }else{
         return response()->json(['message'=>'Ban chua đang nhap']);
        }

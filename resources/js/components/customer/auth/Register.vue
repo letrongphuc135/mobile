@@ -22,18 +22,22 @@
                     <div class="col-lg-6 offset-lg-3">
                         <div class="register-form">
                             <h2>Register</h2>
-                            <form action="#">
+                            <form @submit.prevent="register">
                                 <div class="group-input">
-                                    <label for="username">Username or email address *</label>
-                                    <input type="text" id="username">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="username" v-model="form.name">
                                 </div>
                                 <div class="group-input">
-                                    <label for="pass">Password *</label>
-                                    <input type="text" id="pass">
+                                    <label for="email"> Email address *</label>
+                                    <input type="email" id="email" v-model="form.email" >
                                 </div>
                                 <div class="group-input">
-                                    <label for="con-pass">Confirm Password *</label>
-                                    <input type="text" id="con-pass">
+                                    <label for="password">Password *</label>
+                                    <input type="password" id="password" v-model="form.password">
+                                </div>
+                                <div class="group-input">
+                                    <label for="re_password">Confirm Password *</label>
+                                    <input type="password" id="re_password" v-model="form.re_password" >
                                 </div>
                                 <button type="submit" class="site-btn register-btn">REGISTER</button>
                             </form>
@@ -85,7 +89,50 @@
 
 <script>
     export default {
-        name: "Register"
+        name: "Register",
+         data() {
+            return {
+                form: new Form({
+                    name:'',
+                    email:'',
+                    password:'',
+                    re_password:'',
+                }),
+            }
+        },
+        methods: {
+            register() {
+                var current = this;
+                 axios.post('/api/registerClient', this.form)
+                .then(response => {
+                    console.log(response.data.data);
+                    let auth = response.data.data;
+                    this.$store.commit('login', auth);
+                    if (!auth || auth.length === 0) {
+                            Toast.fire({
+                            icon: 'error',
+                            title: response.data.message
+                        });
+                    }else{
+                        Toast.fire({
+                        icon: 'success',
+                        title: response.data.message
+                     });
+                     current.$router.push({path: '/home'});
+                    }
+                    $('#exampleModal').modal('hide');
+                    Fire.$emit('afterSaveChange');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
+        },
+
+        created() {
+            //this.login();
+        }
+
     }
 </script>
 

@@ -11,6 +11,6 @@ class Order extends Model
         'code_order', 'idUser', 'name','address','email', 'phone', 'total_price','message','status',
     ];
     public function User(){
-    	return $this->belongsTo('App\Models\User','idUser','id');
+    	return $this->belongsTo('App\User','idUser','id');
     }
 }

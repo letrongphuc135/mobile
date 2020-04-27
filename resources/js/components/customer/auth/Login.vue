@@ -22,14 +22,14 @@
                     <div class="col-lg-6 offset-lg-3">
                         <div class="login-form">
                             <h2>Login</h2>
-                            <form action="#">
+                            <form @submit.prevent="login">
                                 <div class="group-input">
                                     <label for="username">Username or email address *</label>
-                                    <input type="text" id="username">
+                                    <input type="email" id="username" name="email" v-model="form.email">
                                 </div>
                                 <div class="group-input">
                                     <label for="pass">Password *</label>
-                                    <input type="text" id="pass">
+                                    <input type="password" id="pass" name="password" v-model="form.password">
                                 </div>
                                 <div class="group-input gi-check">
                                     <div class="gi-more">
@@ -91,7 +91,47 @@
 
 <script>
     export default {
-        name: "Login"
+        name: "Login",
+        data() {
+            return {
+                form: new Form({
+                    email:'',
+                    password:'',
+                }),
+            }
+        },
+        methods: {
+            login() {
+                var current = this;
+                 axios.post('/api/login', this.form)
+                .then(response => {
+                    console.log(response.data.data);
+                    let auth = response.data.data;
+                    this.$store.commit('login', auth);
+                    if (!auth || auth.length === 0) {
+                            Toast.fire({
+                            icon: 'error',
+                            title: response.data.message
+                        });
+                    }else{
+                        Toast.fire({
+                        icon: 'success',
+                        title: response.data.message
+                     });
+                     current.$router.push({path: '/home'});
+                    }
+                    $('#exampleModal').modal('hide');
+                    Fire.$emit('afterSaveChange');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
+        },
+
+        created() {
+            //this.login();
+        }
     }
 </script>
 

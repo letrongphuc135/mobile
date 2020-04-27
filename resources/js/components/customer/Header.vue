@@ -11,8 +11,16 @@
                         </div>
                         <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
                             <div class="header__actions">
-                                <div class="login">
-                                    <router-link to="/login-user">Login & Regiser</router-link>
+                                <div class="login" v-if="this.$store.state.auth != null" >
+                                    <a href="#">{{this.$store.state.auth.name}}</a>
+                                    <a href="#" @click="logout">logout</a>
+                                </div> 
+                                <!-- <div class="login" v-if="auth" >
+                                    <a href="#">{{auth.name}}</a>
+                                    <a href="#" @click="logout">logout</a>
+                                </div>  -->
+                                <div class="login" v-else >
+                                    <router-link to="/login-user">login & resgister</router-link>
                                 </div>
 
                                 <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$t('language[0].name')}}<i class="fa fa-angle-down"></i></a>
@@ -130,6 +138,7 @@
         data() {
             return {
                 categories: [],
+                auth:'',
             }
         },
         methods: {
@@ -144,10 +153,22 @@
                 i18n.locale = lang.value;
                 i18n.fallbackLocale = lang.value;
             },
+             User() {
+                axios.get('/api/checklogin')
+                .then(response => {
+                    console.log(response.data.data);
+                    this.auth = response.data.data;
+                })
+            },
+            logout(){
+                this.$store.commit('logout');
+            }
         },
 
         created() {
+            this.User();
             this.getAllCategory();
+           
         }
     }
 </script>
