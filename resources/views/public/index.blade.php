@@ -102,7 +102,15 @@
 <script src="/assets/customer/fashi/js/jquery.slicknav.js"></script>
 <script src="/assets/customer/fashi/js/owl.carousel.min.js"></script>
 <script src="/assets/customer/fashi/js/main.js"></script>
-
+</style>
 <script src="{{ asset('js/app.js') }}" defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.commentBtn').click(function() {
+    $(this).next('.comment').toggle();
+  });
+});
+</script>
 </body>
 </html>

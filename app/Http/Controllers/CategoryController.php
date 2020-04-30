@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Categories;
 use App\Models\ProductTypes;
 use App\Models\Products;
+use App\Models\ProductImage;
 use App\Http\Requests\StoreCategoryRequest;
 use Validator;
 
@@ -172,5 +173,19 @@ class CategoryController extends Controller
             $data[$key]=$value;
         }
         return response()->json(['category'=>$data]);
+    }
+    public function getProductByProductTypeId($productTypeId){
+        $products = Products::where('idProductType', $productTypeId)->get();
+        if(empty($products)){
+            return response()->json(['error'=>'Khong tim thay san pham']);
+        }
+        $data=[];
+        foreach ($products as $key => $value) {
+            $value->Category;
+            $value->ProductType;
+            $value->ProductImg;
+            $data[$key]=$value;
+        }
+        return response()->json(['product'=> $data]);
     }
 }

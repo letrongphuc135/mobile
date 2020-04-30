@@ -53,6 +53,16 @@
            5.2 margin
            5.3 padding
 */
+.btn_click {
+    color: #ffffff;
+    background: #e7ab3c;
+    border: 1px solid #e7ab3c;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 13px 45px 11px;
+    cursor: pointer;
+}
 .masonry-wrapper .grid-item .grid-item__inner, .setting .grid-item .grid-item__inner {
     position: relative; }
 
