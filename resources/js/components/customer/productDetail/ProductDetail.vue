@@ -5,23 +5,7 @@
         <!--<div class="loader"></div>-->
         <!--</div>-->
         <main class="ps-main">
-            <!-- Breadcrumb Section Begin -->
-            <div class="breacrumb-section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="breadcrumb-text product-more">
-                                <router-link to="/home"><i class="fa fa-home"></i> Home
-                                </router-link>
-                                <a href="./shop.html">Shop</a>
-                                <span>Detail</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Breadcrumb Section Begin -->
-
+            <Section :path="path"></Section>
             <!-- Product Shop Section Begin -->
             <section class="product-shop spad page-details">
                 <div class="container">
@@ -32,34 +16,20 @@
                                 <div class="col-lg-6">
                                     <div class="product-pic-zoom">
                                         <!-- <img class="product-big-img" src="../../../../../public/assets/customer/fashi/img/product-single/product-1.jpg" alt=""> -->
-                                        <img class="product-big-img" :src="productDetail.product_img[0].url"
+                                        <img class="product-big-img" :src="mainImage"
                                              alt="">
                                         <div class="zoom-icon">
                                             <i class="fa fa-search-plus"></i>
                                         </div>
                                     </div>
-                                    <div class="product-thumbs">
-                                        <div  class="product-thumbs-track ps-slider owl-carousel">
-                                            <div class="pt active"
-                                                 data-imgbigurl="img/product-single/product-1.jpg">
-                                                <img
-                                                    src="../../../../../public/assets/customer/fashi/img/product-single/product-1.jpg"
-                                                    alt=""></div>
-                                            <div class="pt"
-                                                 data-imgbigurl="img/product-single/product-2.jpg">
-                                                <img
-                                                    src="../../../../../public/assets/customer/fashi/img/product-single/product-2.jpg"
-                                                    alt=""></div>
-                                            <div class="pt"
-                                                 data-imgbigurl="img/product-single/product-3.jpg">
-                                                <img
-                                                    src="../../../../../public/assets/customer/fashi/img/product-single/product-3.jpg"
-                                                    alt=""></div>
-                                            <div class="pt"
-                                                 data-imgbigurl="img/product-single/product-3.jpg">
-                                                <img
-                                                    src="../../../../../public/assets/customer/fashi/img/product-single/product-3.jpg"
-                                                    alt=""></div>
+                                    <div class="product-thumbs mt-3">
+                                        <div  class="product-thumbs-track ps-slider">
+                                            <div class="col-lg-3 slide-img" v-for="(img, index) in productDetail.product_img" :key="index">
+                                                <img style="width: 150px"
+                                                    :src="img.url"
+                                                     @click.prevent="switchImage"
+                                                    alt="">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -488,8 +458,10 @@
 <script>
     import StringUtil from "../../../utils/StringUtils"
     const stringUtil = new StringUtil();
+    import Section from "../Section";
     export default {
         name: "productDetail",
+        components: {Section},
         data() {
             return {
                 cartItem:{
@@ -497,18 +469,25 @@
                     quantity: 0,
                     productId: null,
                 },
+                mainImage: null,
                 productDetail: null,
                 splitedStr: "",
-                quantity: 1
+                quantity: 1,
+                path:{
+                    category: null,
+                    productType: null
+                }
 
             }
         },
         methods: {
-            getproductDetail() {
+            getProductDetail() {
                 var myCookie = document.cookie;
                 console.log("myCookie" + myCookie);
                 var param = this.$route.params.id + "";
                 console.log(param);
+                var param2 = this.$route.params.name + "";
+                console.log("name  " + param2);
                 let id = stringUtil.splitString(param);
                 console.log("id " + id);
                 axios.get('/api/getProductDetail/' + id)
@@ -516,28 +495,40 @@
                     console.log(response.data.product);
                     this.productDetail = response.data.product;
                     this.productDetail.quantity = 1;
+                    this.mainImage = response.data.product.product_img[0].url;
+                    this.path.category = response.data.product.category;
+                    this.path.productType = response.data.product.product_type;
+
+                    console.log("idProduct " + response.data.product.id);
                 })
             },
             formatPrice(price) {
                 let formatedNumber = price || 0;
                 return stringUtil.formatNumber(formatedNumber);
             },
-            addToCart(item){
+            addToCart(){
                 // console.log("quantity" + this.quantity);
                 // var current = this;
                 // current.cartItem.quantity = parseInt(quantity);
                 // current.cartItem.productDetail = current.productDetail;
                 // current.cartItem.productId = current.productDetail.id;
                 this.$store.commit('addToCart', {product: this.productDetail, quantity: parseInt(this.quantity)});
+            },
+            switchImage(event) {
+                this.mainImage = event.target.src;
             }
 
         },
         created() {
-            this.getproductDetail();
+            this.getProductDetail();
         }
     }
 </script>
 
 <style scoped>
-
+.slide-img{
+    padding: 5px;
+    border: 3px solid rgb(199, 199, 199);
+    margin-right: 30px;
+}
 </style>

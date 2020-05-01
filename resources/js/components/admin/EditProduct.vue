@@ -204,6 +204,7 @@
                     name: '',
                     slug: '',
                     status: 1,
+                    promotion: 0,
                     created_at: '',
                     idProductType: -1,
                     description: '',

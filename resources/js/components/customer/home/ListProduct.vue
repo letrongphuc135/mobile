@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <div class="ps-section--features-product ps-section masonry-root pt-40 pb-80">
             <div class="ps-container">
                 <div class="ps-section__header mb-50">
@@ -78,8 +79,8 @@
                     <section class="product-shop spad">
                         <div class="container">
                             <div class="product-list">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-6"
+                                <div class="row item-filter">
+                                    <div class="col-lg-3 col-sm-6 isotop nike"
                                          v-for="(product, index) in products" :key="index">
                                         <div class="product-item">
                                             <div class="pi-pic">
@@ -113,6 +114,56 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-3 col-sm-6 isotop adidas">
+                                        <div class="product-item">
+                                            <div class="pi-pic">
+                                                <img src="../../../../../public/assets/customer/fashi/img/products/product-3.jpg" alt="">
+                                                <div class="icon">
+                                                    <i class="icon_heart_alt"></i>
+                                                </div>
+                                                <ul>
+                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="pi-text">
+                                                <div class="catagory-name">Shoes</div>
+                                                <a href="#">
+                                                    <h5>Guangzhou sweater</h5>
+                                                </a>
+                                                <div class="product-price">
+                                                    $34.00
+                                                    <span>$35.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6 isotop men">
+                                        <div class="product-item">
+                                            <div class="pi-pic">
+                                                <img src="../../../../../public/assets/customer/fashi/img/products/product-3.jpg" alt="">
+                                                <div class="icon">
+                                                    <i class="icon_heart_alt"></i>
+                                                </div>
+                                                <ul>
+                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="pi-text">
+                                                <div class="catagory-name">Shoes</div>
+                                                <a href="#">
+                                                    <h5>Guangzhou sweater</h5>
+                                                </a>
+                                                <div class="product-price">
+                                                    $34.00
+                                                    <span>$35.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -124,6 +175,7 @@
 </template>
 
 <script>
+
     import StringUtil from "../../../utils/StringUtils"
 
     const stringUtil = new StringUtil();
@@ -149,7 +201,29 @@
         },
         created() {
             this.getAllProduct();
-        }
+        },
+        // watch: {
+        //     products: function (value) {
+        //         if (value) {
+        //             jQuery(document).ready(function () {
+        //                 $('ul li a').click(function(event) {
+        //                     // var type = $(this).attr('data-type');
+        //                     var type = $(this).data('filter');
+        //                     console.log(type);
+        //                     //var ten_loai = $(this).text();
+        //                     // $('.title').text(ten_loai);
+        //                     // type = '.'+type;
+        //                     $('.item-filter').isotope({
+        //                         itemSelector: '.isotop'
+        //                     });
+        //                     $('.item-filter').isotope({
+        //                         filter:type
+        //                     });
+        //                 });
+        //             });
+        //         }
+        //     }
+        // }
     }
 </script>
 

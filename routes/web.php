@@ -30,11 +30,14 @@
 Route::get('/owl2', function () {
     return view('public/owl');
 });
+Route::get('/home', function () {
+    return view('public/index');
+});
 
 Auth::routes();
 
 Route::get('/', 'IndexController@index');
-Route::get('/home', 'IndexController@index');
+//Route::get('/home', 'IndexController@index');
 Route::get('/admin', 'HomeController@index')->name('admin');
 
 //Route::get('/admin/{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
@@ -44,6 +47,8 @@ Route::get('/product-detail/{path}', 'IndexController@index');
 Route::get('/product-list/{path}', 'IndexController@index');
 Route::get('/product-list', 'IndexController@index');
 Route::get('/cart', 'IndexController@index');
+Route::get('/{path}', 'IndexController@index');
+Route::get('/{path}/{path2}', 'IndexController@index');
 Route::get('/owl', 'IndexController@index');
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();

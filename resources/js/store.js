@@ -9,6 +9,7 @@ export default new Vuex.Store({
     state: {
         cart: cart ? JSON.parse(cart) : [],
         cartCount: cartCount ? JSON.parse(cartCount) : 0,
+        search: null
     },
 
     mutations: {
@@ -23,6 +24,10 @@ export default new Vuex.Store({
             }
 
             this.commit('saveData');
+        },
+
+        searchinit(state, item){
+            state.search = item;
         },
 
         saveData(state){

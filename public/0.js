@@ -125,12 +125,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Category",
   data: function data() {
     return {
       editMode: false,
-      categories: [],
+      categories: {},
+      itemPerPage: 2,
+      numPerPageList: [2, 3, 10],
       form: new Form({
         id: '',
         name: '',
@@ -138,7 +150,8 @@ __webpack_require__.r(__webpack_exports__);
         slug: '',
         created_at: ''
       }),
-      error: null
+      error: null,
+      inputSearch: this.$store.state.search
     };
   },
   methods: {
@@ -159,16 +172,38 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    getAllCategory: function getAllCategory() {
+    getResults: function getResults() {
       var _this = this;
 
-      axios.get('/api/admin/category').then(function (response) {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var num = this.itemPerPage;
+      var url;
+
+      if (this.$store.state.search == null) {
+        url = '/api/getAllCategoryPaging/' + num + '?page=' + page;
+      } else {
+        url = '/api/search/' + num + '?page=' + page + "&q=" + this.$store.state.search;
+      }
+
+      axios.get(url).then(function (response) {
         console.log(response.data);
         _this.categories = response.data;
       });
     },
-    deleteCategroy: function deleteCategroy(id, index) {
+    getAllCategory: function getAllCategory(itemPerPage) {
       var _this2 = this;
+
+      if (this.inputSearch != null) {
+        this.search();
+      } else {
+        axios.get('/api/getAllCategoryPaging/' + itemPerPage).then(function (response) {
+          console.log(response.data);
+          _this2.categories = response.data;
+        });
+      }
+    },
+    deleteCategroy: function deleteCategroy(id, index) {
+      var _this3 = this;
 
       Swal.fire({
         title: 'Are you sure?',
@@ -181,9 +216,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
-          var app = _this2;
+          var app = _this3;
           axios["delete"]('/api/admin/category/' + id).then(function (resp) {
-            app.categories.splice(index, 1);
+            app.categories.data.splice(index, 1);
             console.log(resp);
           })["catch"](function (resp) {
             alert("Could not delete company");
@@ -203,21 +238,37 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
         Toast.fire({
           icon: 'success',
-          title: 'update successfully'
+          title: response.data.message
         });
         $('#exampleModal').modal('hide');
         Fire.$emit('afterSaveChange');
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    search: function search() {
+      var _this4 = this;
+
+      console.log(this.$store.state.search);
+      axios.get('/api/searchCategory/' + this.itemPerPage + '?q=' + this.$store.state.search).then(function (response) {
+        console.log(response.data);
+        _this4.categories = response.data;
+      });
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this5 = this;
 
-    this.getAllCategory();
+    this.getAllCategory(this.itemPerPage);
     Fire.$on('afterSaveChange', function () {
-      _this3.getAllCategory();
+      _this5.getAllCategory(_this5.itemPerPage);
+    });
+    Fire.$on('search', function () {
+      if (_this5.$store.state.search != null) {
+        _this5.search();
+      } else {
+        _this5.getAllCategory(_this5.itemPerPage);
+      }
     }); // setInterval(()=>this.getAllCategory(), 5000);
   }
 });
@@ -256,12 +307,62 @@ var render = function() {
     _vm._v(" "),
     _c("h2", { staticClass: "text-center mb-3" }, [_vm._v("All category")]),
     _vm._v(" "),
+    _c("div", { staticClass: "d-flex justify-content-end" }, [
+      _c("p", { staticStyle: { padding: "10px" } }, [
+        _vm._v("Hiển thị số sản phẩm")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.itemPerPage,
+              expression: "itemPerPage"
+            }
+          ],
+          staticClass: "form-control",
+          class: { "is-invalid": _vm.form.errors.has("idCategory") },
+          staticStyle: { width: "10%" },
+          attrs: { id: "exampleFormControlSelect1" },
+          on: {
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.itemPerPage = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              function($event) {
+                return _vm.getAllCategory(_vm.itemPerPage)
+              }
+            ]
+          }
+        },
+        _vm._l(_vm.numPerPageList, function(item, index) {
+          return _c("option", { key: index, domProps: { value: item } }, [
+            _vm._v(_vm._s(item))
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
     _c("table", { staticClass: "table table-bordered table-hover" }, [
       _vm._m(0),
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.categories, function(category, index) {
+        _vm._l(_vm.categories.data, function(category, index) {
           return _c("tr", { key: index + "-" + category.id }, [
             _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(index + 1))]),
             _vm._v(" "),
@@ -313,6 +414,20 @@ var render = function() {
         0
       )
     ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "d-flex justify-content-center" },
+      [
+        _c("pagination", {
+          staticClass: "text-center mb-3",
+          staticStyle: { width: "auto" },
+          attrs: { data: _vm.categories },
+          on: { "pagination-change-page": _vm.getResults }
+        })
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -409,7 +524,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           class: { "is-invalid": _vm.form.errors.has("slug") },
-                          attrs: { type: "text", name: "name" },
+                          attrs: { type: "text", name: "slug" },
                           domProps: { value: _vm.form.slug },
                           on: {
                             input: function($event) {
@@ -422,7 +537,7 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("has-error", {
-                          attrs: { form: _vm.form, field: "name" }
+                          attrs: { form: _vm.form, field: "slug" }
                         })
                       ],
                       1

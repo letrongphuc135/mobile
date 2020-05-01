@@ -2,34 +2,41 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 let routes = [
+    {
+        path: '/admin',
+        component: require('./components/views/AdminMaster').default,
+        redirect: {path: "/admin/category"},
+        children: [
+            {
+                path: "/admin/category",
+                name: "category",
+                component: () => import("./components/admin/Category"),
+            },
+            {
+                path: '/admin/develop',
+                component: require('./components/admin/Develop').default
+            },
+            {
+                path: '/admin/producttype',
+                component: require('./components/admin/ProductType').default
+            },
+            {
+                path: '/admin/product',
+                name: 'admin-product',
+                component: require('./components/admin/Product').default
+            },
+            {
+                path: '/admin/add-product',
+                component: require('./components/admin/AddProduct').default
+            },
+            {
+                path: '/admin/edit-product/:id',
+                name: "edit-product",
+                component: require('./components/admin/EditProduct').default
+            }
+        ]
+    },
 
-    {
-        path: "/admin/category",
-        name: "category",
-        component: () => import("./components/admin/Category"),
-    },
-    {
-        path: '/admin/develop',
-        component: require('./components/admin/Develop').default
-    },
-    {
-        path: '/admin/producttype',
-        component: require('./components/admin/ProductType').default
-    },
-    {
-        path: '/admin/product',
-        name: 'admin-product',
-        component: require('./components/admin/Product').default
-    },
-    {
-        path: '/admin/add-product',
-        component: require('./components/admin/AddProduct').default
-    },
-    {
-        path: '/admin/edit-product/:id',
-        name: "edit-product",
-        component: require('./components/admin/EditProduct').default
-    },
 
     // { path: '/admin/dashboard', component: require('./components/admin/AdminHome').default },
     // { path: '/admin/category', component: require('./components/admin/Category').default },
@@ -63,12 +70,24 @@ let routes = [
                     './components/customer/listProduct/ShopProdutcList').default
             },
             {
+                path: "/:slugCategory",
+                name: "product-category",
+                component: require(
+                    './components/customer/listProduct/ShopProdutcList').default
+            },
+            {
+                path: "/:slugCategory/:slugProductType",
+                name: "product-productType",
+                component: require(
+                    './components/customer/listProduct/ProductTypeList').default
+            },
+            {
                 path: "/cart",
                 name: "cart",
                 component: require('./components/customer/cart/Cart').default
             },
             {
-                path: "/owl",
+                path: "/owl2",
                 name: "owl",
                 component: require('./components/customer/home/Owl').default
             },

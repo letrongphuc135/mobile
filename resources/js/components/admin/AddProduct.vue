@@ -310,7 +310,7 @@
                 axios.post('/api/admin/product',formData, config)
                 .then(function (response) {
                     console.log(response.data.message);
-                    this.isLoading = false;
+                    current.isLoading = false;
                     current.$router.push({path: '/admin/product'});
                     Toast.fire({
                         icon: 'success',

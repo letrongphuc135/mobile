@@ -45,7 +45,7 @@
                                </ul>ss
                            </li> -->
                             <li class="menu-item menu-item-has-children has-mega-menu"
-                                v-for="(category, index) in categories" :key="index">><router-link to="/product-list">{{category.name}}</router-link>
+                                v-for="(category, index) in categories" :key="index">><router-link :to="{name:'product-category', params:{slugCategory: category.slug}}">{{category.name}}</router-link>
                                 <div class="mega-menu" v-if="category.product_type.length > 0">
                                     <div class="mega-wrap">
                                         <div class="mega-column">
@@ -100,7 +100,7 @@
                                     <p>Item Total:<span>£528.00</span></p>
                                 </div>
                                 <div class="ps-cart__footer" ><router-link class="ps-btn" style="background-color: #e7ab3c" to="/cart">{{$t('viewcart')}}<i class="ps-icon-arrow-left"></i></router-link></div>
-                                <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">{{$t('checkout')}}<i class="ps-icon-arrow-left"></i></a></div>
+                                <div class="ps-cart__footer"><router-link class="ps-btn" to="/owl2">{{$t('checkout')}}<i class="ps-icon-arrow-left"></i></router-link></div>
                             </div>
                         </div>
                         <div class="menu-toggle"><span></span></div>
@@ -148,7 +148,9 @@
 
         created() {
             this.getAllCategory();
-        }
+        },
+
+
     }
 </script>
 

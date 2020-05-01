@@ -28,13 +28,25 @@ Route::get('getindex',function(){
 });
 Route::get('getAllCategory','CategoryController@getAllCategory')->name('getAllCategory');
 Route::get('getBanner','BannerController@getBanner');
+Route::get('getAllCategoryPaging/{numberItem}','CategoryController@getAllCategoryPaging');
 Route::get('getProductDetail/{id}','ProductController@getProductDetail');
 Route::get('getAllProduct','ProductController@getAllProduct');
-Route::get('getProductTypeByCategoryId/{id}','ProductTypeController@getProductTypeByCategoryId');
 Route::get('getProductImgByProduct','ProductController@getProductImgByProduct');
 Route::resource('upload','PostImageController');
-Route::get('getProductByCategoryId/{id}','ProductController@getProductByCategoryId');
+
+//Product
+Route::get('getProductByCategoryId/{id}/{num}','ProductController@getProductByCategoryId');
+Route::get('getProductByProductTypeId/{id}/{num}','ProductController@getProductByProductTypeId');
+
 Route::get('getProductById/{id}','ProductController@getProductById');
+Route::get('searchCategory/{numberItem}','CategoryController@searchCategory');
+Route::get('getCategoryBySlug/{slug}','CategoryController@getCategoryBySlug');
+
+//productType
+Route::get('getProductTypeByCategoryId/{id}','ProductTypeController@getProductTypeByCategoryId');
+Route::get('getProductTypeBySlug/{slug}','ProductTypeController@getProductTypeBySlug');
+Route::get('getAllProductTypePaging/{num}','ProductTypeController@getAllProductTypePaging');
+Route::get('searchProductType/{num}','ProductTypeController@searchProductType');
 
 //dk,dn
 Route::post('login','UserController@loginClient')->name('login');

@@ -263,8 +263,41 @@ class ProductController extends Controller
         return response()->json(['product'=>$data]);
     }
 
-    public function getProductByCategoryId($categoryId){
-        $products = Products::where('idCategory', $categoryId)->get();
+    public function getProductByCategoryId($categoryId,  $numberItem){
+//        $products = Products::where('idCategory', $categoryId)->paginate($numberItem);
+        $products = Products::where('idCategory', $categoryId)->paginate($numberItem);
+        if(empty($products)){
+            return response()->json(['error'=>'Khong tim thay san pham']);
+        }
+//        $data=[];
+//        $products = Products::paginate($numberItem);
+        foreach ($products as $key => $value) {
+//            $value->Category;
+//            $value->ProductType;
+            $value->ProductImg;
+            $products[$key]=$value;
+        }
+        return response()->json(['product'=> $products]);
+    }
+
+//    public function getProductByProductTypeId($productTypeId, $numberItem){
+//        $products = Products::where('idProductType', $productTypeId)->get();
+//        if(empty($products)){
+//            return response()->json(['error'=>'Khong tim thay san pham']);
+//        }
+//        $data=[];
+//        foreach ($products as $key => $value) {
+//            $value->Category;
+//            $value->ProductType;
+//            $value->ProductImg;
+//            $data[$key]=$value;
+//        }
+//        $products = Products::paginate($numberItem);
+//        return response()->json(['product'=> $products]);
+//    }
+
+    public function getProductByProductTypeId($productTypeId){
+        $products = Products::where('idProductType', $productTypeId)->get();
         if(empty($products)){
             return response()->json(['error'=>'Khong tim thay san pham']);
         }
@@ -275,11 +308,6 @@ class ProductController extends Controller
             $value->ProductImg;
             $data[$key]=$value;
         }
-        return response()->json(['product'=> $products]);
+        return response()->json(['product'=> $data]);
     }
-    // public function getProductById($id){
-    //     $product = Products::find($id);
-    //     $product->ProductImg;
-    //     return response()->json(['product'=>$product]);
-    // }
 }

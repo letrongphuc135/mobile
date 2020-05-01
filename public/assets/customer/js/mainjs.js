@@ -1,18 +1,36 @@
+import 'jquery';
+import '../plugins/isotope.pkgd.min'
 jQuery(document).ready(function($) {
-    $('.content').isotope({
-        itemSelector: 'img'
-    });
-    $('ul li').click(function(event) {
+
+    $('ul li a').click(function(event) {
         // var type = $(this).attr('data-type');
-        var type = $(this).data('type');
-        // console.log(type);
-        var ten_loai = $(this).text();
-        $('.title').text(ten_loai);
-        type = '.'+type;
-        $('.content').isotope({
+        var type = $(this).data('filter');
+        console.log(type);
+        //var ten_loai = $(this).text();
+        // $('.title').text(ten_loai);
+        // type = '.'+type;
+        $('.item-filter').isotope({
+            itemSelector: '.isotop'
+        });
+        $('.item-filter').isotope({
             filter:type
         });
     });
+
+    $('.content').isotope({
+        itemSelector: 'img'
+    });
+    // $('ul li').click(function(event) {
+    //     // var type = $(this).attr('data-type');
+    //     var type = $(this).data('type');
+    //     // console.log(type);
+    //     var ten_loai = $(this).text();
+    //     $('.title').text(ten_loai);
+    //     type = '.'+type;
+    //     $('.content').isotope({
+    //         filter:type
+    //     });
+    // });
 
 
     $('.owl-carousel').owlCarousel({
