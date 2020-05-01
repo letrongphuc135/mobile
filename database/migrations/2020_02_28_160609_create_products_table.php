@@ -19,8 +19,8 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->text('slug')->unique();
             $table->integer('quantity');
-            $table->decimal('price');
-            $table->decimal('promotion');
+            $table->double('price');
+            $table->double('promotion');
             $table->integer('idCategory')->unsigned();
             $table->foreign('idCategory')->references('id')->on('category');
             $table->integer('idProductType')->unsigned();

@@ -50,9 +50,14 @@ Route::get('/cart', 'IndexController@index');
 Route::get('/{path}', 'IndexController@index');
 Route::get('/{path}/{path2}', 'IndexController@index');
 Route::get('/owl', 'IndexController@index');
+Route::get('/login-user', 'IndexController@index');
+Route::get('/register-user', 'IndexController@index');
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
-
-
+// Route::get('login', function () {
+//    return view('admin.hello');
+// });
+Route::post('loginAdmin','UserController@loginAdmin')->name('admin.login');
+Route::view('loginAdmin','admin.login')->name('login.admin');
 

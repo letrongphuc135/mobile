@@ -59,7 +59,7 @@ let routes = [
             },
             {
                 path: "/product-detail",
-                name: "abc",
+                name: "product-detail",
                 component: require(
                     './components/customer/productDetail/ProductDetail').default
             },
@@ -90,6 +90,16 @@ let routes = [
                 path: "/owl2",
                 name: "owl",
                 component: require('./components/customer/home/Owl').default
+            },
+            {
+                path: "/login-user",
+                name: "login",
+                component: require('./components/customer/auth/Login').default
+            },
+            {
+                path: "/register-user",
+                name: "register",
+                component: require('./components/customer/auth/Register').default
             },
         ]
     },
