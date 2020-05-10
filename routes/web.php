@@ -43,6 +43,8 @@ Route::get('/product-list', 'IndexController@index');
 Route::get('/cart', 'IndexController@index');
 Route::get('/login-user', 'IndexController@index');
 Route::get('/register-user', 'IndexController@index');
+Route::get('/password-reset', 'IndexController@index')->name('get.send.link.reset');
+Route::get('/email', 'IndexController@index');
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
@@ -52,3 +54,8 @@ Route::group(['prefix' => 'laravel-filemanager'], function () {
 Route::post('loginAdmin','UserController@loginAdmin')->name('admin.login');
 Route::view('loginAdmin','admin.login')->name('login.admin');
 
+Route::get('forget_password','Auth\ForgotPasswordController@getFormResetPassword')->name('get.reset.password');
+Route::post('forget_password','Auth\ForgotPasswordController@sendCodeResetPassword');
+Route::get('password_reset','Auth\ForgotPasswordController@resetPassword');
+Route::post('password_reset','Auth\ForgotPasswordController@saveResetPassword');
+//Route::post('forget_passwordAdmin','Auth\ForgotPasswordController@sendCodeAdminResetPassword');

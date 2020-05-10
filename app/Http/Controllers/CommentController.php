@@ -22,14 +22,33 @@ class CommentController extends Controller
             return response()->json(['message'=>'bạn phải đăng nhập trước khi bình luận']);
         }
     }
+    public function getAllComment(){
+        $comment=Comment::where('status',1)->with('user')->with('product')->get();
+        return response()->json(['comment'=>$comment]);
+    }
     public function getComment($id){
         $comment=Comment::where('idProduct',$id)->get();
         $data=[];
         foreach ($comment as $key => $value){
             $value->user;
             $value->admincomment;
+            foreach ($value->admincomment as $key1 => $value1){
+                $value1->usercomment;
+            }
             $data[$key]=$value;
         }
-        return response()->json(['data'=>$data]);
+        return response()->json(['comment'=>$data]);
+    }
+    public function deleteComment($id){
+        $comment = Comment::find($id);
+        if (count($comment->admincomment) === 0) {
+            if ($comment->delete()) {
+                return response()->json(['message' => 'Đã xóa thành công'], 200);
+            } else {
+                return response()->json(['message' => 'Đã xóa không thành công ' . $id], 200);
+            }
+        } else {
+            return response() > json(['message' => 'Xoa that bai. Mot comment su dung truong nay xin vui long kiem tra lai']);
+        }
     }
 }

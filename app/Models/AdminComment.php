@@ -16,4 +16,8 @@ class AdminComment extends Model
     public function usercomment(){
     	return $this->belongsTo('App\User','idUser','id');
     }
+    // public function replies()
+    // {
+    //     return $this->hasMany(Comment::class);
+    // }
 }

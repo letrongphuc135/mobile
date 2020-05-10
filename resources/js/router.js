@@ -30,6 +30,10 @@ let routes = [
         name: "edit-product",
         component: require('./components/admin/EditProduct').default
     },
+    {
+        path: '/admin/comment',
+        component: require('./components/admin/Comment').default
+    },
 
     // { path: '/admin/dashboard', component: require('./components/admin/AdminHome').default },
     // { path: '/admin/category', component: require('./components/admin/Category').default },
@@ -76,6 +80,17 @@ let routes = [
                 path: "/register-user",
                 name: "register",
                 component: require('./components/customer/auth/Register').default
+            },
+            {
+                path: "/email",
+                name: "email",
+                component: require('./components/customer/auth/Email').default
+            },
+            {
+                path: "/password-reset",
+                name: "password-reset",
+                component: require('./components/customer/auth/ResetPassWord').default,
+                props: true
             },
         ]
     },

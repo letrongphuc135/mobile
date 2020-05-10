@@ -38,7 +38,7 @@
                                             <input type="checkbox" id="save-pass">
                                             <span class="checkmark"></span>
                                         </label>
-                                        <a href="#" class="forget-pass">Forget your Password</a>
+                                        <router-link to="/email">Forget your Password</router-link>
                                     </div>
                                 </div>
                                 <button type="submit" class="site-btn login-btn">Sign In</button>
@@ -107,13 +107,14 @@
                 .then(response => {
                     console.log(response.data.data);
                     let auth = response.data.data;
-                    this.$store.commit('login', auth);
+                    
                     if (!auth || auth.length === 0) {
                             Toast.fire({
                             icon: 'error',
                             title: response.data.message
                         });
                     }else{
+                        this.$store.commit('login', auth);
                         Toast.fire({
                         icon: 'success',
                         title: response.data.message

@@ -161,7 +161,7 @@
                                         </li>
                                         <li>
                                             <a data-toggle="tab" href="#tab-3" role="tab">Customer
-                                                Reviews ({{allComment.length}})</a>
+                                                Reviews ({{allComment.length}}) comment</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -273,21 +273,23 @@
                                                             <h5>{{comment.user.name}}
                                                                 <span>{{comment.created_at}}</span></h5>
                                                             <div class="at-reply">{{comment.noidung}}</div>
-                                                            <div class="co-item" style="margin-top:30px"  v-for="(commentadmin, index_admin) in comment.admincomment" :key="`${index_admin}-${commentadmin.id}`" >
-                                                                <div class="avatar-pic">
-                                                                    <img
-                                                                        src="../../../../../public/assets/customer/fashi/img/product-single/avatar-1.png"
-                                                                        alt="">
+                                                                <div class="comment-option" style="margin-top:10px" v-for="(commentAdmin, indexAdmin) in comment.admincomment" :key="`${indexAdmin}-${commentAdmin.id}`" >
+                                                                <div class="co-item commentchiren" >
+                                                                    <div class="avatar-pic">
+                                                                        <img
+                                                                            src="../../../../../public/assets/customer/fashi/img/product-single/avatar-1.png"
+                                                                            alt="">
+                                                                    </div>
+                                                                    <div class="avatar-text">
+                                                                        <h5>{{commentAdmin.usercomment.name}}-Quản trị viên
+                                                                            <span>{{commentAdmin.created_at}}</span></h5>
+                                                                        <div class="at-reply" v-html="commentAdmin.content">{{commentAdmin.content}}</div>
+                                                                    </div>
+                                                                </div>        
                                                                 </div>
-                                                                <div class="avatar-text">
-                                                                    <h5>{{comment.user.name}}
-                                                                        <span>{{commentadmin.created_at}}</span></h5>
-                                                                    <div class="at-reply">{{commentadmin.content}}</div>
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                                </div>
-                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>        
                                                 </div>
                                                  <div class="personal-rating">
                                                     <!--<h6>Your Ratind</h6>
@@ -562,11 +564,6 @@
                 })
             },
             getComment(id) {
-                // var myCookie = document.cookie;
-                // console.log("myCookie" + myCookie);
-                // var param = this.$route.params.id + "";
-                // console.log(param);
-                // let id = stringUtil.splitString(param);
                 console.log("idGetComment " + id);
                 axios.get('/api/getAllCommentByIdProduct/'+id)
                 .then(response => {
@@ -610,8 +607,8 @@
         },
         created() {
             this.getproductDetail();
-            this. User();
-            // this.getComment();
+            this.User();
+            //this.getComment();
             Fire.$on('comment', ()=>{
                this.getComment(this.productId);
             });

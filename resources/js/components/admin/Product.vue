@@ -6,7 +6,7 @@
             </button>
         </router-link>
 
-        <h2 class="text-center mb-3">All product type</h2>
+        <h2 class="text-center mb-3">All product</h2>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
