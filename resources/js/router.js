@@ -2,7 +2,21 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 let routes = [
-
+    {
+        path: '/admin/login',
+        name: 'admin-login',
+        component: require('./components/views/FormLogin').default
+    },
+    {
+        path: '/admin/email',
+        name: 'admin-email',
+        component: require('./components/admin/auth/EmailAdmin').default
+    },
+    {
+        path: '/admin/resetpass',
+        name: 'admin-resetpass',
+        component: require('./components/admin/auth/ResetPasswordAdmin').default
+    },
     {
         path: "/admin/category",
         name: "category",
@@ -92,6 +106,7 @@ let routes = [
                 component: require('./components/customer/auth/ResetPassWord').default,
                 props: true
             },
+           
         ]
     },
 

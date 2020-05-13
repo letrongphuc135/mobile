@@ -32,8 +32,10 @@ Auth::routes();
 
 Route::get('/', 'IndexController@index');
 Route::get('/home', 'IndexController@index');
-Route::get('/admin', 'HomeController@index')->name('admin');
-
+Route::get('/admin/dashboard', 'HomeController@index')->name('admin');
+Route::get('/admin/login', 'IndexController@index')->name('login.admin');
+Route::get('/admin/email', 'IndexController@index');
+Route::get('/admin/resetpass', 'IndexController@index')->name('get.send.link.reset.admin');
 //Route::get('/admin/{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
 Route::get('/admin/{path}', 'HomeController@index');
 Route::get('/admin/edit-product/{path}', 'HomeController@index');
@@ -51,8 +53,8 @@ Route::group(['prefix' => 'laravel-filemanager'], function () {
 // Route::get('login', function () {
 //    return view('admin.hello');
 // });
-Route::post('loginAdmin','UserController@loginAdmin')->name('admin.login');
-Route::view('loginAdmin','admin.login')->name('login.admin');
+// Route::post('loginAdmin','UserController@loginAdmin')->name('admin.login');
+//Route::view('loginAdmin','admin.login')->name('login.admin');
 
 Route::get('forget_password','Auth\ForgotPasswordController@getFormResetPassword')->name('get.reset.password');
 Route::post('forget_password','Auth\ForgotPasswordController@sendCodeResetPassword');

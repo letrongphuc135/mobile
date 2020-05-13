@@ -113,7 +113,7 @@
                             </router-link>
                         </li>
                         <li class="nav-item" @click="logout">
-                            <a href="/loginAdmin" class="nav-link">
+                            <a href="/admin/login" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Logout

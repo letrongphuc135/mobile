@@ -102,6 +102,7 @@
 <script src="/assets/customer/fashi/js/jquery.slicknav.js"></script>
 <script src="/assets/customer/fashi/js/owl.carousel.min.js"></script>
 <script src="/assets/customer/fashi/js/main.js"></script>
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 </style>
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

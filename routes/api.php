@@ -51,3 +51,4 @@ Route::delete('deleteComment/{id}','CommentController@deleteComment');
 //forget_password
 Route::post('forget_password','Auth\ForgotPasswordController@sendCodeResetPassword');
 Route::post('password_reset','Auth\ForgotPasswordController@saveResetPassword');
+Route::post('forget_password_admin','Auth\ForgotPasswordController@sendCodeResetPasswordAdmin');
