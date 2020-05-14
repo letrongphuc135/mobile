@@ -44,22 +44,19 @@ class UserController extends Controller
    	 
     }
     public function loginClient(Request $request){
-       $validator=Validator::make($request->all(),
-        [
-          'email'=>'required|email',
-          'password'=>'required|min:6|max:255',
-        ],
-        [
-          'email.required'=>'Email không được bỏ trống',
-          'email.email'=>'Phải có đúng định dạng email',
-          'password.required'=>'Mật khẩu không được bỏ trống',
-          'password.min'=>'Mật Khẩu phải có tối thiểu 6 ký tự',
-          'password.max'=>'Mật khẩu phải có tối đa 255 ký tự',
-        ]
-      );
-      if($validator->fails()){
-          return response()->json(['error'=>'true','message' => $validator->errors()],200);
-      }
+        $this->validate($request,
+            [
+                'email'=>'required|email',
+                'password'=>'required|min:6|max:255',
+            ],
+            [
+                'email.required'=>'Email không được bỏ trống',
+                'email.email'=>'Phải có đúng định dạng email',
+                'password.required'=>'Mật khẩu không được bỏ trống',
+                'password.min'=>'Mật Khẩu phải có tối thiểu 6 ký tự',
+                'password.max'=>'Mật khẩu phải có tối đa 255 ký tự',
+            ]
+        );
       $data=array('email' =>$request->email ,'password'=>$request->password );
       if(Auth::attempt($data)){
         return response()->json(['message'=>'Dang nhap thanh cong','data'=>Auth::user()]);

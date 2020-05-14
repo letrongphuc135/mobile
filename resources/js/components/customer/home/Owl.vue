@@ -1,5 +1,7 @@
 <template>
-    <div>
+    <div style="clear: both">
+        <div class="slide"></div>
+
         <h2>Abc</h2>
         <div class="owl-carousel owl-theme">
             <div class="item"><h4>1</h4></div>
@@ -15,21 +17,6 @@
             <div class="item"><h4>11</h4></div>
             <div class="item"><h4>12</h4></div>
         </div>
-        <ul class="menu">
-            <li data-type="type1">Loại 1</li>
-            <li data-type="type2">Loại 2</li>
-            <li data-type="type3">Loại 4</li>
-            <li data-type="all">Tất cả</li>
-        </ul>
-        <div class="title">Tất cả</div>
-        <div class="content">
-            <img src="/assets/customer/fashi/img/products/product-1.jpg" class="hinh all type1">
-            <img src="/assets/customer/fashi/img/products/product-2.jpg" class="hinh all type2">
-            <img src="assets/customer/fashi/img/products/product-3.jpg" class="hinh all type3">
-            <img src="/assets/customer/fashi/img/products/product-4.jpg" class="hinh all type4">
-            <img src="/assets/customer/fashi/img/products/product-5.jpg" class="hinh all type5">
-            <img src="/assets/customer/fashi/img/products/product-6.jpg" class="hinh all type6">
-        </div>
     </div>
 
 </template>
@@ -39,9 +26,78 @@
         name: "Owl",
         data(){
             return{
-                firstName: "foo"
+                firstName: "foo",
+                products: [],
             }
-        }
+        },
+        created() {
+            this.getAllProduct();
+        },
+        methods: {
+            // getAllProduct() {
+            //     //Fire.$emit('onLoading');
+            //     return new Promise((resolve, reject) => {
+            //         axios.get('/api/getAllProduct')
+            //         .then(response => {
+            //             console.log(response.data.product);
+            //             this.products = response.data.product;
+            //             //Fire.$emit('offLoading');
+            //         })
+            //     })
+            // },
+            getAllProduct() {
+                return new Promise((resolve, reject) => {
+                    axios.get('/api/getAllProduct').then((data) => {
+                        this.products = data.data.product;
+                        resolve();
+                    }).catch(error => reject(error));
+                });
+            }
+        },
+        mounted() {
+            this.getAllProduct().then(() => {
+                $('.owl-carousel').owlCarousel({
+                    loop:true,
+                    margin:10,
+                    nav:true,
+                    responsive:{
+                        0:{
+                            items:1
+                        },
+                        600:{
+                            items:3
+                        },
+                        1000:{
+                            items:5
+                        }
+                    }
+                });
+            })
+        },
+        // watch: {
+        //     products: function (value) {
+        //         if (value) {
+        //             jQuery(document).ready(function () {
+        //                 $('.owl-carousel').owlCarousel({
+        //                     loop:true,
+        //                     margin:10,
+        //                     nav:true,
+        //                     responsive:{
+        //                         0:{
+        //                             items:1
+        //                         },
+        //                         600:{
+        //                             items:3
+        //                         },
+        //                         1000:{
+        //                             items:5
+        //                         }
+        //                     }
+        //                 })
+        //             });
+        //         }
+        //     }
+        // }
     }
 </script>
 

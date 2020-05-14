@@ -7,6 +7,35 @@
         <!-- Product Shop Section Begin -->
         <section class="product-shop spad">
             <div class="container">
+                <div class="row" style="border: 1px solid black">
+                    <div class="col-4">
+                        Tìm theo
+                    </div>
+                    <div class="col-2">
+                        <select class="sorting" >
+                            <option value="asc">Mức giá</option>
+                            <option value="desc">Giá từ cao đến thấp</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="sorting" >
+                            <option value="asc">Hệ điều hành</option>
+                            <option value="desc">Giá từ cao đến thấp</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <select class="sorting" >
+                            <option value="asc">Màn hình</option>
+                            <option value="desc">Giá từ cao đến thấp</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <select class="sorting" >
+                            <option value="asc">Tính năng</option>
+                            <option value="desc">Giá từ cao đến thấp</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row">
 
                     <div class="col-lg-12 order-1 order-lg-2">
@@ -14,8 +43,9 @@
                             <div class="row">
                                 <div class="col-lg-7 col-md-7">
                                     <div class="select-option">
-                                        <select class="sorting">
-                                            <option value="">Default Sorting</option>
+                                        <select class="sorting" v-model="sort" @change="getAllProductByCatgeoryId(path.category.id)">
+                                            <option value="asc">Giá từ thấp đến cao</option>
+                                            <option value="desc">Giá từ cao đến thấp</option>
                                         </select>
                                         <select class="p-show">
                                             <option value="">Show:</option>
@@ -58,7 +88,7 @@
                                 <div class="col-lg-3 col-sm-6">
                                     <div class="product-item">
                                         <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-2.jpg" alt="">
+                                            <img src="https://cdn.tgdd.vn/Products/Images/42/219913/vivo-y50-tim-400x460-3-400x460.png" alt="">
                                             <div class="icon">
                                                 <i class="icon_heart_alt"></i>
                                             </div>
@@ -95,7 +125,6 @@
         </section>
         <!--&lt;!&ndash; Product Shop Section End &ndash;&gt;-->
 
-
         <!-- Partner Logo Section End -->
         <LoadingAnition :isLoading="isLoading"></LoadingAnition>
     </div>
@@ -127,44 +156,13 @@
                 nextPage: 0,
                 isLoading: true,
                 moreExists : false,
+                sort: 'asc',
             }
         },
         methods:{
-
-            getSlug(){
-                this.path.category = null;
-                this.slugCategory = this.$route.params.slugCategory;
-                console.log("cate " + this.slugCategory);
-                console.log("productType" + this.slugProductType);
-                this.getCatgeoryBySlug(this.slugCategory);
-            },
-            getProductTypeBySlug(slugProductType) {
-                axios.get('/api/getProductTypeBySlug/'+slugProductType)
-                .then(response => {
-                    console.log(response.data);
-                    this.path.productType = response.data[0];
-                    console.log(response.data[0]);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-            },
-            getCatgeoryBySlug(slugCategory) {
+            getProductBySort(){
                 this.isLoading = true;
-                axios.get('/api/getCategoryBySlug/'+ slugCategory)
-                .then(response => {
-                    this.isLoading = false;
-                    console.log(response.data);
-                    this.path.category = response.data[0];
-                    this.getAllProductByCatgeoryId(response.data[0].id);
-                }).catch(function (error) {
-                    console.log(error);
-                })
-            },
-            getAllProductByCatgeoryId(id) {
-                this.isLoading = true;
-                console.log("id " + id);
-                axios.get('/api/getProductByCategoryId/'+ id+'/'+this.itemPerPage)
+                axios.get('/api/getProductByCategoryId/'+ this.path.category.id+'/'+this.itemPerPage+"?sort="+this.sort)
                 .then(response => {
                     console.log(response.data.product.data);
                     this.products = response.data.product.data;
@@ -178,20 +176,38 @@
                 })
                 .catch(function (error) {
                     console.log(error);
+                });
+                console.log();
+                console.log(this.sort);
+            },
+            getSlug(){
+                Fire.$emit('offLoading');
+                this.path.category = null;
+                this.slugCategory = this.$route.params.slugCategory;
+                console.log("cate " + this.slugCategory);
+                console.log("productType" + this.slugProductType);
+                this.getCatgeoryBySlug(this.slugCategory);
+            },
+            getCatgeoryBySlug(slugCategory) {
+                this.isLoading = true;
+                axios.get('/api/getCategoryBySlug/'+ slugCategory)
+                .then(response => {
+                    this.isLoading = false;
+                    console.log(response.data);
+                    this.path.category = response.data[0];
+                    this.getAllProductByCatgeoryId(response.data[0].id);
+                    Fire.$emit('offLoading');
+                }).catch(function (error) {
+                    console.log(error);
                 })
             },
-            formatPrice(price) {
-                let formatedNumber = price || 0;
-                return stringUtil.formatNumber(formatedNumber);
-            },
-            loadMore : async function(){
-                console.log("loadmore");
-                console.log("nextpage", this.nextPage);
-                var id = this.path.category.id;
-
-                axios.get('/api/getProductByCategoryId/'+ id+'/'+this.itemPerPage + '?page=' + this.nextPage)
+            getAllProductByCatgeoryId(id) {
+                this.isLoading = true;
+                console.log("id " + id);
+                axios.get('/api/getProductByCategoryId/'+ id+'/'+this.itemPerPage+"?sort="+this.sort)
                 .then(response => {
-                    console.log(response.data.product);
+                    console.log(response.data.product.data);
+                    this.products = response.data.product.data;
                     this.isLoading = false;
                     if (response.data.product.current_page < response.data.product.last_page) {
                         this.moreExists = true;
@@ -199,19 +215,44 @@
                     }else{
                         this.moreExists = false;
                     }
-                    var current = this;
-
-                    response.data.product.data.forEach(data => {
-                        console.log(data);
-                        current.products.push(data);
-                        current.test.push(data);
-                    });
+                    Fire.$emit('offLoading');
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
-            }
-        },
+            },
+            formatPrice(price) {
+                let formatedNumber = price || 0;
+                return stringUtil.formatNumber(formatedNumber);
+            },
+            loadMore : async function(){
+            console.log("loadmore");
+            console.log("nextpage", this.nextPage);
+            var id = this.path.category.id;
+
+            axios.get('/api/getProductByCategoryId/'+ id+'/'+this.itemPerPage+'?page=' + this.nextPage+"&sort="+this.sort)
+            .then(response => {
+                console.log(response.data.product);
+                this.isLoading = false;
+                if (response.data.product.current_page < response.data.product.last_page) {
+                    this.moreExists = true;
+                    this.nextPage = response.data.product.current_page + 1;
+                }else{
+                    this.moreExists = false;
+                }
+                var current = this;
+
+                response.data.product.data.forEach(data => {
+                    console.log(data);
+                    current.products.push(data);
+                    current.test.push(data);
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }
+    },
 
         beforeRouteUpdate ( to, from , next ) {
             // console.log('Reusing this component.')
@@ -224,7 +265,7 @@
 
         created() {
             this.getSlug();
-            this.getAllProductByCatgeoryId();
+            //this.getAllProductByCatgeoryId();
 
         },
     }

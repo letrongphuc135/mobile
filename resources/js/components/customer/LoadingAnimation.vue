@@ -1,5 +1,5 @@
 <template>
-    <div id="loading" v-if="isLoading" class="fullscreenDiv">
+    <div id="loading" v-if="isLoadingAnimation" class="fullscreenDiv">
         <div class="fixed-bottom">
             <div class="text-center float-right">
                 <div class="spinner-border " style="width: 4rem; height: 4rem;" role="status">
@@ -15,7 +15,7 @@
     export default {
         name: "LoadingAnimation",
         props:{
-            isLoading: Boolean,
+            isLoadingAnimation: Boolean,
         },
     }
 </script>

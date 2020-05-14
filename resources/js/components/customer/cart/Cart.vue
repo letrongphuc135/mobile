@@ -3,12 +3,11 @@
         <!-- Breadcrumb Section Begin -->
         <div class="breacrumb-section">
             <div class="container">
-                <div class="row">
+                <div class="row"  style="width: 100%">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text product-more">
-                            <a href="./home.html"><i class="fa fa-home"></i> Home</a>
-                            <a href="./shop.html">Shop</a>
-                            <span>Shopping Cart</span>
+                            <a href="./home.html" style="position: relative;"><i class="fa fa-home"></i> Home</a>
+                            <a href="#">Giỏ hàng</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +47,7 @@
                                         </div>
                                     </td>
                                     <td class="total-price first-row">{{formatTotalPrice(item.product.price, item.quantity)}}</td>
-                                    <td class="close-td first-row"><i class="ti-close"></i></td>
+                                    <td class="close-td first-row" @click="$store.commit('removeFromCart',item)"><i class="ti-close"></i></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -73,7 +72,7 @@
                                         <li class="subtotal">Subtotal <span></span></li>
                                         <li class="cart-total" >Total<span style="font-weight: bold; font-size: 20px">{{formatSubTotalPrice()}}</span></li>
                                     </ul>
-                                    <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                                    <button @click="checkout" class="proceed-btn">PROCEED TO CHECK OUT</button>
                                 </div>
                             </div>
                         </div>
@@ -110,6 +109,16 @@
                 }
                 return stringUtil.formatNumber(total);
             },
+            checkout(){
+                var totalNum = 0;
+                for(var i = 0; i < this.$store.state.cart.length; i++){
+                    var item = this.$store.state.cart[i];
+                    this.$store.state.cart[i].total =  item.product.price * item.quantity;
+                    totalNum += item.product.price * item.quantity;
+                }
+                this.$router.push({name: 'checkout'});
+                this.$store.commit('updateCart', {cart: this.$store.state.cart, total : totalNum});
+            }
         }
     }
 </script>

@@ -38,8 +38,6 @@ class CategoryController extends Controller
     public function getAllCategoryPaging($numberItem)
     {
         $category = Categories::paginate($numberItem);
-//        $category = Categories::where('status', 1)->get();
-        // return view('admin.pages.category.list',compact('category'));
         return response()->json($category);
     }
 
@@ -148,7 +146,6 @@ class CategoryController extends Controller
         } else {
             return response()->json(['message' => 'Cập nhật thất bại'], 200);
         }
-        return response()->json(['success' => 'update thanh cong']);
     }
 
     /**

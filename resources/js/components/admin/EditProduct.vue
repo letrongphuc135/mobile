@@ -172,9 +172,9 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
+                <router-link :to="{name: 'admin-product'}" type="button" class="btn btn-secondary"
                         data-dismiss="modal">Close
-                </button>
+                </router-link>
                 <button type="submit" class="btn btn-primary">Save
                     changes
                 </button>

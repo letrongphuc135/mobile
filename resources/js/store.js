@@ -6,12 +6,14 @@ Vue.use(Vuex);
 let cart = window.localStorage.getItem('cart');
 let cartCount = window.localStorage.getItem('cartCount');
 let auth = window.localStorage.getItem('auth');
+let totalNum = window.localStorage.getItem('totalNum');
 export default new Vuex.Store({
     state: {
         cart: cart ? JSON.parse(cart) : [],
         cartCount: cartCount ? JSON.parse(cartCount) : 0,
         search: null,
         auth: auth ? JSON.parse(auth) : null,
+        totalNum: totalNum ? JSON.parse(totalNum) : 0,
     },
 
     mutations: {
@@ -28,6 +30,12 @@ export default new Vuex.Store({
             this.commit('saveData');
         },
 
+        updateCart(state, item){
+            state.cart = item.cart;
+            state.totalNum = item.total;
+            this.commit('saveData');
+        },
+
         searchinit(state, item){
             state.search = item;
         },
@@ -41,10 +49,18 @@ export default new Vuex.Store({
             this.commit('saveData');
         },
 
+        removeAllCart(){
+            state.cart = null;
+            totalNum = 0;
+            cartCount = 0;
+            this.commit('saveData');
+        },
+
         saveData(state){
             window.localStorage.setItem('cart', JSON.stringify(state.cart));
             window.localStorage.setItem('cartCount', JSON.stringify(state.cartCount));
             window.localStorage.setItem('auth', JSON.stringify(state.auth));
+            window.localStorage.setItem('totalNum', JSON.stringify(state.totalNum));
         },
 
         removeFromCart(state, item){

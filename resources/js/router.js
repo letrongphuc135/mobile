@@ -52,13 +52,23 @@ let routes = [
                 component: require('./components/customer/home/Home').default
             },
             {
-                path: "/product-detail/:name-:id",
-                name: "product-detail",
-                component: require(
-                    './components/customer/productDetail/ProductDetail').default
+                path: "/login-user",
+                name: "login",
+                component: require('./components/customer/auth/Login').default
             },
             {
-                path: "/product-detail",
+                path: "/register-user",
+                name: "register",
+                component: require('./components/customer/auth/Register').default
+            },
+            // {
+            //     path: "/product-detail",
+            //     name: "product-detail",
+            //     component: require(
+            //         './components/customer/productDetail/ProductDetail').default
+            // },
+            {
+                path: "/:slugCategory/:slugProductType/:slug",
                 name: "product-detail",
                 component: require(
                     './components/customer/productDetail/ProductDetail').default
@@ -68,6 +78,21 @@ let routes = [
                 name: "product-list",
                 component: require(
                     './components/customer/listProduct/ShopProdutcList').default
+            },
+            {
+                path: "/cart",
+                name: "cart",
+                component: require('./components/customer/cart/Cart').default
+            },
+            {
+                path: "/checkout",
+                name: "checkout",
+                component: require('./components/customer/cart/Checkout').default
+            },
+            {
+                path: "/owl",
+                name: "owl",
+                component: require('./components/customer/home/Owl').default
             },
             {
                 path: "/:slugCategory",
@@ -81,26 +106,7 @@ let routes = [
                 component: require(
                     './components/customer/listProduct/ProductTypeList').default
             },
-            {
-                path: "/cart",
-                name: "cart",
-                component: require('./components/customer/cart/Cart').default
-            },
-            {
-                path: "/owl2",
-                name: "owl",
-                component: require('./components/customer/home/Owl').default
-            },
-            {
-                path: "/login-user",
-                name: "login",
-                component: require('./components/customer/auth/Login').default
-            },
-            {
-                path: "/register-user",
-                name: "register",
-                component: require('./components/customer/auth/Register').default
-            },
+
         ]
     },
 

@@ -15,7 +15,8 @@
  * @todo Test Zepto
  * @todo stagePadding calculate wrong active classes
  */
-;(function($, window, document, undefined) {
+// require('jquery')
+(function($, window, document, undefined) {
 
 	/**
 	 * Creates a carousel.

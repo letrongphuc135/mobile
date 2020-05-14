@@ -1,9 +1,8 @@
 <template>
     <div>
         <!--&lt;!&ndash; Page Preloder &ndash;&gt;-->
-        <!--<div id="preloder">-->
-        <!--<div class="loader"></div>-->
-        <!--</div>-->
+        <!-- Page Preloder -->
+
         <main class="ps-main">
             <Section :path="path"></Section>
             <!-- Product Shop Section Begin -->
@@ -14,30 +13,30 @@
                         <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="product-pic-zoom">
-                                        <!-- <img class="product-big-img" src="../../../../../public/assets/customer/fashi/img/product-single/product-1.jpg" alt=""> -->
-                                        <img class="product-big-img" :src="mainImage"
-                                             alt="">
-                                        <div class="zoom-icon">
-                                            <i class="fa fa-search-plus"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product-thumbs mt-3">
-                                        <div  class="product-thumbs-track ps-slider">
-                                            <div class="col-lg-3 slide-img" v-for="(img, index) in productDetail.product_img" :key="index">
-                                                <img style="width: 150px"
-                                                    :src="img.url"
-                                                     @click.prevent="switchImage"
-                                                    alt="">
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!--<div class="product-pic-zoom">-->
+                                        <!--<img class="product-big-img" :src="mainImage" style="min-width: 70%"-->
+                                             <!--alt="">-->
+                                        <!--<div class="zoom-icon">-->
+                                            <!--<i class="fa fa-search-plus"></i>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="product-thumbs mt-3">-->
+                                        <!--<div  class="product-thumbs-track ps-slider">-->
+                                            <!--<div class="col-lg-3 slide-img" v-for="(img, index) in productDetail.product_img" :key="index">-->
+                                                <!--<img style="width: 150px"-->
+                                                    <!--:src="img.url"-->
+                                                     <!--@click.prevent="switchImage"-->
+                                                    <!--alt="">-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="product-details">
                                         <div class="pd-title">
-                                            <span>oranges</span>
-                                            <h1 class="font-weight-bold">{{productDetail.name}}</h1>
+                                            <!--<span>oranges</span>-->
+                                            <h3 class="font-weight-bold">{{productDetail.name}}</h3>
                                             <a href="#" class="heart-icon"><i
                                                 class="icon_heart_alt"></i></a>
                                         </div>
@@ -50,13 +49,13 @@
                                             <span>(5)</span>
                                         </div>
                                         <div class="pd-desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur ing elit, sed
-                                                do eiusmod tempor sum dolor
-                                                sit amet, consectetur adipisicing elit, sed do mod
-                                                tempor</p>
-                                            <h1 class="price">{{formatPrice(productDetail.price)}}
+                                            <!--<p>Lorem ipsum dolor sit amet, consectetur ing elit, sed-->
+                                                <!--do eiusmod tempor sum dolor-->
+                                                <!--sit amet, consectetur adipisicing elit, sed do mod-->
+                                                <!--tempor</p>-->
+                                            <h3 class="price">{{formatPrice(productDetail.price)}}
                                                 <span>{{formatPrice(productDetail.price)}}</span>
-                                            </h1>
+                                            </h3>
                                         </div>
                                         <div class="pd-color">
                                             <h6>Color</h6>
@@ -77,44 +76,37 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="pd-size-choose">
-                                            <div class="sc-item">
-                                                <input type="radio" id="sm-size">
-                                                <label for="sm-size">s</label>
-                                            </div>
-                                            <div class="sc-item">
-                                                <input type="radio" id="md-size">
-                                                <label for="md-size">m</label>
-                                            </div>
-                                            <div class="sc-item">
-                                                <input type="radio" id="lg-size">
-                                                <label for="lg-size">l</label>
-                                            </div>
-                                            <div class="sc-item">
-                                                <input type="radio" id="xl-size">
-                                                <label for="xl-size">xs</label>
-                                            </div>
-                                        </div>
+
                                         <div class="quantity">
                                             <div class="pro-qty" >
                                                 <input type="number" value=1 v-model="quantity">
                                             </div>
-                                            <a class="primary-btn pd-cart" href="#" @click="addToCart(productDetail)">Add To Cart</a>
+                                            <button class="primary-btn pd-cart"  @click="addToCart(productDetail)">Add To Cart</button>
 
                                         </div>
-                                        <ul class="pd-tags">
-                                            <li><span>CATEGORIES</span>: More Accessories, Wallets &
-                                                Cases
-                                            </li>
-                                            <li><span>TAGS</span>: Clothing, T-shirt, Woman</li>
-                                        </ul>
-                                        <div class="pd-share">
-                                            <div class="p-code">Sku : 00012</div>
-                                            <div class="pd-social">
-                                                <a href="#"><i class="ti-facebook"></i></a>
-                                                <a href="#"><i class="ti-twitter-alt"></i></a>
-                                                <a href="#"><i class="ti-linkedin"></i></a>
-                                            </div>
+                                        <!--<ul class="pd-tags">-->
+                                            <!--<li><span>CATEGORIES</span>: More Accessories, Wallets &-->
+                                                <!--Cases-->
+                                            <!--</li>-->
+                                            <!--<li><span>TAGS</span>: Clothing, T-shirt, Woman</li>-->
+                                        <!--</ul>-->
+                                        <!--<div class="pd-share">-->
+                                            <!--<div class="p-code">Sku : 00012</div>-->
+                                            <!--<div class="pd-social">-->
+                                                <!--<a href="#"><i class="ti-facebook"></i></a>-->
+                                                <!--<a href="#"><i class="ti-twitter-alt"></i></a>-->
+                                                <!--<a href="#"><i class="ti-linkedin"></i></a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <div style="border-radius: 20px; border: 1px solid black">
+                                            <div style="padding: 5px; margin-left: 5px; font-size: 16px; color: black; font-weight: bold" >Khuyến mãi</div>
+                                            <ul class="a">
+                                                <li>Tặng: <span style="color: red">Cường lực - Ốp lưng - Tai nghe</span> khi mua BHV</li>
+                                                <li>Giảm: 100K áp dụng HSSV mua BHV tại PN shop</li>
+                                                <li>Mua: Dán cường lực 5D <span style="color: red">chỉ 99K</span></li>
+                                                <li><span style="color: red">Giảm 100K</span> khi mua BHV và đặt hàng tại: Đây</li>
+                                                <li>Cam kết bán<span style="color: red">iPhone</span> RẺ nhất VN</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -141,8 +133,7 @@
                                             <div class="product-content">
                                                 <div class="row">
                                                     <div class="col-lg-9">
-                                                        <h3>Introduction</h3>
-                                                        <read-more style="font-size: 18px;" more-str="Đọc thêm" :text="productDetail.description" less-str="Thu gọn" :max-chars=500>
+                                                        <read-more style="font-size: 14px;" more-str="Đọc thêm" :text="productDetail.description" less-str="Thu gọn" :max-chars=500>
                                                             <div v-html="productDetail.description"></div>
                                                         </read-more>
 
@@ -320,137 +311,8 @@
                 </div>
             </section>
             <!-- Product Shop Section End -->
+            <RelatedProduct></RelatedProduct>
 
-            <!-- Related Products Section End -->
-            <div class="related-products spad">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="section-title">
-                                <h2>Related Products</h2>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img
-                                        src="../../../../../public/assets/customer/fashi/img/products/women-1.jpg"
-                                        alt="">
-                                    <div class="sale">Sale</div>
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i
-                                            class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Coat</div>
-                                    <a href="#">
-                                        <h5>Pure Pineapple</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $14.00
-                                        <span>$35.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img
-                                        src="../../../../../public/assets/customer/fashi/img/products/women-2.jpg"
-                                        alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i
-                                            class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Shoes</div>
-                                    <a href="#">
-                                        <h5>Guangzhou sweater</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $13.00
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img
-                                        src="../../../../../public/assets/customer/fashi/img/products/women-3.jpg"
-                                        alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i
-                                            class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Towel</div>
-                                    <a href="#">
-                                        <h5>Pure Pineapple</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $34.00
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img
-                                        src="../../../../../public/assets/customer/fashi/img/products/women-4.jpg"
-                                        alt="">
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
-                                    </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i
-                                            class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">Towel</div>
-                                    <a href="#">
-                                        <h5>Converse Shoes</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        $34.00
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Related Products Section End -->
         </main>
     </div>
 </template>
@@ -458,10 +320,12 @@
 <script>
     import StringUtil from "../../../utils/StringUtils"
     const stringUtil = new StringUtil();
+    import LoadingAnition from "../../customer/LoadingAnimation";
     import Section from "../Section";
+    import RelatedProduct from "./RelatedProduct";
     export default {
         name: "productDetail",
-        components: {Section},
+        components: {RelatedProduct, Section, LoadingAnition},
         data() {
             return {
                 cartItem:{
@@ -476,30 +340,28 @@
                 path:{
                     category: null,
                     productType: null
-                }
+                },
+                isLoading: true,
 
             }
         },
         methods: {
             getProductDetail() {
+                Fire.$emit('onLoading');
+                this.isLoading = true;
                 var myCookie = document.cookie;
                 console.log("myCookie" + myCookie);
-                var param = this.$route.params.id + "";
-                console.log(param);
-                var param2 = this.$route.params.name + "";
-                console.log("name  " + param2);
-                let id = stringUtil.splitString(param);
-                console.log("id " + id);
-                axios.get('/api/getProductDetail/' + id)
+                var slug = this.$route.params.slug;
+                axios.get('/api/getProductDetail/' + slug)
                 .then(response => {
-                    console.log(response.data.product);
-                    this.productDetail = response.data.product;
+                    console.log(response.data.product[0]);
+                    this.productDetail = response.data.product[0];
                     this.productDetail.quantity = 1;
-                    this.mainImage = response.data.product.product_img[0].url;
-                    this.path.category = response.data.product.category;
-                    this.path.productType = response.data.product.product_type;
-
-                    console.log("idProduct " + response.data.product.id);
+                    this.mainImage = response.data.product[0].product_img[0].url;
+                    this.path.category = response.data.product[0].category;
+                    this.path.productType = response.data.product[0].product_type;
+                    //this.isLoading = false;
+                    Fire.$emit('offLoading');
                 })
             },
             formatPrice(price) {
@@ -507,12 +369,13 @@
                 return stringUtil.formatNumber(formatedNumber);
             },
             addToCart(){
-                // console.log("quantity" + this.quantity);
-                // var current = this;
-                // current.cartItem.quantity = parseInt(quantity);
-                // current.cartItem.productDetail = current.productDetail;
-                // current.cartItem.productId = current.productDetail.id;
-                this.$store.commit('addToCart', {product: this.productDetail, quantity: parseInt(this.quantity)});
+                var current = this;
+                if (this.$store.state.auth == null){
+                    current.$router.push({name: 'login'});
+                } else {
+                    this.$store.commit('addToCart', {product: this.productDetail, quantity: parseInt(this.quantity), total: this.productDetail.price * this.quantity});
+                }
+
             },
             switchImage(event) {
                 this.mainImage = event.target.src;
@@ -531,4 +394,69 @@
     border: 3px solid rgb(199, 199, 199);
     margin-right: 30px;
 }
+ul.a {
+    list-style-type: circle;
+    margin-left: 30px;
+}
+#preloader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    background: #000;
+}
+
+.loader2 {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -13px;
+    margin-left: -13px;
+    border-radius: 60px;
+    animation: loader 0.8s linear infinite;
+    -webkit-animation: loader 0.8s linear infinite;
+}
+@keyframes loader2 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        border: 4px solid #f44336;
+        border-left-color: transparent;
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        border: 4px solid #673ab7;
+        border-left-color: transparent;
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        border: 4px solid #f44336;
+        border-left-color: transparent;
+    }
+}
+
+@-webkit-keyframes loader2 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        border: 4px solid #f44336;
+        border-left-color: transparent;
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+        border: 4px solid #673ab7;
+        border-left-color: transparent;
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        border: 4px solid #f44336;
+        border-left-color: transparent;
+    }
+}
+
 </style>

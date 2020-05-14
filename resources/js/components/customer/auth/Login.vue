@@ -25,11 +25,13 @@
                             <form @submit.prevent="login">
                                 <div class="group-input">
                                     <label for="username">Username or email address *</label>
-                                    <input type="email" id="username" name="email" v-model="form.email">
+                                    <input type="email" id="username" name="email" v-model="form.email" :class="{ 'is-invalid': form.errors.has('email') }">
+                                    <has-error :form="form" field="email"></has-error>
                                 </div>
                                 <div class="group-input">
                                     <label for="pass">Password *</label>
-                                    <input type="password" id="pass" name="password" v-model="form.password">
+                                    <input type="password" id="pass" name="password" v-model="form.password" :class="{ 'is-invalid': form.errors.has('password') }">
+                                    <has-error :form="form" field="password"></has-error>
                                 </div>
                                 <div class="group-input gi-check">
                                     <div class="gi-more">
@@ -44,7 +46,7 @@
                                 <button type="submit" class="site-btn login-btn">Sign In</button>
                             </form>
                             <div class="switch-login">
-                                <router-link to="/register-user" class="or-login">Or Create An Account</router-link>
+                                <router-link :to="{name : 'register'}" class="or-login">Or Create An Account</router-link>
                             </div>
                         </div>
                     </div>
@@ -103,17 +105,17 @@
         methods: {
             login() {
                 var current = this;
-                 axios.post('/api/login', this.form)
+                this.form.post('/api/login', this.form)
                 .then(response => {
                     console.log(response.data.data);
                     let auth = response.data.data;
-                    this.$store.commit('login', auth);
                     if (!auth || auth.length === 0) {
                             Toast.fire({
                             icon: 'error',
-                            title: response.data.message
+                            title: "Dang nhap that bai"
                         });
                     }else{
+                        this.$store.commit('login', auth);
                         Toast.fire({
                         icon: 'success',
                         title: response.data.message

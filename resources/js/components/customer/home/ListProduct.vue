@@ -9,15 +9,15 @@
                         <li class="current"><a style="cursor: pointer" data-filter="*">All
                             <sup>8</sup></a>
                         </li>
-                        <li><a style="cursor: pointer" data-filter=".nike">Nike <sup>1</sup></a>
+                        <li><a style="cursor: pointer" data-filter=".nike">Samsung <sup>1</sup></a>
                         </li>
-                        <li><a style="cursor: pointer" data-filter=".adidas">Adidas <sup>1</sup></a>
+                        <li><a style="cursor: pointer" data-filter=".adidas">Xiaomi <sup>1</sup></a>
                         </li>
-                        <li><a style="cursor: pointer" data-filter=".men">Men <sup>1</sup></a>
+                        <li><a style="cursor: pointer" data-filter=".men">Iphone <sup>1</sup></a>
                         </li>
-                        <li><a style="cursor: pointer" data-filter=".women">Women
+                        <li><a style="cursor: pointer" data-filter=".women">Huewai
                             <sup>1</sup></a></li>
-                        <li><a style="cursor: pointer" data-filter=".kids">Kids <sup>4</sup></a>
+                        <li><a style="cursor: pointer" data-filter=".kids">Sony <sup>4</sup></a>
                         </li>
                     </ul>
                 </div>
@@ -94,9 +94,9 @@
                                                         class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view">
                                                         <router-link
-                                                            :to="{ name: 'product-detail', params: {name: product.name, id: product.id} }">
-                                                            + Quick View
-                                                        </router-link>
+                                                        :to="{ name: 'product-detail', params: {slugCategory: product.category.slug, slugProductType: product.product_type.slug, slug: product.slug} }">
+                                                        + Quick View
+                                                    </router-link>
                                                     </li>
                                                     <li class="w-icon"><a href="#"><i
                                                         class="fa fa-random"></i></a></li>
@@ -117,7 +117,7 @@
                                     <div class="col-lg-3 col-sm-6 isotop adidas">
                                         <div class="product-item">
                                             <div class="pi-pic">
-                                                <img src="../../../../../public/assets/customer/fashi/img/products/product-3.jpg" alt="">
+                                                <img src="https://cdn.tgdd.vn/Products/Images/42/219913/vivo-y50-tim-400x460-3-400x460.png" alt="">
                                                 <div class="icon">
                                                     <i class="icon_heart_alt"></i>
                                                 </div>
@@ -163,10 +163,12 @@
         },
         methods: {
             getAllProduct() {
+                Fire.$emit('onLoading');
                 axios.get('/api/getAllProduct')
                 .then(response => {
                     console.log(response.data.product);
                     this.products = response.data.product;
+                    Fire.$emit('offLoading');
                 })
             },
             formatPrice(price) {
@@ -177,28 +179,28 @@
         created() {
             this.getAllProduct();
         },
-        // watch: {
-        //     products: function (value) {
-        //         if (value) {
-        //             jQuery(document).ready(function () {
-        //                 $('ul li a').click(function(event) {
-        //                     // var type = $(this).attr('data-type');
-        //                     var type = $(this).data('filter');
-        //                     console.log(type);
-        //                     //var ten_loai = $(this).text();
-        //                     // $('.title').text(ten_loai);
-        //                     // type = '.'+type;
-        //                     $('.item-filter').isotope({
-        //                         itemSelector: '.isotop'
-        //                     });
-        //                     $('.item-filter').isotope({
-        //                         filter:type
-        //                     });
-        //                 });
-        //             });
-        //         }
-        //     }
-        // }
+        watch: {
+            products: function (value) {
+                if (value) {
+                    jQuery(document).ready(function () {
+                        $('ul li a').click(function(event) {
+                            // var type = $(this).attr('data-type');
+                            var type = $(this).data('filter');
+                            console.log(type);
+                            //var ten_loai = $(this).text();
+                            // $('.title').text(ten_loai);
+                            // type = '.'+type;
+                            $('.item-filter').isotope({
+                                itemSelector: '.isotop'
+                            });
+                            $('.item-filter').isotope({
+                                filter:type
+                            });
+                        });
+                    });
+                }
+            }
+        }
     }
 </script>
 

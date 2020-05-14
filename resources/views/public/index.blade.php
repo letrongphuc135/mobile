@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/assets/customer/plugins/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/customer/plugins/ps-icon/style.css">
     {{--<!-- CSS Library-->--}}
-    <link rel="stylesheet" href="/assets/customer/plugins/bootstrap/dist/css/bootstrap.min.css">
+    {{--<link rel="stylesheet" href="/assets/customer/plugins/bootstrap/dist/css/bootstrap.min.css">--}}
     {{--<link rel="stylesheet" href="/assets/customer/plugins/owl-carousel/assets/owl.carousel.css">--}}
     {{--<link rel="stylesheet"--}}
     {{--href="/assets/customer/plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css">--}}
@@ -70,13 +70,12 @@
 <script src="/assets/customer/fashi/js/jquery.zoom.min.js"></script>
 <script src="/assets/customer/fashi/js/jquery.dd.min.js"></script>
 <script src="/assets/customer/fashi/js/jquery.slicknav.js"></script>
-<script src="/assets/customer/fashi/js/owl.carousel.min.js"></script>
-<script src="/assets/customer/fashi/js/main.js"></script>
-<script src="/assets/customer/OwlCarousel2/docs/assets/owlcarousel/owl.carousel.js"></script>
-{{--<script src="/assets/customer/js/mainjs.js" type="text/javascript"></script>--}}
+{{--<script src="/assets/customer/fashi/js/owl.carousel.min.js"></script>--}}
 
+<script src="/assets/customer/js/mainjs.js" type="text/javascript"></script>
+{{--<script src="/assets/customer/fashi/js/main.js"></script>--}}
 <script src="{{ asset('js/app.js') }}" defer></script>
-
+<script src="/assets/customer/OwlCarousel2/docs/assets/owlcarousel/owl.carousel.js"></script>
 
 </body>
 </html>

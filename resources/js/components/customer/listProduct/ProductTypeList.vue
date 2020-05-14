@@ -136,8 +136,10 @@
                             <div class="row">
                                 <div class="col-lg-7 col-md-7">
                                     <div class="select-option">
-                                        <select class="sorting">
+                                        <select class="sorting" v-model="sort">
                                             <option value="">Default Sorting</option>
+                                            <option value="asc">Giá từ thấp đến cao</option>
+                                            <option value="desc">Giá từ cao đến thấp</option>
                                         </select>
                                         <select class="p-show">
                                             <option value="">Show:</option>
@@ -161,7 +163,10 @@
                                             </div>
                                             <ul>
                                                 <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><router-link :to="{ name: 'product-detail', params: {name: product.name, id: product.id} }">+ Quick View</router-link></li>
+                                                <li class="quick-view"><router-link
+                                                    :to="{ name: 'product-detail', params: {slugCategory: product.category.slug, slugProductType: product.product_type.slug, slug: product.slug} }">
+                                                    + Quick View
+                                                </router-link></li>
                                                 <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                             </ul>
                                         </div>
@@ -180,7 +185,7 @@
                                 <div class="col-lg-3 col-sm-6">
                                     <div class="product-item">
                                         <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-2.jpg" alt="">
+                                            <img src="https://cdn.tgdd.vn/Products/Images/42/219913/vivo-y50-tim-400x460-3-400x460.png" alt="">
                                             <div class="icon">
                                                 <i class="icon_heart_alt"></i>
                                             </div>
@@ -500,6 +505,7 @@
             </div>
         </div>
         <!-- Partner Logo Section End -->
+        <LoadingAnition :isLoading="isLoading"></LoadingAnition>
     </div>
 </template>
 
@@ -507,9 +513,10 @@
     import StringUtil from  "../../../utils/StringUtils"
     import Section from "../Section";
     const stringUtil = new StringUtil();
+    import LoadingAnition from "../../customer/LoadingAnimation";
     export default {
         name: "ProductTypeList",
-        components: {Section},
+        components: {Section, LoadingAnition},
         data(){
             return{
                 products: [],
@@ -518,10 +525,20 @@
                     productType: null
                 },
                 slugProductType: this.$route.params.slugProductType,
+                itemPerPage: 2,
+                numPerPageList: [
+                    2,
+                    3,
+                    10
+                ],
+                test: [],
+                nextPage: 0,
+                isLoading: true,
+                moreExists : false,
+                sort: 0
             }
         },
         methods:{
-
             getSlug(){
                 this.path.productType = null;
                 this.path.category = null;
@@ -537,7 +554,8 @@
                 .then(response => {
                     console.log(response.data);
                     this.path.productType = response.data[0];
-                    console.log(response.data[0]);
+                    this.isLoading = false;
+                    this.getAllProductByProductTypeId(response.data[0].id);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -551,35 +569,72 @@
                 });
             },
             getAllProductByProductTypeId(id) {
+                this.isLoading = true;
                 // this.form.idProductType = -1;
-                axios.get('/api/getProductByCategoryId/'+ 1)
+                axios.get('/api/getProductByProductTypeId/'+ id+'/'+this.itemPerPage)
                 .then(response => {
-                    console.log(response.data);
-                    this.products = response.data.product;
-                });
+                    console.log(response.data.product.data);
+                    this.products = response.data.product.data;
+                    this.isLoading = false;
+                    if (response.data.product.current_page < response.data.product.last_page) {
+                        this.moreExists = true;
+                        this.nextPage = response.data.product.current_page + 1;
+                    }else{
+                        this.moreExists = false;
+                    }
+                    Fire.$emit('offLoading');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
             },
-            getAllProductByCatgeoryId(id) {
-                // this.form.idProductType = -1;
-                axios.get('/api/getProductByCategoryId/'+ 1)
-                .then(response => {
-                    console.log(response.data);
-                    this.products = response.data.product;
-                });
-            },
+
             formatPrice(price) {
                 let formatedNumber = price || 0;
                 return stringUtil.formatNumber(formatedNumber);
             }
         },
-        watch: {
-            slugProductType: function(newData) {
-                console.log("changeeeeee")
-            }
+
+        loadMore : async function(){
+            console.log("loadmore");
+            console.log("nextpage", this.nextPage);
+            var id = this.path.category.id;
+
+            axios.get('/api/getProductByProductTypeId/'+ id+'/'+this.itemPerPage + '?page=' + this.nextPage)
+            .then(response => {
+                console.log(response.data.product);
+                this.isLoading = false;
+                if (response.data.product.current_page < response.data.product.last_page) {
+                    this.moreExists = true;
+                    this.nextPage = response.data.product.current_page + 1;
+                }else{
+                    this.moreExists = false;
+                }
+                var current = this;
+
+                response.data.product.data.forEach(data => {
+                    console.log(data);
+                    current.products.push(data);
+                    current.test.push(data);
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
         },
+
+        beforeRouteUpdate ( to, from , next ) {
+            // console.log('Reusing this component.')
+            // this.user = this.getUser(to.params.slugCategory);
+            console.log('Entering User' +to.params.slugProductType);
+            this.slugProductType = to.params.slugProductType;
+            this.getProductTypeBySlug(this.slugProductType);
+            next()
+        },
+
         created() {
            this.getSlug();
-           this.getAllProductByProductTypeId(this.path.productType.id);
-
+           //this.getAllProductByProductTypeId();
         },
     }
 </script>

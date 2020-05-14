@@ -13,7 +13,9 @@ import Swal from 'sweetalert2'
 import CKEditor from 'ckeditor4-vue';
 import store from "./store";
 import i18n from "./lang/i18n";
+import SortedTablePlugin from "vue-sorted-table";
 
+Vue.use(SortedTablePlugin);
 window.Swal = Swal;
 window.Fire = new Vue();
 Vue.use(CKEditor);
@@ -45,10 +47,15 @@ Vue.filter('myDate', function (created) {
 });
 
 Vue.component('pagination', require('laravel-vue-pagination'));
-// import jQuery from "../../public/assets/customer/fashi/js/jquery-3.3.1.min.js"
+import jQuery from "../../public/assets/customer/fashi/js/jquery-3.3.1.min.js"
 // import jQuery from 'jquery';
-import 'jquery';
-window.$ = window.jQuery = require("jquery");
+// import "../../public/assets/customer/fashi/js/owl.carousel.min.js"
+// import 'jquery';
+// window.$ = window.jQuery = require("jquery");
+import VueAgile from 'vue-agile'
+
+Vue.use(VueAgile);
+window.$ = window.jQuery = jQuery;
 
 window.i18n = i18n;
 
@@ -59,3 +66,5 @@ const app = new Vue({
     i18n,
     store,
 });
+
+

@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="text-center mb-3">Add product</h2>
-        <form @submit.prevent="addProduct()">
+        <form @submit.prevent="addProduct">
             <div class="modal-body">
                 <div class="form-group">
                     <label>Category name</label>
@@ -166,10 +166,9 @@
                         </div>
                     </div>
                 </fieldset>
-
             </div>
             <div class="modal-footer">
-                <router-link to="/product" type="button" class="btn btn-secondary"
+                <router-link :to="{name:'admin-product'}" type="submit" class="btn btn-secondary"
                         data-dismiss="modal" >Close
                 </router-link>
                 <button type="submit" class="btn btn-primary">Save
@@ -263,17 +262,6 @@
                 this.listImage = [];
             },
             addProduct() {
-                // this.form.post('/api/admin/product', this.form)
-                // .then(function (response) {
-                //     console.log(response);
-                //     Toast.fire({
-                //         icon: 'success',
-                //         title: response.data.message
-                //     });
-                // })
-                // .catch(function (error) {
-                //     console.log(error);
-                // })
                 this.isLoading = true;
                 const config = {
                     headers: {
@@ -316,7 +304,6 @@
                         icon: 'success',
                         title: "Them thanh cong"
                     });
-
                 })
                 .catch(function (error) {
                     this.isLoading = false;
@@ -337,7 +324,7 @@
                     console.log(response.data);
                     this.categories = response.data;
                 })
-            },
+            }
         },
         created() {
             this.getAllCategory();

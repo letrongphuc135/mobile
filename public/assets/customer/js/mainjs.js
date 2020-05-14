@@ -1,5 +1,5 @@
-import 'jquery';
-import '../plugins/isotope.pkgd.min'
+// import 'jquery';
+// import '../plugins/isotope.pkgd.min'
 jQuery(document).ready(function($) {
 
     $('ul li a').click(function(event) {

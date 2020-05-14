@@ -229,15 +229,24 @@ class ProductController extends Controller
              }
          }
     }
-    public function getProductDetail($id){
-        $productdetail=Products::find($id);
+    public function getProductDetail($slug){
+        $productdetail=Products::where('slug', $slug)->get();
         if(empty($productdetail)){
             return response()->json(['error'=>'Khong tim thay san pham']);
         }
-        $productdetail->ProductImg;
-        $productdetail->Category;
-        $productdetail->ProductType;
-        $productdetail->Specification;
+
+        foreach ($productdetail as $key => $value) {
+            $value->Category;
+            $value->ProductType;
+            $value->ProductImg;
+            $value->Specification;
+            $data[$key]=$value;
+        }
+//        $productdetail->ProductImg;
+        //$productdetail->Category;
+//        $productdetail->ProductType;
+//        $productdetail->Specification;
+
         return response()->json(['product'=> $productdetail]);
     }
 
@@ -248,9 +257,62 @@ class ProductController extends Controller
             $value->Category;
             $value->ProductType;
             $value->ProductImg;
+
             $data[$key]=$value;
         }
-        return response()->json(['product'=>$data]);
+        return response()->json(['product'=> $data]);
+    }
+
+    public function getAllProductPaging($numberItem)
+    {
+        if ($sort = \Request::get('sort')) {
+            $products = Products::where('status', 1)->orderBy('price', $sort)->paginate($numberItem);
+            if (empty($products)) {
+                return response()->json(['error' => 'Khong tim thay san pham']);
+            }
+            foreach ($products as $key => $value) {
+                $value->ProductImg;
+                $category = Categories::find($value->idCategory);
+                $productType = ProductTypes::find($value->idProductType);
+                $categoryName = $category['name'];
+                $productTypeName = $productType['name'];
+                $products[$key]['categoryName'] = $categoryName;
+                $products[$key]['productTypeName'] = $productTypeName;
+                $products[$key] = $value;
+            }
+        } else {
+            $products = Products::where('status', 1)->paginate($numberItem);
+            if (empty($products)) {
+                return response()->json(['error' => 'Khong tim thay san pham']);
+            }
+            foreach ($products as $key => $value) {
+                $value->ProductImg;
+                $category = Categories::find($value->idCategory);
+                $productType = ProductTypes::find($value->idProductType);
+                $categoryName = $category['name'];
+                $productTypeName = $productType['name'];
+                $products[$key]['categoryName'] = $categoryName;
+                $products[$key]['productTypeName'] = $productTypeName;
+                $products[$key] = $value;
+            }
+        }
+        return response()->json($products);
+
+    }
+    public function searchProduct($numberItem){
+        if ($search = \Request::get('q')) {
+
+            $products = Products::where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%$search%");
+            })->paginate($numberItem);
+            foreach ($products as $key => $value) {
+                $value->ProductImg;
+                $value->Category;
+                $value->ProductType;
+                $products[$key] = $value;
+            }
+            return $products;
+        }
 
     }
     public function getProductImgByProduct(){
@@ -264,50 +326,37 @@ class ProductController extends Controller
     }
 
     public function getProductByCategoryId($categoryId,  $numberItem){
-//        $products = Products::where('idCategory', $categoryId)->paginate($numberItem);
-        $products = Products::where('idCategory', $categoryId)->paginate($numberItem);
-        if(empty($products)){
-            return response()->json(['error'=>'Khong tim thay san pham']);
-        }
-//        $data=[];
-//        $products = Products::paginate($numberItem);
-        foreach ($products as $key => $value) {
-//            $value->Category;
-//            $value->ProductType;
-            $value->ProductImg;
-            $products[$key]=$value;
+        if ($sort = \Request::get('sort')) {
+            $products = Products::where('idCategory', $categoryId)->orderBy('price', $sort)->paginate($numberItem);
+            if (empty($products)) {
+                return response()->json(['error' => 'Khong tim thay san pham']);
+            }
+            foreach ($products as $key => $value) {
+                $value->ProductImg;
+                $products[$key] = $value;
+            }
+        }else{
+            $products = Products::where('idCategory', $categoryId)->paginate($numberItem);
+            if (empty($products)) {
+                return response()->json(['error' => 'Khong tim thay san pham']);
+            }
+            foreach ($products as $key => $value) {
+                $value->ProductImg;
+                $products[$key] = $value;
+            }
         }
         return response()->json(['product'=> $products]);
     }
 
-//    public function getProductByProductTypeId($productTypeId, $numberItem){
-//        $products = Products::where('idProductType', $productTypeId)->get();
-//        if(empty($products)){
-//            return response()->json(['error'=>'Khong tim thay san pham']);
-//        }
-//        $data=[];
-//        foreach ($products as $key => $value) {
-//            $value->Category;
-//            $value->ProductType;
-//            $value->ProductImg;
-//            $data[$key]=$value;
-//        }
-//        $products = Products::paginate($numberItem);
-//        return response()->json(['product'=> $products]);
-//    }
-
-    public function getProductByProductTypeId($productTypeId){
-        $products = Products::where('idProductType', $productTypeId)->get();
+    public function getProductByProductTypeId($productTypeId, $numberItem){
+        $products = Products::where('idProductType', $productTypeId)->paginate($numberItem);
         if(empty($products)){
             return response()->json(['error'=>'Khong tim thay san pham']);
         }
-        $data=[];
         foreach ($products as $key => $value) {
-            $value->Category;
-            $value->ProductType;
             $value->ProductImg;
-            $data[$key]=$value;
+            $products[$key]=$value;
         }
-        return response()->json(['product'=> $data]);
+        return response()->json(['product'=> $products]);
     }
 }
