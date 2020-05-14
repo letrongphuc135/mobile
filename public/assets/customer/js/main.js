@@ -1,6 +1,5 @@
 (function($) {
     "use strict";
-
     var isMobile = {
         Android: function() {
             return navigator.userAgent.match(/Android/i);
@@ -54,7 +53,6 @@
             }
         });
     }
-
     function menuBtnToggle() {
         var toggleBtn = $('.menu-toggle'),
             sidebar = $('.header--sidebar'),

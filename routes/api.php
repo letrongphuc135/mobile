@@ -62,3 +62,13 @@ Route::post('login','UserController@loginClient');
 Route::post('registerClient','UserController@registerClient');
 Route::get('logout','UserController@logout');
 Route::get('checklogin','UserController@checklogin');
+//Comment
+Route::post('comment/{id}','CommentController@addComment');
+Route::get('getAllCommentByIdProduct/{id}','CommentController@getComment');
+Route::post('commentAdmin/{id}','AdminCommentController@postComment');
+Route::get('getProductByProductTypeId/{productTypeId}','CategoryController@getProductByProductTypeId');
+Route::get('getAllComment','CommentController@getAllComment');
+Route::delete('deleteComment/{id}','CommentController@deleteComment');
+//forget_password
+Route::post('forget_password','Auth\ForgotPasswordController@sendCodeResetPassword');
+Route::post('password_reset','Auth\ForgotPasswordController@saveResetPassword');

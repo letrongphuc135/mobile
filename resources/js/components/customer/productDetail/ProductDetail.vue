@@ -122,7 +122,8 @@
                                             <a data-toggle="tab" href="#tab-2" role="tab">{{$t('product.specifications')}}</a>
                                         </li>
                                         <li>
-                                            <a data-toggle="tab" href="#tab-3" role="tab">{{$t('product.customer_review')}}</a>
+                                            <a data-toggle="tab" href="#tab-3" role="tab">Customer
+                                                Reviews ({{allComment.length}}) comment</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -227,8 +228,8 @@
                                         </div>
                                         <div class="tab-pane fade" id="tab-3" role="tabpanel">
                                             <div class="customer-review-option">
-                                                <h4>2 Comments</h4>
-                                                <div class="comment-option">
+                                                <h4>{{allComment.length}} Comment</h4>
+                                                <div class="comment-option" v-for="(comment, index) in allComment" :key="`${index}-${comment.id}`" >
                                                     <div class="co-item">
                                                         <div class="avatar-pic">
                                                             <img
@@ -236,66 +237,77 @@
                                                                 alt="">
                                                         </div>
                                                         <div class="avatar-text">
-                                                            <div class="at-rating">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <h5>Brandon Kelley
-                                                                <span>27 Aug 2019</span></h5>
-                                                            <div class="at-reply">Nice !</div>
+                                                            <h5>{{comment.user.name}}
+                                                                <span>{{comment.created_at}}</span></h5>
+                                                            <div class="at-reply">{{comment.noidung}}</div>
+                                                                <div class="comment-option" style="margin-top:10px" v-for="(commentAdmin, indexAdmin) in comment.admincomment" :key="`${indexAdmin}-${commentAdmin.id}`" >
+                                                                <div class="co-item commentchiren" >
+                                                                    <div class="avatar-pic">
+                                                                        <img
+                                                                            src="../../../../../public/assets/customer/fashi/img/product-single/avatar-1.png"
+                                                                            alt="">
+                                                                    </div>
+                                                                    <div class="avatar-text">
+                                                                        <h5>{{commentAdmin.usercomment.name}}-Quản trị viên
+                                                                            <span>{{commentAdmin.created_at}}</span></h5>
+                                                                        <div class="at-reply" v-html="commentAdmin.content">{{commentAdmin.content}}</div>
+                                                                    </div>
+                                                                </div>        
+                                                                </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="co-item">
-                                                        <div class="avatar-pic">
-                                                            <img
-                                                                src="../../../../../public/assets/customer/fashi/img/product-single/avatar-2.png"
-                                                                alt="">
-                                                        </div>
-                                                        <div class="avatar-text">
-                                                            <div class="at-rating">
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star"></i>
-                                                                <i class="fa fa-star-o"></i>
-                                                            </div>
-                                                            <h5>Roy Banks <span>27 Aug 2019</span>
-                                                            </h5>
-                                                            <div class="at-reply">Nice !</div>
-                                                        </div>
-                                                    </div>
+                                                        
+                                                    </div>        
                                                 </div>
-                                                <div class="personal-rating">
-                                                    <h6>Your Ratind</h6>
+                                                 <div class="personal-rating">
+                                                    <!--<h6>Your Ratind</h6>
                                                     <div class="rating">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star-o"></i>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <div class="leave-comment">
+                                                <div class="leave-comment" v-if="this.$store.state.auth != null">
                                                     <h4>Leave A Comment</h4>
-                                                    <form action="#" class="comment-form">
+                                                    <form @submit.prevent="postCommment" class="comment-form">
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <input type="text"
-                                                                       placeholder="Name">
+                                                                       placeholder="Name" v-bind:value="this.$store.state.auth.name" readonly> 
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <input type="text"
-                                                                       placeholder="Email">
+                                                                       placeholder="Email" v-bind:value="this.$store.state.auth.email" readonly> 
                                                             </div>
                                                             <div class="col-lg-12">
                                                                 <textarea
-                                                                    placeholder="Messages"></textarea>
+                                                                    placeholder="Messages" v-model="formMessage.noidung"></textarea>
                                                                 <button type="submit"
                                                                         class="site-btn">Send
                                                                     message
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    
+                                                </div>
+
+                                                <div class="leave-comment" v-else>
+                                                    <h4>Bạn cần đăng nhập để thực hiện chức năng này</h4>
+                                                    <form @submit.prevent="login" class="comment-form">
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <input type="email"
+                                                                       placeholder="Email" v-model="form.email">
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <input type="password"
+                                                                       placeholder="Password" v-model="form.password">
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                <button type="submit"
+                                                                        class="site-btn">login
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -343,14 +355,25 @@
                 },
                 isLoading: true,
 
+                form: new Form({
+                    email:'',
+                    password:'',
+                }),
+                auth:'',
+                formMessage: new Form({
+                    noidung:'',
+                }),
+                comment:null,
+                allComment:[],
+                productId: null
             }
         },
         methods: {
             getProductDetail() {
                 Fire.$emit('onLoading');
                 this.isLoading = true;
-                var myCookie = document.cookie;
-                console.log("myCookie" + myCookie);
+                // var myCookie = document.cookie;
+                // console.log("myCookie" + myCookie);
                 var slug = this.$route.params.slug;
                 axios.get('/api/getProductDetail/' + slug)
                 .then(response => {
@@ -362,6 +385,67 @@
                     this.path.productType = response.data.product[0].product_type;
                     //this.isLoading = false;
                     Fire.$emit('offLoading');
+                    console.log("idproduct " + response.data.product[0].id);
+                    this.getComment( response.data.product[0].id);
+                    this.productId = response.data.product[0].id;
+                })
+                
+                
+            },
+            postCommment() {
+                console.log("idComment " + this.productId);
+                axios.post('/api/comment/' + this.productId, this.formMessage)
+                .then(response => {
+                    console.log(response.data.comment);
+                    this.comment = response.data.comment;
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.data.message
+                     });
+                     //current.$router.push({path: '/home'});
+                    Fire.$emit('comment');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
+             User() {
+                axios.get('/api/checklogin')
+                .then(response => {
+                    console.log(response.data.data);
+                    this.auth = response.data.data;
+                })
+            },
+            getComment(id) {
+                console.log("idGetComment " + id);
+                axios.get('/api/getAllCommentByIdProduct/'+id)
+                .then(response => {
+                    console.log(response.data.comment);
+                    this.allComment = response.data.comment;
+                })
+            },
+            login() {
+                var current = this;
+                 axios.post('/api/login', this.form)
+                .then(response => {
+                    console.log(response.data.data);
+                    let auth = response.data.data;
+                    this.$store.commit('login', auth);
+                    if (!auth || auth.length === 0) {
+                            Toast.fire({
+                            icon: 'error',
+                            title: response.data.message
+                        });
+                    }else{
+                        Toast.fire({
+                        icon: 'success',
+                        title: response.data.message
+                     });
+                     //current.$router.push({path: '/home'});
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
                 })
             },
             formatPrice(price) {
@@ -384,6 +468,11 @@
         },
         created() {
             this.getProductDetail();
+            this.User();
+            //this.getComment();
+            Fire.$on('comment', ()=>{
+               this.getComment(this.productId);
+            });
         }
     }
 </script>

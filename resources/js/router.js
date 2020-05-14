@@ -33,9 +33,14 @@ let routes = [
                 path: '/admin/edit-product/:id',
                 name: "edit-product",
                 component: require('./components/admin/EditProduct').default
-            }
+            },
+            {
+                path: '/admin/comment',
+                component: require('./components/admin/Comment').default
+            },
         ]
     },
+
 
 
     // { path: '/admin/dashboard', component: require('./components/admin/AdminHome').default },
@@ -106,7 +111,17 @@ let routes = [
                 component: require(
                     './components/customer/listProduct/ProductTypeList').default
             },
-
+            {
+                path: "/email",
+                name: "email",
+                component: require('./components/customer/auth/Email').default
+            },
+            {
+                path: "/password-reset",
+                name: "password-reset",
+                component: require('./components/customer/auth/ResetPassWord').default,
+                props: true
+            },
         ]
     },
 

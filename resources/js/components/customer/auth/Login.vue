@@ -40,7 +40,7 @@
                                             <input type="checkbox" id="save-pass">
                                             <span class="checkmark"></span>
                                         </label>
-                                        <a href="#" class="forget-pass">Forget your Password</a>
+                                        <router-link to="/email">Forget your Password</router-link>
                                     </div>
                                 </div>
                                 <button type="submit" class="site-btn login-btn">Sign In</button>

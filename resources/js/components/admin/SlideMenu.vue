@@ -103,6 +103,15 @@
                                 </p>
                             </router-link>
                         </li>
+                         <li class="nav-item">
+                            <router-link to="/admin/comment" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                   Comment
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </router-link>
+                        </li>
                         <li class="nav-item" @click="logout">
                             <a href="/loginAdmin" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
