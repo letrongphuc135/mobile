@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
-
+use App\Models\Role;
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
@@ -39,5 +39,8 @@ class User extends Authenticatable
     ];
     public function customer(){
         return $this->hasMany('App\Models\Customer','idUser','id');
+    }
+    public function role(){
+        return $this->belongsToMany(Role::class);
     }
 }

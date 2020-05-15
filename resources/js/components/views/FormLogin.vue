@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import LoginAdmin from "../admin//auth/LoginAdmin";
+    import LoginAdmin from "../admin/auth/LoginAdmin";
 
 
     export default {

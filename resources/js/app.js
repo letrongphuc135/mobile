@@ -35,7 +35,8 @@ import ReadMore from 'vue-read-more';
 
 Vue.use(ReadMore);
 
-Vue.component('admin', require('./components/Test').default);
+Vue.component('admin', require('./components/views/AdminMaster').default);
+Vue.component('login', require('./components/views/FormLogin').default);
 Vue.component('product',
     require('./components/views/ProductDetailView').default);
 

@@ -36,11 +36,17 @@ Route::resource('upload','PostImageController');
 Route::get('getProductByCategoryId/{id}','ProductController@getProductByCategoryId');
 Route::get('getProductById/{id}','ProductController@getProductById');
 
+
 //dk,dn
 Route::post('login','UserController@loginClient');
 Route::post('registerClient','UserController@registerClient');
+Route::post('registerAdmin','UserController@registerAdmin');
 Route::get('logout','UserController@logout');
 Route::get('checklogin','UserController@checklogin');
+Route::get('getAllUser','UserController@getAllUser');
+Route::get('getAllRole','UserController@getAllRole');
+Route::get('getUserById/{id}','UserController@getUserById');
+Route::post('edit/{id}','UserController@editUser');
 //Comment
 Route::post('comment/{id}','CommentController@addComment');
 Route::get('getAllCommentByIdProduct/{id}','CommentController@getComment');

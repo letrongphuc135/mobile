@@ -23,6 +23,7 @@
                         <div class="login-form">
                             <h2>Login</h2>
                             <form @submit.prevent="login">
+                                
                                 <div class="group-input">
                                     <label for="username">Username or email address *</label>
                                     <input type="email" id="username" name="email" v-model="form.email">
@@ -65,7 +66,12 @@
         methods: {
             login() {
                 var current = this;
-                 axios.post('/api/login', this.form)
+                const config = {
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    }
+                };
+                 axios.post('/api/login', this.form, config)
                 .then(response => {
                     console.log(response.data.data);
                     let auth = response.data.data;
@@ -81,7 +87,7 @@
                         icon: 'success',
                         title: response.data.message
                      });
-                     current.$router.push({path:'/admin/dashboard'});
+                     current.$router.push({name:'category'});
                     }
                     $('#exampleModal').modal('hide');
                     Fire.$emit('afterSaveChange');

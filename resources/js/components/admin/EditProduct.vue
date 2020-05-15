@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="text-center mb-3">Add product</h2>
+        <h2 class="text-center mb-3">Edit product</h2>
         <form @submit.prevent="updateProduct()">
             <div class="modal-body">
                 <div class="form-group">

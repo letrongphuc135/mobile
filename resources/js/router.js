@@ -48,6 +48,19 @@ let routes = [
         path: '/admin/comment',
         component: require('./components/admin/Comment').default
     },
+    {
+        path: '/admin/user',
+        component: require('./components/admin/User').default
+    },
+    {
+        path: '/admin/add-user',
+        component: require('./components/admin/AddUser').default
+    },
+    {
+        path: '/admin/edit-user/:id',
+        name: "edit-user",
+        component: require('./components/admin/EditUser').default
+    },
 
     // { path: '/admin/dashboard', component: require('./components/admin/AdminHome').default },
     // { path: '/admin/category', component: require('./components/admin/Category').default },

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\Role;
 use Auth;
 use Hash;
 use Validator;
+use DB;
 class UserController extends Controller
 {
     public function registerClient(Request $request){
@@ -101,6 +103,77 @@ class UserController extends Controller
     }
     else {
        return back()->with('error','Vui long kiem tra lai tai khoan cua ban');
+    }
+  }
+  public function getAllUser(){
+    $user=User::all();
+    return response()->json(['user'=>$user]);
+  }
+  public function getAllRole(){
+    $roles=Role::all();
+    return response()->json(['roles'=>$roles]);
+  }
+  public function registerAdmin(Request $request){
+    $this->validate($request,
+        [
+          'name'=>'required|min:2|max:255',
+          'email'=>'required|email|unique:users,email',
+          'password'=>'required|min:6|max:255',
+          're_password'=>'required|same:password',
+          'role'=>'required',
+        ],
+        [
+          'name.required'=>'Tên không được bỏ trống',
+          'name.min'=>'Tên phải có tối thiểu 2 ký tự',
+          'name.max'=>'Tên phải có tối đa 255 ký tự',
+          'email.required'=>'Email không được bỏ trống',
+          'email.email'=>'Phải có đúng định dạng email',
+          'email.unique'=>'E  mail nay da duoc su dung',
+          'password.required'=>'Mật khẩu không được bỏ trống',
+          'password.min'=>'Mật Khẩu phải có tối thiểu 6 ký tự',
+          'password.max'=>'Mật khẩu phải có tối đa 255 ký tự',
+          're_password.required'=>'Trường này không được bỏ trống',
+          're_password.same'=>'Nhập mật khẩu không đúng với trường mật khẩu',
+          'role.required'=>'Trường này không được bỏ trống',
+        ]
+      );
+      try{
+        DB::beginTransaction();
+        $userCreate = User::create([
+          'name' => $request->name,
+          'email' =>$request->email,
+          'password' => Hash::make($request->password),
+        ]);
+  
+        $roles=$request->role;
+        foreach ($roles as $roleId){
+         DB::table('role_user')->insert([
+           'user_id'=>$userCreate->id,
+           'role_id'=>$roleId,
+         ]);
+        }
+        DB::commit();
+        return response()->json(['message'=>'Thêm thanh cong']);
+      }catch(Exception $exception){
+        DB::rollBack();
+      }
+  }
+  public function getUserById($id){
+    $user=User::where('id',$id)->with('role')->get();
+    return response()->json(['user'=>$user]);
+  }
+  public function editUser(Request $request,$id){
+    try{
+      DB::beginTransaction();
+    $user=User::where('id',$id)->update([
+      'name'=>$request->name,
+      'email'=>$request->email,
+    ]);
+    DB::table('role_user')->where('user_id',$id)->delete();
+    $userCreate->role()->attach($request->role);
+    return response()->json(['message'=>'Thêm thanh cong']);
+    }catch(Exception $exception){
+      DB::rollBack();
     }
   }
 }
