@@ -176,7 +176,7 @@
                 </button>
             </div>
         </form>
-       <LoadingAnition :isLoading="isLoading"></LoadingAnition>
+       <LoadingAnition :isLoadingAnimation="isLoading"></LoadingAnition>
     </div>
 </template>
 

@@ -30,12 +30,18 @@
                                             <!--</div>-->
                                         <!--</div>-->
                                     <!--</div>-->
+                                    <agile class="main" ref="main" :options="options1" :as-nav-for="asNavFor1">
+                                        <div><img :src="mainImage"/></div>
+                                    </agile>
+                                    <agile class="thumbnails" ref="thumbnails" :options="options2" :as-nav-for="asNavFor2">
+                                        <div class=" slide--thumbniail" v-for="(slide, index) in slides" :key="index"  @click="switchImage(index)" style="height: 150px"><img :src="slide.url" style="width: 130px"/></div>
+                                    </agile>
+
 
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="product-details">
                                         <div class="pd-title">
-                                            <!--<span>oranges</span>-->
                                             <h3 class="font-weight-bold">{{productDetail.name}}</h3>
                                             <a href="#" class="heart-icon"><i
                                                 class="icon_heart_alt"></i></a>
@@ -345,7 +351,7 @@
                     quantity: 0,
                     productId: null,
                 },
-                mainImage: null,
+                mainImage: "https://images.unsplash.com/photo-1453831362806-3d5577f014a4?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ",
                 productDetail: null,
                 splitedStr: "",
                 quantity: 1,
@@ -365,8 +371,54 @@
                 }),
                 comment:null,
                 allComment:[],
-                productId: null
+                productId: null,
+
+                asNavFor1: [],
+                asNavFor2: [],
+                options1: {
+                    dots: false,
+                    fade: true,
+                    navButtons: false
+                },
+
+                options2: {
+                    autoplay: false,
+                    centerMode: true,
+                    dots: false,
+                    navButtons: false,
+                    slidesToShow: 1,
+                    responsive: [
+                        {
+                            breakpoint: 600,
+                            settings: {
+                                slidesToShow: 4
+                            }
+                        },
+                        {
+                            breakpoint: 1000,
+                            settings: {
+                                navButtons: false
+                            }
+                        }
+                    ]
+
+                },
+
+                slides: [
+                    'https://images.unsplash.com/photo-1453831362806-3d5577f014a4?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
+                    'https://images.unsplash.com/photo-1496412705862-e0088f16f791?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
+                    'https://images.unsplash.com/photo-1506354666786-959d6d497f1a?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
+                    'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
+                    'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
+                    'https://images.unsplash.com/photo-1472926373053-51b220987527?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
+                    'https://images.unsplash.com/photo-1497534547324-0ebb3f052e88?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ'
+                ],
+
             }
+        },
+        mounted () {
+            this.asNavFor1.push(this.$refs.thumbnails)
+            this.asNavFor2.push(this.$refs.main)
         },
         methods: {
             getProductDetail() {
@@ -381,6 +433,8 @@
                     this.productDetail = response.data.product[0];
                     this.productDetail.quantity = 1;
                     this.mainImage = response.data.product[0].product_img[0].url;
+                    this.slides = response.data.product[0].product_img;
+                    this.options2.responsive[0].settings.slidesToShow =  response.data.product[0].product_img.length;
                     this.path.category = response.data.product[0].category;
                     this.path.productType = response.data.product[0].product_type;
                     //this.isLoading = false;
@@ -425,7 +479,6 @@
                 })
             },
             login() {
-                var current = this;
                  axios.post('/api/login', this.form)
                 .then(response => {
                     console.log(response.data.data);
@@ -461,8 +514,9 @@
                 }
 
             },
-            switchImage(event) {
-                this.mainImage = event.target.src;
+            switchImage(index){
+                this.$refs.thumbnails.goTo(index);
+                this.mainImage = this.slides[index].url;
             }
 
         },
@@ -546,6 +600,91 @@ ul.a {
         border: 4px solid #f44336;
         border-left-color: transparent;
     }
+}
+
+.main {
+    margin-bottom: 30px;
+}
+
+.thumbnails {
+    margin: 0 -5px;
+    width: calc(100% + 10px);
+}
+
+.agile__nav-button {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 24px;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+.agile__nav-button .agile__nav-button {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.agile__nav-button .agile__nav-button--prev {
+    left: -45px;
+}
+.agile__nav-button .agile__nav-button--next {
+    right: -45px;
+}
+.agile__nav-button:hover {
+    color: #888;
+}
+.agile__dot {
+    margin: 0 10px;
+}
+.agile__dot button {
+    background-color: #eee;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: block;
+    height: 10px;
+    font-size: 0;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    width: 10px;
+}
+.agile__dot--current button, .agile__dot:hover button {
+    background-color: #888;
+}
+
+.slide {
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    color: #fff;
+    display: -webkit-box;
+    display: flex;
+    height: 450px;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.slide--thumbniail {
+    cursor: pointer;
+    height: 100px;
+    padding: 0 5px;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+.slide--thumbniail:hover {
+    opacity: 0.75;
+}
+.slide img {
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center;
+    object-position: center;
+    width: 100%;
 }
 
 </style>

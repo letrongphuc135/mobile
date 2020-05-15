@@ -250,6 +250,23 @@ class ProductController extends Controller
         return response()->json(['product'=> $productdetail]);
     }
 
+    public function getProductDetailById($id){
+        $productdetail=Products::where('id', $id)->get();
+        if(empty($productdetail)){
+            return response()->json(['error'=>'Khong tim thay san pham']);
+        }
+
+        foreach ($productdetail as $key => $value) {
+            $value->Category;
+            $value->ProductType;
+            $value->ProductImg;
+            $value->Specification;
+            $data[$key]=$value;
+        }
+
+        return response()->json($productdetail);
+    }
+
     public function getAllProduct(){
         $product = Products::all();
         $data=[];

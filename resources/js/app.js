@@ -47,23 +47,21 @@ Vue.filter('myDate', function (created) {
 });
 
 Vue.component('pagination', require('laravel-vue-pagination'));
-import jQuery from "../../public/assets/customer/fashi/js/jquery-3.3.1.min.js"
+// import jQuery from "../../public/assets/customer/fashi/js/jquery-3.3.1.min.js"
 // import jQuery from 'jquery';
 // import "../../public/assets/customer/fashi/js/owl.carousel.min.js"
 // import 'jquery';
 // window.$ = window.jQuery = require("jquery");
 import VueAgile from 'vue-agile'
-
+// import isotope from 'vueisotope'
 Vue.use(VueAgile);
-window.$ = window.jQuery = jQuery;
-
 window.i18n = i18n;
 
-// Vue.use(isotope);
 const app = new Vue({
     el: '#app',
     router,
     i18n,
+    // isotope,
     store,
 });
 

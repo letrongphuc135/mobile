@@ -104,7 +104,7 @@
                                     <p>Item Total:<span>£528.00</span></p>
                                 </div>
                                 <div class="ps-cart__footer" ><router-link class="ps-btn" style="background-color: #e7ab3c" :to="{name : 'cart'}">{{$t('viewcart')}}<i class="ps-icon-arrow-left"></i></router-link></div>
-                                <div class="ps-cart__footer"><router-link class="ps-btn" :to="{name : 'owl'}">{{$t('checkout')}}<i class="ps-icon-arrow-left"></i></router-link></div>
+                                <div class="ps-cart__footer"><router-link class="ps-btn" :to="{name : 'checkout'}">{{$t('checkout')}}<i class="ps-icon-arrow-left"></i></router-link></div>
                             </div>
                         </div>
                         <div class="menu-toggle"><span></span></div>

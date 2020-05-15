@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="ps-section ps-home-blog pt-80 pb-80">
+        <div class="ps-section ps-home-blog  pb-80">
             <div class="ps-container">
                 <div class="ps-section__header mb-50">
                     <h2 class="ps-section__title" data-mask="News">- Our Story</h2>

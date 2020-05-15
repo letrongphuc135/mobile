@@ -44,7 +44,7 @@ Route::get('getProductByCategoryId/{id}/{num}','ProductController@getProductByCa
 Route::get('getProductByProductTypeId/{id}/{num}','ProductController@getProductByProductTypeId');
 Route::get('getAllProductPaging/{num}','ProductController@getAllProductPaging');
 Route::get('getAllProduct','ProductController@getAllProduct');
-Route::get('getProductById/{id}','ProductController@getProductById');
+Route::get('getProductDetailById/{id}','ProductController@getProductDetailById');
 Route::get('searchProduct/{numberItem}','ProductController@searchProduct');
 Route::get('getProductDetail/{name}','ProductController@getProductDetail');
 

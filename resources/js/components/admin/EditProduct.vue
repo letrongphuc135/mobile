@@ -180,14 +180,20 @@
                 </button>
             </div>
         </form>
+        <LoadingAnition :isLoadingAnimation="isLoading"></LoadingAnition>
     </div>
 </template>
 
 <script>
+    import LoadingAnition from "../customer/LoadingAnimation";
     export default {
         name: "EditProduct",
+        components: {
+            LoadingAnition
+        },
         data() {
             return {
+                isLoading: false,
                 listImage: [],
                 listUploadImage: [],
                 avatar: '',
@@ -197,7 +203,6 @@
                 categories: [],
                 productTypes: [],
                 product: null,
-                listImage: [],
                 form: new Form({
                     id: '',
                     idCategory: -1,
@@ -262,30 +267,12 @@
                 this.listUploadImage = [];
                 this.listImage = [];
             },
-            addProduct() {
-                if (this.idCategory < 0){
-                    this.idCategory = null;
-                }
-                this.form.post('/api/admin/product', this.form)
-                .then(function (response) {
-                    console.log(response);
-                    Toast.fire({
-                        icon: 'success',
-                        title: response.data.message
-                    });
-                    $('#exampleModal').modal('hide');
-                    Fire.$emit('afterSaveChange');
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-            },
             getProductById() {
                 let id = this.$route.params.id;
-                axios.get('/api/getProductDetail/' +id)
+                axios.get('/api/getProductDetailById/' +id)
                 .then(response => {
-                    console.log(response.data);
-                    this.product = response.data.product;
+                    console.log(response.data[0]);
+                    this.product = response.data[0];
                     this.form.fill(this.product);
                     this.getAllProductType(this.product.idCategory);
                     this.listImage = this.product.product_img;
@@ -308,6 +295,7 @@
                 })
             },
             updateProduct() {
+                this.isLoading = true;
                 const config = {
                     headers: {
                         'content-type': 'multipart/form-data',
@@ -345,6 +333,7 @@
                 axios.post('/api/admin/product/'+this.form.id,formData,config)
                 .then(function (response) {
                     console.log(response);
+                    current.isLoading = false;
                     current.$router.push({path: '/admin/product'});
                     Toast.fire({
                         icon: 'success',
