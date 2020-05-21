@@ -82,12 +82,12 @@
 
                         <!--Cart order -->
                         <div class="ps-cart" v-if="this.$store.state.auth"><a class="ps-cart__toggle"
-                                                href="#"><span><i>{{this.$store.state.cartCount}}</i></span><i
+                                                href="#"><span><i>{{this.$store.state.cart.length}}</i></span><i
                             class="ps-icon-shopping-cart"></i></a>
                             <div class="ps-cart__listing">
                                 <div class="ps-cart__content">
                                     <div class="ps-cart-item" v-for="(item, index) in this.$store.state.cart" :key="index">
-                                        <a class="ps-cart-item__close" @click="$store.commit('removeFromCart',item)"></a>
+                                        <a class="ps-cart-item__close" @click="removeItem(item)"></a>
                                         <div class="ps-cart-item__thumbnail"><a
                                             href="product-detail.html"></a><img
                                             :src="item.product.product_img[0].url" alt=""></div>
@@ -159,6 +159,15 @@
             logout(){
                 this.$store.commit('logout');
                 this.$router.push({name: 'home'});
+
+            },
+            removeItem(item){
+                this.$store.commit('removeFromCart',item);
+                axios.post('/api/removeItem/'+item.product.id  +'/' + item.quantity)
+                .then(response => {
+                    console.log(response.data);
+                    Fire.$emit('productDetail');
+                })
 
             }
         },

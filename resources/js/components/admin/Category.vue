@@ -271,7 +271,7 @@
             },
             getCategoryById(category) {
                 this.editMode = true;
-                this.form.clear();
+                  this.form.clear();
                 $('#exampleModal').modal('show');
                 this.form.fill(category);
             },

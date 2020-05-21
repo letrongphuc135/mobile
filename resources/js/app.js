@@ -53,15 +53,16 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 // import 'jquery';
 // window.$ = window.jQuery = require("jquery");
 import VueAgile from 'vue-agile'
-// import isotope from 'vueisotope'
 Vue.use(VueAgile);
 window.i18n = i18n;
 
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js'
+Vue.use(Chartkick.use(Chart));
 const app = new Vue({
     el: '#app',
     router,
     i18n,
-    // isotope,
     store,
 });
 

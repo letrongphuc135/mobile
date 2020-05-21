@@ -19,20 +19,25 @@
             </div>
 
             <h2>Layout</h2>
-            <div>
-                <button v-for="layout in layouts" :class="[layout===currentLayout? 'is-checked' : '']" class="button" @click="changeLayout(layout)">
-                    {{layout}}
-                </button>
-            </div>
+            <!--<div>-->
+                <!--<button v-for="layout in layouts" :class="[layout===currentLayout? 'is-checked' : '']" class="button" @click="changeLayout(layout)">-->
+                    <!--{{layout}}-->
+                <!--</button>-->
+            <!--</div>-->
 
-            <isotope ref="cpt" id="root_isotope1" :item-selector="'element-item'" :list="list" :options='option' @filter="filterOption=arguments[0]" @sort="sortOption=arguments[0]" @layout="currentLayout=arguments[0]">
-                <div v-for="element,index in list" :class='[element.category]'  :key="index">
-                    <h3 class="name">{{element.name}}</h3>
-                    <p class="symbol">{{element.symbol}}</p>
-                    <p class="number">{{element.number}}</p>
-                    <p class="weight">{{element.weight}}</p>
-                </div>
-            </isotope>
+            <!--<isotope ref="cpt" id="root_isotope1" :item-selector="'element-item'" :list="list" :options='option' @filter="filterOption=arguments[0]" @sort="sortOption=arguments[0]" @layout="currentLayout=arguments[0]">-->
+                <!--<div v-for="element,index in list" :class='[element.category]'  :key="index">-->
+                    <!--<h3 class="name">{{element.name}}</h3>-->
+                    <!--<p class="symbol">{{element.symbol}}</p>-->
+                    <!--<p class="number">{{element.number}}</p>-->
+                    <!--<p class="weight">{{element.weight}}</p>-->
+                <!--</div>-->
+            <!--</isotope>-->
+        </div>
+
+        <div class="form-check" v-for="(item, index) in role" :key="index">
+            <input type="checkbox" class="form-check-input" v-model="permission" :value="item" >
+            <label class="form-check-label">{{item.name}}</label>
         </div>
 
     </div>
@@ -49,6 +54,47 @@
             return{
                 firstName: "foo",
                 products: [],
+                check: {},
+                role:[
+                    {
+                        name: "permission1",
+                        id: 1
+                    },
+                    {
+                        name: "permission2",
+                        id: 2
+                    },
+                    {
+                        name: "permission3",
+                        id: 3
+                    },
+                    {
+                        name: "permission4",
+                        id: 4
+                    },
+                    {
+                        name: "permission5",
+                        id: 5
+                    },
+                    {
+                        name: "permission6",
+                        id: 6
+                    },
+                ],
+                permission:[
+                    {
+                        name: "permission3",
+                        id: 3
+                    },
+                    {
+                        name: "permission4",
+                        id: 4
+                    },
+                    {
+                        name: "permission5",
+                        id: 5
+                    }
+                ],
                 layouts: [
                     "masonry",
                     "fitRows",

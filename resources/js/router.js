@@ -8,6 +8,11 @@ let routes = [
         redirect: {path: "/admin/category"},
         children: [
             {
+                path: "/admin/dashboard",
+                name: "dashboard",
+                component: () => import("./components/admin/DashBoard"),
+            },
+            {
                 path: "/admin/category",
                 name: "category",
                 component: () => import("./components/admin/Category"),
@@ -36,7 +41,12 @@ let routes = [
             },
             {
                 path: '/admin/comment',
+                name: "comment",
                 component: require('./components/admin/Comment').default
+            },
+            {
+                path: '/admin/order',
+                component: require('./components/admin/Order').default
             },
         ]
     },

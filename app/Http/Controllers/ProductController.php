@@ -51,7 +51,7 @@ class ProductController extends Controller
         $this->validate($request,
             [
                 'name' => 'required|min:2|max:255',
-//                'slug' => 'required|min:2|max:255'
+                'slug' => 'required|min:2|max:255|unique:product'
             ],
             [
                 'required' => 'Tên danh mục không được để trống',
@@ -68,11 +68,9 @@ class ProductController extends Controller
         $files=$request->file;
         $product=Products::create($dulieu);
         $idproduct=$product->id;
-        $specification = new Specifications();
-        $specification->product_id = $idproduct;
-        $specification->screen = $request->screen;
-//        $specification['product_id'] = $idproduct;
-//        $specification['screen'] = $request->screen;
+//        $specification = new Specifications();
+//        $specification->product_id = $idproduct;
+//        $specification->screen = $request->screen;
         $specification = $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory', 'sim', 'battery', 'design']);
         $specification['product_id'] = $idproduct;
         Specifications::create($specification);
@@ -155,32 +153,6 @@ class ProductController extends Controller
             ]
         );
 
-//        $validator=Validator::make($request->all(),
-//            [
-//                'name' => 'required|min:2|max:255',
-//                'description' => 'required|min:2',
-//                'quantity' => 'required|numeric',
-//                'price' => 'required|numeric',
-//                'promotion' => 'numeric',
-//            ],
-//            [
-//                'required' => ':attribute không được bỏ trống',
-//                'min' => ':attribute tối thiểu có 2 ký tự',
-//                'max' => ':attribute tối đa có 255 ký tự',
-//                'numeric' => ':attribute phải là một số ',
-//                'unique' => ':attribute đã tồn tại trong hệ thống'
-//            ],
-//            [
-//                'name' => 'Tên sản phẩm',
-//                'description' => 'Mô tả sản phẩm',
-//                'quantity' => 'Số lượng sản phẩm',
-//                'price' => 'Đơn giá sản phẩm',
-//                'promotion' => 'Giá khuyến mại',
-//            ]
-//        );
-//        if($validator->fails()){
-//            return response()->json(['error'=>'true','message' => $validator->errors()],200);
-//        }
         $product = Products::find($id);
         $idproduct=$product->id;
         $data = $request->all();
@@ -215,6 +187,8 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product =Products::find($id);
+        $specification = Specifications::where('product_id', $id);
+        $specification->delete();
         $image=ProductImage::where('idProduct',$id)->get();
         if(count($product->ProductImg)===0){
              if($product->delete()){
@@ -350,6 +324,8 @@ class ProductController extends Controller
             }
             foreach ($products as $key => $value) {
                 $value->ProductImg;
+                $value->Category;
+                $value->ProductType;
                 $products[$key] = $value;
             }
         }else{

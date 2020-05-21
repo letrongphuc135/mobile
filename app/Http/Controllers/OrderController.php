@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
+
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -15,6 +16,8 @@ class OrderController extends Controller
     public function index()
     {
         //
+        $order= Order::where('status', 0)->get();
+        return response()->json($order);
     }
 
     /**
@@ -36,6 +39,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+
     }
 
     /**
@@ -81,5 +85,11 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function getAllOrderPaging($numberItem)
+    {
+        $order = Order::paginate($numberItem);
+        return response()->json($order);
     }
 }

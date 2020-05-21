@@ -38,10 +38,10 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
+                                    <router-link to="/admin/dashboard" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v1</p>
-                                    </a>
+                                        <p>Dashboard v2</p>
+                                    </router-link>
                                 </li>
                                 <li class="nav-item">
                                     <a href="../../index2.html" class="nav-link">
@@ -57,15 +57,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <router-link to="/admin/dashboard" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </router-link>
-                        </li>
+
 
                         <li class="nav-item">
                             <router-link to="/admin/category" class="nav-link">
@@ -104,10 +96,19 @@
                             </router-link>
                         </li>
                          <li class="nav-item">
-                            <router-link to="/admin/comment" class="nav-link">
+                             <router-link :to="{ name: slug.aaa}"  class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                    Comment
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </router-link>
+                        </li>
+                        <li class="nav-item" @click="logout">
+                            <router-link to="/admin/order" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Order
                                     <span class="right badge badge-danger">New</span>
                                 </p>
                             </router-link>
@@ -133,6 +134,14 @@
 <script>
     export default {
         name: "SildeMenu",
+        data(){
+            return{
+                slug: {
+                    aaa: "comment"
+                }
+            }
+
+        },
         methods: {
              logout() {
                 axios.get('/api/logout')

@@ -431,7 +431,6 @@
                 .then(response => {
                     console.log(response.data.product[0]);
                     this.productDetail = response.data.product[0];
-                    this.productDetail.quantity = 1;
                     this.mainImage = response.data.product[0].product_img[0].url;
                     this.slides = response.data.product[0].product_img;
                     this.options2.responsive[0].settings.slidesToShow =  response.data.product[0].product_img.length;
@@ -510,7 +509,24 @@
                 if (this.$store.state.auth == null){
                     current.$router.push({name: 'login'});
                 } else {
-                    this.$store.commit('addToCart', {product: this.productDetail, quantity: parseInt(this.quantity), total: this.productDetail.price * this.quantity});
+                    console.log(parseInt(this.quantity));
+                    console.log("product " + this.productDetail.quantity);
+                    if (parseInt(this.quantity) > this.productDetail.quantity) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Số lượng sản phẩm không đủ đáp ứng...',
+                            text: 'Vui lòng mua dưới ' + (parseInt(this.productDetail.quantity) + 1) + ' sản phẩm',
+                        })
+                    }else {
+                        axios.post('/api/addItem/'+this.productDetail.id +'/' +this.quantity)
+                        .then(response => {
+                            console.log(response.data);
+                        });
+                        Fire.$emit('productDetail');
+                        this.$store.commit('addToCart', {product: this.productDetail, quantity: parseInt(this.quantity), total: this.productDetail.price * this.quantity});
+                    }
+
+
                 }
 
             },
@@ -526,6 +542,9 @@
             //this.getComment();
             Fire.$on('comment', ()=>{
                this.getComment(this.productId);
+            });
+            Fire.$on('productDetail', ()=>{
+                this.getProductDetail();
             });
         }
     }

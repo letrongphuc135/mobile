@@ -163,10 +163,12 @@
                                             </div>
                                             <ul>
                                                 <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><router-link
-                                                    :to="{ name: 'product-detail', params: {slugCategory: product.category.slug, slugProductType: product.product_type.slug, slug: product.slug} }">
-                                                    + Quick View
-                                                </router-link></li>
+                                                <li class="quick-view">
+                                                    <router-link
+                                                        :to="{ name: 'product-detail', params: {slugCategory: product.category.slug, slugProductType: product.product_type.slug, slug: product.slug} }">
+                                                        + Quick View
+                                                    </router-link>
+                                                </li>
                                                 <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                             </ul>
                                         </div>

@@ -262,7 +262,6 @@
                 this.listImage = [];
             },
             addProduct() {
-                this.isLoading = true;
                 const config = {
                     headers: {
                         'content-type': 'multipart/form-data',
@@ -295,7 +294,8 @@
                 formData.append('battery',current.form.battery);
                 formData.append('design',current.form.design);
                 formData.append('status',current.form.status);
-                axios.post('/api/admin/product',formData, config)
+                current.isLoading = true;
+                this.form.post('/api/admin/product',formData, config)
                 .then(function (response) {
                     console.log(response.data.message);
                     current.isLoading = false;
@@ -306,7 +306,11 @@
                     });
                 })
                 .catch(function (error) {
-                    this.isLoading = false;
+                    current.isLoading = false;
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Thêm thất bại"
+                    });
                     console.log(error);
                 });
             },
