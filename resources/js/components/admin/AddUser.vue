@@ -31,10 +31,17 @@
                            :class="{ 'is-invalid': form.errors.has('re_password') }">
                     <has-error :form="form" field="re_password"></has-error>
                 </div>
-                 <label>Role</label>
-                <select class="form-group" style="width: 100%; height: 45px; border-radius: 5px;" name="role[]" v-model="form.role" multiple > 
-                    <option  v-for="(role, index) in roles" :key="`${index}-${role.id}`" v-bind:value="role.id">{{ role.dislay_name }}</option>
-                </select>
+                <div class="form-group">
+                <div class="form-group">
+                    <label>Role</label>
+                    <select class="form-control" id="exampleFormControlSelect1" v-model="form.role"
+                            :class="{ 'is-invalid': form.errors.has('role') }">
+                        <option :value=-1 >----- Select a category -----</option>
+                        <option v-for="(role, index) in roles" :key="index" :value="role.id">{{role.name}}</option>
+                    </select>
+                    <has-error :form="form" field="role"></has-error>
+                </div>
+            </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
@@ -53,23 +60,14 @@
         name: "AddUser",
         data() {
             return {
-                // listImage: [],
-                // avatar: '',
-                // filename: null,
-                // file:[],
-                // success: '',
-                // data:'',
-                // editMode: false,
-                // categories: [],
                 roles: [],
-                // products: null,
                 form: new Form({
                     id: '',
                     name: '',
                     email: '',
                     password: '',
                     re_password: '',
-                    role:[],
+                    role:-1,
                 }),
                 editorConfig: {
                     // The configuration of the editor.

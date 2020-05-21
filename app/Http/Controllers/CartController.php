@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Categories;
@@ -9,6 +11,8 @@ use App\Models\Products;
 use App\Models\ProductTypes;
 use Cart;
 use Auth;
+use Mail;
+use App\Mail\ShoppingMail;
 class CartController extends Controller
 {
     //  public function __construct(){
@@ -49,6 +53,36 @@ class CartController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->all();
+        $customer = $data['customer'];
+        $cart = $data['cart'];
+        $data['code_order'] = 'order'.rand();
+        $order['code_order'] = $data['code_order'];
+        $order['idUser'] = $data['idUser'];
+        $order['email'] = $data['email'];
+        $order['name'] = $customer['name'];
+        $order['address'] = $customer['address'];
+        $order['phone'] = $customer['phone'];
+        $order['total_price'] = $data['totalNum'];
+        $order['status'] = 0;
+//        $result = Order::create($order);
+//        $idOrder = $result->id;
+        $orderDetail = [];
+//        $orderDetails = [];
+        foreach ($cart as $key => $value){
+//            $orderDetail['idOrder'] = $idOrder;
+//            $orderDetail['idProduct'] = $value['product']['id'];
+            $orderDetail['quantity'] = $value['quantity'];
+            $product = Products::find($value['product']['id']);
+            $product['quantity'] = $product['quantity'] - $orderDetail['quantity'];
+
+//            $orderDetail['price'] = $value['product']['price'];
+//            $orderDetail['image'] = $value['product']['product_img'][0]['url'];
+//            $orderDetails[$key] = OrderDetail::create($orderDetail);
+
+        }
+        //Mail::to($result->email)->send(new ShoppingMail($result, $orderDetails));
+        //return response()->json(['orderDetail'=> $orderDetail, 'cart' => $cart]);
     }
 
     /**

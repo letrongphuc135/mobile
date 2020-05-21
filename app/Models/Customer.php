@@ -8,7 +8,7 @@ class Customer extends Model
 {
     protected $table ='customer';
     protected $fillable = [
-        'idUser','email', 'address', 'phone',
+        'idUser', 'name',  'address', 'phone', 'active'
     ];
     public function User(){
     	return $this->belongsTo('App\User','idUser','id');

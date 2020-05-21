@@ -12,7 +12,7 @@
     {{--<!-- CSRF Token -->--}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
-{{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Ckfinder and Ckeditor -->
 
 
@@ -20,16 +20,14 @@
 <body class="hold-transition sidebar-mini" >
 <!-- Site wrapper -->
 <div class="wrapper" id="app">
-    {{--<router-view></router-view>--}}
-    <admin></admin>
+    <router-view></router-view>
+    {{--<admin></admin>--}}
     {{--<textarea class="ckeditor" id="editor1"></textarea>--}}
     {{--<router-view :user="{{auth()->user()}}"></router-view>--}}
 
     <footer class="main-footer">
-        <div class="float-right d-none d-sm-block">
-            <b>Version</b> 3.0.2
-        </div>
-        <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
+
+        <strong>Copyright &copy; 2020 <a href="http://adminlte.io">LeTrongPhuc</a>.</strong> All rights
         reserved.
     </footer>
 

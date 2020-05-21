@@ -46,22 +46,19 @@ class UserController extends Controller
    	 
     }
     public function loginClient(Request $request){
-       $validator=Validator::make($request->all(),
-        [
-          'email'=>'required|email',
-          'password'=>'required|min:6|max:255',
-        ],
-        [
-          'email.required'=>'Email không được bỏ trống',
-          'email.email'=>'Phải có đúng định dạng email',
-          'password.required'=>'Mật khẩu không được bỏ trống',
-          'password.min'=>'Mật Khẩu phải có tối thiểu 6 ký tự',
-          'password.max'=>'Mật khẩu phải có tối đa 255 ký tự',
-        ]
-      );
-      if($validator->fails()){
-          return response()->json(['error'=>'true','message' => $validator->errors()],200);
-      }
+        $this->validate($request,
+            [
+                'email'=>'required|email',
+                'password'=>'required|min:6|max:255',
+            ],
+            [
+                'email.required'=>'Email không được bỏ trống',
+                'email.email'=>'Phải có đúng định dạng email',
+                'password.required'=>'Mật khẩu không được bỏ trống',
+                'password.min'=>'Mật Khẩu phải có tối thiểu 6 ký tự',
+                'password.max'=>'Mật khẩu phải có tối đa 255 ký tự',
+            ]
+        );
       $data=array('email' =>$request->email ,'password'=>$request->password );
       if(Auth::attempt($data)){
         return response()->json(['message'=>'Dang nhap thanh cong','data'=>Auth::user()]);
@@ -106,11 +103,11 @@ class UserController extends Controller
     }
   }
   public function getAllUser(){
-    $user=User::all();
+    $user=User::with('role')->get();
     return response()->json(['user'=>$user]);
   }
   public function getAllRole(){
-    $roles=Role::all();
+    $roles=Role::with('permissions')->get();
     return response()->json(['roles'=>$roles]);
   }
   public function registerAdmin(Request $request){
@@ -144,14 +141,10 @@ class UserController extends Controller
           'email' =>$request->email,
           'password' => Hash::make($request->password),
         ]);
-  
-        $roles=$request->role;
-        foreach ($roles as $roleId){
          DB::table('role_user')->insert([
            'user_id'=>$userCreate->id,
-           'role_id'=>$roleId,
+           'role_id'=>$request->role,
          ]);
-        }
         DB::commit();
         return response()->json(['message'=>'Thêm thanh cong']);
       }catch(Exception $exception){
@@ -162,18 +155,45 @@ class UserController extends Controller
     $user=User::where('id',$id)->with('role')->get();
     return response()->json(['user'=>$user]);
   }
+  public function getPermissionUserLogin(){
+    if(Auth::check()){
+      $user=Auth::user();
+      $data=[];
+        foreach ($user->role as $key => $value){
+            $value->permissions;
+            $data[$key]=$value;
+        }
+    }
+    return response()->json(['user'=>$data]);
+  }
   public function editUser(Request $request,$id){
     try{
       DB::beginTransaction();
-    $user=User::where('id',$id)->update([
-      'name'=>$request->name,
-      'email'=>$request->email,
-    ]);
-    DB::table('role_user')->where('user_id',$id)->delete();
-    $userCreate->role()->attach($request->role);
-    return response()->json(['message'=>'Thêm thanh cong']);
+      $user=User::where('id',$id)->update([
+        'name'=>$request->name,
+        'email'=>$request->email,
+      ]);
+      DB::table('role_user')->where('user_id',$id)->delete();
+      $userCreate=User::find($id);
+      $userCreate->role()->attach($request->role);
+      DB::commit();
+      return response()->json(['message'=>'Sửa thành công']);
     }catch(Exception $exception){
       DB::rollBack();
     }
   }
+  public function deleteUser(Request $request,$id){
+    try{
+      DB::beginTransaction();
+      $user=User::find($id);
+      $user->role()->detach();
+      $user->delete();
+
+      DB::commit();
+      return response()->json(['message'=>'Xoá thành công']);
+    }catch(Exception $exception){
+      DB::rollBack();
+    }
+  }
+ 
 }

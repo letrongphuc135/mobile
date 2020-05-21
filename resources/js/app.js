@@ -13,7 +13,9 @@ import Swal from 'sweetalert2'
 import CKEditor from 'ckeditor4-vue';
 import store from "./store";
 import i18n from "./lang/i18n";
+import SortedTablePlugin from "vue-sorted-table";
 
+Vue.use(SortedTablePlugin);
 window.Swal = Swal;
 window.Fire = new Vue();
 Vue.use(CKEditor);
@@ -35,21 +37,32 @@ import ReadMore from 'vue-read-more';
 
 Vue.use(ReadMore);
 
-Vue.component('admin', require('./components/views/AdminMaster').default);
-Vue.component('login', require('./components/views/FormLogin').default);
-Vue.component('product',
-    require('./components/views/ProductDetailView').default);
+Vue.component('admin', require('./components/Test').default);
+Vue.component('owl',
+    require('./components/customer/home/Owl').default);
 
 Vue.filter('myDate', function (created) {
     moment.locale();
     return moment(created).format('L');
 });
 
-
+Vue.component('pagination', require('laravel-vue-pagination'));
+// import jQuery from "../../public/assets/customer/fashi/js/jquery-3.3.1.min.js"
+// import jQuery from 'jquery';
+// import "../../public/assets/customer/fashi/js/owl.carousel.min.js"
+// import 'jquery';
+// window.$ = window.jQuery = require("jquery");
+import VueAgile from 'vue-agile'
+// import isotope from 'vueisotope'
+Vue.use(VueAgile);
 window.i18n = i18n;
+
 const app = new Vue({
     el: '#app',
     router,
     i18n,
-    store
+    // isotope,
+    store,
 });
+
+

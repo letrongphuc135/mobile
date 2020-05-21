@@ -8,7 +8,7 @@ class OrderDetail extends Model
 {
     protected $table ='orderdetail';
     protected $fillable = [
-        'idOrder', 'idProduct', 'quantity','price',
+        'idOrder', 'idProduct', 'quantity','price', 'image'
     ];
     public function Order(){
     	return $this->belongsTo('App\Models\Order','idOrder','id');

@@ -7,7 +7,7 @@ class ProductTypes extends Model
 {
     protected $table ='producttype';
     protected $fillable = [
-        'idCategory', 'status', 'name',
+        'idCategory', 'status', 'name', 'slug'
     ];
     public function Category(){
     	return $this->belongsTo('App\Models\Categories','idCategory','id');

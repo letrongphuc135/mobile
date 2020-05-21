@@ -158,4 +158,27 @@ class ProductTypeController extends Controller
         $productype = ProductTypes::where('idCategory', $categoryId)->get();
         return response()->json(['product_type'=>$productype]);
     }
+
+    public function getProductTypeBySlug($slugProductType)
+    {
+        $productype = ProductTypes::where('slug', $slugProductType)->get();
+        return response()->json($productype);
+    }
+
+    public function getAllProductTypePaging($numberItem)
+    {
+        $productype = ProductTypes::paginate($numberItem);
+        return response()->json($productype);
+    }
+
+    public function searchProductType($numberItem)
+    {
+        if ($search = \Request::get('q')) {
+
+            $productype = ProductTypes::where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%$search%");
+            })->paginate($numberItem);
+            return $productype;
+        }
+    }
 }

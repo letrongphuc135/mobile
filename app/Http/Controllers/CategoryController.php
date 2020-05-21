@@ -20,6 +20,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+//        $category = Categories::paginate(2);
         $category = Categories::where('status', 1)->get();
         // return view('admin.pages.category.list',compact('category'));
         return response()->json($category);
@@ -35,14 +36,32 @@ class CategoryController extends Controller
         //return view('admin.pages.category.add');
     }
 
-    public function getAllCategory(){
+    public function getAllCategoryPaging($numberItem)
+    {
+        $category = Categories::paginate($numberItem);
+        return response()->json($category);
+    }
+
+    public function searchCategory($numberItem)
+    {
+        if ($search = \Request::get('q')) {
+
+            $category = Categories::where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%$search%");
+            })->paginate($numberItem);
+            return $category;
+        }
+    }
+
+    public function getAllCategory()
+    {
         $category = Categories::where('status', 1)->get();
-        $data=[];
+        $data = [];
         foreach ($category as $key => $value) {
             $value->productType;
-            $data[$key]=$value;
+            $data[$key] = $value;
         }
-        return response()->json(['category'=>$data]);
+        return response()->json(['category' => $data]);
     }
 
 
@@ -54,22 +73,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-//        $validator=Validator::make($request->all(),
-//            [
-//                'name'=>'required|min:2|max:255'
-//            ],
-//            [
-//                'required'=>'Tên danh mục không được để trống',
-//                'min'=>'Tên danh mục phải từ  2-255 ký tự',
-//                'max'=>'Tên danh mục phải từ  2-255 ký tự',
-//            ]
-//        );
-//        if($validator->fails()){
-//            return response()->json(['error'=>'true','message' => $validator->errors()],200);
-//        }
         $this->validate($request,
             [
-                'name' => 'required|min:2|max:255|unique:category'
+                'name' => 'required|min:2|max:255|unique:category',
+                'slug' => 'required|min:2|max:255|unique:category'
             ],
             [
                 'required' => 'Tên danh mục không được để trống',
@@ -82,9 +89,9 @@ class CategoryController extends Controller
         $data = $request->all();
         if (Categories::create($data)) {
             $categories = Categories::all();
-            return response()->json(['message' => 'them thanh cong', 'Categories' => $categories]);
+            return response()->json(['message' => 'Thêm thành công', 'Categories' => $categories]);
         } else {
-            return response()->json(['message' => 'them that bai']);
+            return response()->json(['message' => 'Thêm thất bại']);
         }
     }
 
@@ -109,8 +116,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-//        $category=Categories::find($id);
-//        return response()->json($category,200);
+
     }
 
     /**
@@ -122,29 +128,25 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(),
+        $this->validate($request,
             [
-                'name' => 'required|min:2|max:255'
+                'name' => 'required|min:2|max:255|unique:category',
+                'slug' => 'required|min:2|max:255'
             ],
             [
                 'required' => 'Tên danh mục không được để trống',
                 'min' => 'Tên danh mục phải từ  2-255 ký tự',
                 'max' => 'Tên danh mục phải từ  2-255 ký tự',
+                'unique' => 'Tên đã được sử dụng'
             ]
         );
-        if ($validator->fails()) {
-            return response()->json(['error' => 'true', 'message' => $validator->errors()], 200);
-        }
-        $this->validate($request, [
-            'name' => 'required|min:2|max:255|unique:category'
-        ]);
         $category = Categories::find($id);
-        $category->update([
-                'name' => $request->name,
-                'status' => $request->status,
-            ]
-        );
-        return response()->json(['success' => 'update thanh cong']);
+        $data = $request->all();
+        if ($category->update($data)) {
+            return response()->json(['message' => 'Cập nhật thành công'], 200);
+        } else {
+            return response()->json(['message' => 'Cập nhật thất bại'], 200);
+        }
     }
 
     /**
@@ -165,14 +167,22 @@ class CategoryController extends Controller
             return response()->json(['error' => 'Xoa that bai. Mot truong khac dang su dung truong nay xin vui long kiem tra lai', 'productType' => $productType, 'product' => $product]);
         }
     }
-    public function getProductType(){
+
+    public function getProductType()
+    {
         $category = Categories::all();
-        $data=[];
+        $data = [];
         foreach ($category as $key => $value) {
             $value->productType;
-            $data[$key]=$value;
+            $data[$key] = $value;
         }
-        return response()->json(['category'=>$data]);
+        return response()->json(['category' => $data]);
+    }
+
+    public function getCategoryBySlug($slug)
+    {
+        $category = Categories::where('slug', $slug)->get();
+        return response()->json($category);
     }
     public function getProductByProductTypeId($productTypeId){
         $products = Products::where('idProductType', $productTypeId)->get();

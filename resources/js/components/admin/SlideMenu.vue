@@ -24,105 +24,30 @@
                 </div>
 
                 <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <nav class="mt-2"  v-for="(user, index) in users" :key="`${index}-${user.id}`">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <li class="nav-item" v-for="(permission, index_permission) in user.permissions" :key="`${index_permission}-${permission.id}`">
+                            <router-link :to="{ name: permission.slug}" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
                                 <p>
-                                    Dashboard
-                                    <i class="right fas fa-angle-left"></i>
+                                    {{permission.name}}
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </router-link>
+                        </li>
+                         <li class="nav-item" >
+                            <a href="/admin/blog" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Blog
+                                    <span class="right badge badge-danger">New</span>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v1</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index2.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v2</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index3.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v3</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/admin/dashboard" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </router-link>
-                        </li>
-
-                        <li class="nav-item">
-                            <router-link to="/admin/category" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Category
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/admin/producttype" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    ProductType
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/admin/product" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Product
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/admin/user" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    User
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/admin/develop" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Develop
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </router-link>
-                        </li>
-                         <li class="nav-item">
-                            <router-link to="/admin/comment" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                   Comment
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </router-link>
                         </li>
                         <li class="nav-item" @click="logout">
-                            <a href="/admin/login" class="nav-link">
+                            <a href="/loginAdmin" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Logout
@@ -142,6 +67,11 @@
 <script>
     export default {
         name: "SildeMenu",
+         data() {
+            return {
+                users:[],
+            }
+        },
         methods: {
              logout() {
                 axios.get('/api/logout')
@@ -149,7 +79,24 @@
                     console.log(response.data);
 
                 })
+            },
+            getPermissionUserLogin(){
+                 axios.get('/api/getPermissionUserLogin')
+                .then(response => {
+                    console.log(response.data.user);
+                    this.users = response.data.user;
+                })
             }
+        },
+        created() {
+            this.getPermissionUserLogin();
+            // this.getAllRole();
+            // //this.getAllCategory();
+            // Fire.$on('afterSaveChange', ()=>{
+            //     this.getAllComment();
+            // });
+           
+            // setInterval(()=>this.getAllCategory(), 5000);
         }
     }
 </script>

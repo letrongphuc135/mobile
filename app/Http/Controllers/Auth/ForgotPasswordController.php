@@ -29,26 +29,6 @@ class ForgotPasswordController extends Controller
             'route'=>$url,
             'code'=>$checkUser->code
         ];
-        Mail::send('auth.resetPassword',$data, function($message) use ($email){
-	        $message->to($email, 'Reset Password Notification')->subject('Reset Password Notification');
-        });
-        return response()->json(['message'=>'Link lấy mật khẩu đã được gửi vào email của bạn']);
-    }
-    public function sendCodeResetPasswordAdmin(Request $request){
-        $email=$request->email;
-        $checkUser=User::where('email',$email)->first();
-        if(!$checkUser){
-            return response()->json(['message'=>'Email không tồn tại']);
-        }
-        $code=bcrypt(md5(time().$email));
-        $checkUser->code=$code;
-        $checkUser->time_code=Carbon::now();
-        $checkUser->save();
-        $url=route('get.send.link.reset.admin');
-        $data =[
-            'route'=>$url,
-            'code'=>$checkUser->code
-        ];
         Mail::send('admin.resetPassword',$data, function($message) use ($email){
 	        $message->to($email, 'Reset Password Notification')->subject('Reset Password Notification');
         });

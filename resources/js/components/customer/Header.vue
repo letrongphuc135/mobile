@@ -14,13 +14,9 @@
                                 <div class="login" v-if="this.$store.state.auth != null" >
                                     <a href="#">{{this.$store.state.auth.name}}</a>
                                     <a href="#" @click="logout">logout</a>
-                                </div> 
-                                <!-- <div class="login" v-if="auth" >
-                                    <a href="#">{{auth.name}}</a>
-                                    <a href="#" @click="logout">logout</a>
-                                </div>  -->
+                                </div>
                                 <div class="login" v-else >
-                                    <router-link to="/login-user">login & resgister</router-link>
+                                    <router-link :to="{name : 'login'}">login & resgister</router-link>
                                 </div>
 
                                 <div class="btn-group ps-dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$t('language[0].name')}}<i class="fa fa-angle-down"></i></a>
@@ -53,21 +49,21 @@
                                </ul>ss
                            </li> -->
                             <li class="menu-item menu-item-has-children has-mega-menu"
-                                v-for="(category, index) in categories" :key="index">><router-link to="/product-list">{{category.name}}</router-link>
+                                v-for="(category, index) in categories" :key="index">><router-link :to="{name:'product-category', params:{slugCategory: category.slug}}">{{category.name}}</router-link>
                                 <div class="mega-menu" v-if="category.product_type.length > 0">
                                     <div class="mega-wrap">
                                         <div class="mega-column">
                                             <!--v-for="(productType, indexPro) in category.product_type" :key="indexPro"-->
                                             <ul class="mega-item" v-for="(productType, indexPro) in category.product_type"
                                                 :key="indexPro" v-if="indexPro % 2 == 0">
-                                                <li><a href="product-listing.html">{{productType.name}}</a></li>
+                                                <li><router-link :to="{name:'product-productType', params:{slugCategory: category.slug, slugProductType : productType.slug}}">{{productType.name}}</router-link></li>
                                             </ul>
                                         </div>
                                         <div class="mega-column">
                                             <!--v-for="(productType, indexPro) in category.product_type" :key="indexPro"-->
-                                            <ul class="mega-item">
-                                                <li><a href="product-listing.html" v-for="(productType, indexPro) in category.product_type"
-                                                       :key="indexPro" v-if="indexPro % 2 !=0">{{productType.name}}</a></li>
+                                            <ul class="mega-item" v-for="(productType, indexPro) in category.product_type"
+                                                :key="indexPro" v-if="indexPro % 2 !=0">
+                                                <li><router-link :to="{name:'product-productType', params:{slugCategory: category.slug, slugProductType : productType.slug}}" >{{productType.name}}</router-link></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -85,7 +81,7 @@
                         </form>
 
                         <!--Cart order -->
-                        <div class="ps-cart"><a class="ps-cart__toggle"
+                        <div class="ps-cart" v-if="this.$store.state.auth"><a class="ps-cart__toggle"
                                                 href="#"><span><i>{{this.$store.state.cartCount}}</i></span><i
                             class="ps-icon-shopping-cart"></i></a>
                             <div class="ps-cart__listing">
@@ -94,7 +90,7 @@
                                         <a class="ps-cart-item__close" @click="$store.commit('removeFromCart',item)"></a>
                                         <div class="ps-cart-item__thumbnail"><a
                                             href="product-detail.html"></a><img
-                                            :src="item.product.image" alt=""></div>
+                                            :src="item.product.product_img[0].url" alt=""></div>
                                         <div class="ps-cart-item__content"><a
                                             class="ps-cart-item__title" href="product-detail.html">{{item.product.name}}</a>
                                             <p>
@@ -107,8 +103,8 @@
                                     <p>Number of items:<span>36</span></p>
                                     <p>Item Total:<span>£528.00</span></p>
                                 </div>
-                                <div class="ps-cart__footer" ><router-link class="ps-btn" style="background-color: #e7ab3c" to="/cart">{{$t('viewcart')}}<i class="ps-icon-arrow-left"></i></router-link></div>
-                                <div class="ps-cart__footer"><a class="ps-btn" href="cart.html">{{$t('checkout')}}<i class="ps-icon-arrow-left"></i></a></div>
+                                <div class="ps-cart__footer" ><router-link class="ps-btn" style="background-color: #e7ab3c" :to="{name : 'cart'}">{{$t('viewcart')}}<i class="ps-icon-arrow-left"></i></router-link></div>
+                                <div class="ps-cart__footer"><router-link class="ps-btn" :to="{name : 'checkout'}">{{$t('checkout')}}<i class="ps-icon-arrow-left"></i></router-link></div>
                             </div>
                         </div>
                         <div class="menu-toggle"><span></span></div>
@@ -162,14 +158,17 @@
             },
             logout(){
                 this.$store.commit('logout');
+                this.$router.push({name: 'home'});
+
             }
         },
 
         created() {
             this.User();
             this.getAllCategory();
-           
-        }
+        },
+
+
     }
 </script>
 

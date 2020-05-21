@@ -18,6 +18,7 @@ class CreateProductTypesTable extends Migration
             $table->integer('idCategory')->unsigned();
             $table->foreign('idCategory')->references('id')->on('category');
             $table->string('name');
+            $table->string('slug');
             $table->integer('status')->default(1);
             $table->timestamps();
         });

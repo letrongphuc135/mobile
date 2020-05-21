@@ -15,6 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        $customer = Customer::all();
+        return response()->json($customer);
         //
     }
 
@@ -36,12 +38,11 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $validator=Validator::make($request->all(),
+        $this->validate($request,
             [
-                'email' => 'required|email',
                 'phone' => 'required|numeric',
                 'address' => 'required|min:2|max:255',
-                
+
             ],
             [
                 'required' => ':attribute không được bỏ trống',
@@ -51,18 +52,21 @@ class CustomerController extends Controller
                 'email'=>':attribute phải là định dạng email',
             ],
             [
-                'email' => 'Email',
                 'phone' => 'Số điện thoại',
                 'address' => 'Địa chỉ giao hàng',
             ]
         );
-        if($validator->fails()){
-            return response()->json(['error'=>'true','message' => $validator->errors()],200);
+        $data = $request->all();
+//        $data['idUser'] = Auth::user()->id;
+        $customer = Customer::where('idUser', $data['idUser'])->where('active', 1)->first();
+        if (!empty($customer)){
+            if ($data['active'] != 0){
+                $customer->active = 0;
+                $customer->save();
+            }
         }
-        $data=$request->only('email','phone','address');
-        $data['idUser']=Auth::user()->id;
         $customer=Customer::create($data);
-        return response()->json($customer);
+        return response()->json(['message' => 'Thêm thành công', 'customer' => $customer]);
     }
 
     /**
@@ -94,9 +98,24 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, $id)
     {
         //
+        $data= $request->all();
+        $allCustomer = Customer::where('idUser', $data['idUser'])->where('active', 1)->first();
+        if (!empty($allCustomer)){
+            $allCustomer->active = 0;
+            $allCustomer->save();
+        }
+        $customer = Customer::find($id);
+        $data = $request->all();
+        $data['active'] = 1;
+        if ($customer->update($data)) {
+            return response()->json(['message' => 'Cập nhật thành công'], 200);
+        } else {
+            return response()->json(['message' => 'Cập nhật thất bại'], 200);
+        }
+
     }
 
     /**
@@ -107,6 +126,13 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
+        //
+    }
+
+    public function getCustomerAddressActive()
+    {
+        $customer = Customer::where('active', 1)->get();
+        return response()->json($customer);
         //
     }
 }

@@ -17,7 +17,7 @@
                                             <div class="grid-item__content-wrapper" ><a
                                                 class="ps-offer"
                                                 href="product-detail.html"><img 
-                                                src="assets/customer/images/offer/home-2-1.jpg"
+                                                src="https://cdn.tgdd.vn/2020/04/banner/800-300-800x300-31.png"
                                                 alt=""></a>
                                             </div>
                                         </div>
@@ -25,7 +25,7 @@
                                             <div class="grid-item__content-wrapper"><a
                                                 class="ps-offer"
                                                 href="product-detail.html"><img
-                                                src="assets/customer/images/offer/home-2-1.jpg"
+                                                src="https://cdn.tgdd.vn/2020/04/banner/pk-304-800-300-800x300-1.png"
                                                 alt=""></a>
                                             </div>
                                         </div>
@@ -35,7 +35,7 @@
                                             <div class="grid-item__content-wrapper"><a
                                                 class="ps-offer"
                                                 href="product-detail.html"><img
-                                                src="assets/customer/images/offer/home-2-1.jpg"
+                                                src="https://cdn.tgdd.vn/2020/04/banner/a51-800-300-800x300.png"
                                                 alt=""></a>
                                             </div>
                                         </div>
@@ -43,7 +43,7 @@
                                             <div class="grid-item__content-wrapper"><a
                                                 class="ps-offer"
                                                 href="product-detail.html"><img
-                                                src="assets/customer/images/offer/home-2-1.jpg"
+                                                src="https://cdn.tgdd.vn/2020/04/banner/a9new2f-800-300-800x300.png"
                                                 alt=""></a>
                                             </div>
                                         </div>
@@ -52,7 +52,7 @@
                                 <div class="col-md-4">
                                     <div class="grid-item__content-wrapper"><a class="ps-offer"
                                                                                href="product-detail.html"><img
-                                        src="assets/customer/images/offer/home-2-5.jpg"
+                                        src="https://cdn.cellphones.com.vn/media/wysiwyg/mobile/realme/realme-6i-09.jpg"
                                         alt=""></a>
                                     </div>
                                 </div>

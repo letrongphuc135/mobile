@@ -1,11 +1,16 @@
 <template>
     <div>
-       <router-link to="/admin/add-user">
-            <button class="btn btn-outline-success float-right" data-toggle="modal"
-                    data-target="#exampleModal">Add user
-            </button>
-        </router-link>
+        <button class="btn btn-outline-success float-right" data-toggle="modal"
+                data-target="#exampleModal" @click="openUser()">Add User
+        </button>
         <h2 class="text-center mb-3">All User</h2>
+        <div class="d-flex justify-content-end">
+            <p style="padding: 10px">Hiển thị số sản phẩm</p>
+            <select style="width: 10%" class="form-control" v-model="itemPerPage" @change="getAllProductType(itemPerPage)"
+                    :class="{ 'is-invalid': form.errors.has('idCategory') }">
+                <option v-for="(item, index) in numPerPageList" :key="index" :value="item">{{item}}</option>
+            </select>
+        </div>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -25,10 +30,6 @@
                 <td>{{user.created_at | myDate}}</td>
                 <td>
                     <div class="btn-group">
-                         <!-- <router-link
-                            :to="{name: 'edit-user', params:{id: user.id}}"
-                            class="btn btn-outline-warning">Edit
-                        </router-link> -->
                         <button
                             class="btn btn-outline-warning"
                             data-target="#exampleModal"
@@ -36,7 +37,7 @@
                             @click="getUserById(user)">Edit
                         </button>
                         <button
-                            @click="deleteComment(comment.id, index)"
+                            @click="deleteUser(user.id, index)"
                             class="btn btn-outline-danger">Delete
                         </button>
                     </div>
@@ -44,65 +45,73 @@
             </tr>
             </tbody>
         </table>
-
+        <div class="d-flex justify-content-center">
+            <pagination style="width: auto" class="text-center mb-3" :data="productTypes" @pagination-change-page="getResults"></pagination>
+        </div>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-success">Reply Comment</h5>
+                        <h5 v-if="editMode" class="modal-title text-success">Edit User</h5>
+                        <h5 v-else class="modal-title text-success">Add User</h5>
                         <button type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <h2 class="text-center mb-3">Edit User</h2>
-        <form @submit.prevent="addUser">
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input v-model="form.name" type="text" name="name"
-                           class="form-control"
-                           :class="{ 'is-invalid': form.errors.has('name') }">
-                    <has-error :form="form" field="name"></has-error>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input v-model="form.email" type="text" name="email"
-                           class="form-control"
-                           :class="{ 'is-invalid': form.errors.has('email') }">
-                    <has-error :form="form" field="name"></has-error>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input v-model="form.password" type="password" name="password"
-                           class="form-control"
-                           :class="{ 'is-invalid': form.errors.has('password') }">
-                    <has-error :form="form" field="password"></has-error>
-                </div>
-                <div class="form-group">
-                    <label>Comfim Password</label>
-                    <input v-model="form.re_password" type="password" name="re_password"
-                           class="form-control"
-                           :class="{ 'is-invalid': form.errors.has('re_password') }">
-                    <has-error :form="form" field="re_password"></has-error>
-                </div>
-                 <label>Role</label>
-                <select class="form-group" style="width: 100%; height: 45px; border-radius: 5px;" name="role[]" v-model="form.role" multiple > 
-                    <option  v-for="(role, index) in roles" :key="`${index}-${role.id}`" v-bind:value="role.id">{{ role.dislay_name }}</option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Close
-                </button>
-                <button type="submit" class="btn btn-primary">Save
-                    changes
-                </button>
-            </div>
-        </form>
-    </div>
+
+                    <form @submit.prevent="editMode ? updateUser() : addUser()">
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input v-model="form.name" type="text" name="name"
+                                       class="form-control"
+                                       :class="{ 'is-invalid': form.errors.has('name') }">
+                                <has-error :form="form" field="name"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input v-model="form.email" type="text" name="email"
+                                       class="form-control"
+                                       :class="{ 'is-invalid': form.errors.has('email') }">
+                                <has-error :form="form" field="email"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input v-model="form.password" type="text" name="password"
+                                       class="form-control"
+                                       :class="{ 'is-invalid': form.errors.has('password') }">
+                                <has-error :form="form" field="password"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label>Re_Password</label>
+                                <input v-model="form.re_password" type="text" name="re_password"
+                                       class="form-control"
+                                       :class="{ 'is-invalid': form.errors.has('re_password') }">
+                                <has-error :form="form" field="re_password"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label>Role</label>
+                                <select class="form-control" id="exampleFormControlSelect1" v-model="form.role"
+                                        :class="{ 'is-invalid': form.errors.has('role') }">
+                                    <option :value=-1>----- Select a role -----</option>
+                                    <option v-for="(role, index_role) in roles" :key="index_role" :value="role.id">{{role.name}}</option>
+                                </select>
+                                <has-error :form="form" field="idCategory"></has-error>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">Close
+                            </button>
+                            <button type="submit" class="btn btn-primary">Save
+                                changes
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -111,21 +120,26 @@
 
 <script>
     export default {
-        name: "User",
+       name: "User",
         data() {
             return {
                 editMode: false,
                 users:[],
-                user: null,
+                roles:[],
                 form: new Form({
                     id: '',
                     name: '',
                     email: '',
                     password: '',
                     re_password: '',
-                    role:[],
+                    role:-1,
                 }),
-                // error: null,
+                itemPerPage: 2,
+                numPerPageList: [
+                    2,
+                    3,
+                    10
+                ],
                 
             }
         },
@@ -133,6 +147,7 @@
             openUser(){
                 this.editMode = false;
                 this.form.reset();
+        
             },
             getAllUser() {
                 axios.get('/api/getAllUser')
@@ -146,14 +161,94 @@
                 this.form.clear();
                 $('#exampleModal').modal('show');
                 this.form.fill(user);
+            
+            },
+            getAllRole() {
+                axios.get('/api/getAllRole')
+                .then(response => {
+                    console.log(response.roles);
+                    this.roles = response.data.roles;
+                })
+            },
+            addUser() {
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    }
+                };
+                 var current = this;
+                 this.form.post('/api/registerAdmin', this.form, config)
+                .then(function (response) {
+                    console.log(response);
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.data.message
+                    });
+                    $('#exampleModal').modal('hide');
+                    Fire.$emit('loadUser');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
+            updateUser() {
+                const config = {
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    }
+                };
+                this.form.post('/api/editUserAdmin/'+this.form.id,config)
+                .then(function (response) {
+                    console.log(response);
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'update successfully'
+                    });
+                    $('#exampleModal').modal('hide');
+                    Fire.$emit('loadUser');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
+            deleteUser(id, index) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        var app = this;
+                        axios.delete('/api/deleteUserAdmin/' + id)
+                        .then(function (resp) {
+                            app.users.splice(index, 1);
+                            console.log(resp)
+                        })
+                        .catch(function (resp) {
+                            console.log(resp)
+                        });
+                    }
+
+                })
+
             },
         },
         created() {
             this.getAllUser();
-            // //this.getAllCategory();
-            // Fire.$on('afterSaveChange', ()=>{
-            //     this.getAllComment();
-            // });
+            this.getAllRole();
+            Fire.$on('loadUser', ()=>{
+                this.getAllUser();
+            });
            
             // setInterval(()=>this.getAllCategory(), 5000);
         }

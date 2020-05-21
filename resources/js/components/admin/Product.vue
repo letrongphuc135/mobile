@@ -7,55 +7,134 @@
         </router-link>
 
         <h2 class="text-center mb-3">All product</h2>
-        <table class="table table-bordered table-hover">
+        <div class="d-flex justify-content-end">
+            <p style="padding: 10px">Hiển thị số sản phẩm</p>
+            <select style="width: 10%" class="form-control" id="exampleFormControlSelect1" v-model="itemPerPage" @change="getAllProduct(itemPerPage)"
+                    :class="{ 'is-invalid': form.errors.has('idCategory') }">
+                <option v-for="(item, index) in numPerPageList" :key="index" :value="item">{{item}}</option>
+            </select>
+        </div>
+        <!--<table class="table table-bordered table-hover">-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th scope="col">Id</th>-->
+                <!--<th scope="col">Name</th>-->
+                <!--<th scope="col">Quantity</th>-->
+                <!--<th scope="col">Image</th>-->
+                <!--<th scope="col">Promotion</th>-->
+                <!--<th scope="col">Category</th>-->
+                <!--<th scope="col">Product type</th>-->
+                <!--<th scope="col">Created At</th>-->
+                <!--<th scope="col">Action</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+
+            <!--<tr v-for="(product, index) in products" :key="`${index}-${product.id}`">-->
+                <!--<th scope="row">{{index+1}}</th>-->
+                <!--<td>{{product.name}}</td>-->
+                <!--<td>{{product.quantity}}</td>-->
+                <!--<td v-if="product.product_img.length > 0">-->
+                    <!--<img :src="product.product_img[0].url" style="width: 50px; height: 50px">-->
+                <!--</td>-->
+                <!--<td v-else>-->
+                    <!--<img src="../../../../public/assets/customer/fashi/img/no-image.jpg" alt="" style="width: 50px; height: 50px">-->
+                <!--</td>-->
+                <!--<td>{{product.promotion}}</td>-->
+                <!--<td>{{product.category.name}}</td>-->
+                <!--<td>{{product.product_type.name}}</td>-->
+                <!--<td>{{product.created_at | myDate}}</td>-->
+                <!--<td>-->
+                    <!--<div class="btn-group">-->
+                        <!--<router-link-->
+                            <!--:to="{name: 'edit-product', params:{id: product.id}}"-->
+                            <!--class="btn btn-outline-warning">Edit-->
+                        <!--</router-link>-->
+                        <!--<button-->
+                            <!--@click="deleteProductType(product.id, index)"-->
+                            <!--class="btn btn-outline-danger">Delete-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <sorted-table :values="products.data" class="table table-bordered table-hover">
             <thead>
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Image</th>
-                <th scope="col">Promotion</th>
-                <th scope="col">Category</th>
-                <th scope="col">Product type</th>
-                <th scope="col">Created At</th>
-                <th scope="col">Action</th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="id">ID</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="name">Name</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="quantity">Quantity</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="image">Image</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="promotion">Promotion</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="slug">Slug</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="categoryName">Category</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="productTypeName">ProductType</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="created_at">Created at</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
+                    Action
+                </th>
             </tr>
             </thead>
-            <tbody>
-
-            <tr v-for="(product, index) in products" :key="`${index}-${product.id}`">
-                <th scope="row">{{index+1}}</th>
-                <td>{{product.name}}</td>
-                <td>{{product.quantity}}</td>
-                <td >
-                    <img :src="product.product_img[0].url" style="width: 50px; height: 50px">
-                </td>
-                <td>{{product.promotion}}</td>
-                <td>{{product.category.name}}</td>
-                <td>{{product.product_type.name}}</td>
-                <td>{{product.created_at | myDate}}</td>
-                <td>
-                    <div class="btn-group">
-                        <router-link
-                            :to="{name: 'edit-product', params:{id: product.id}}"
-                            class="btn btn-outline-warning">Edit
-                        </router-link>
-                        <button
-                            @click="deleteProductType(product.id, index)"
-                            class="btn btn-outline-danger">Delete
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            <template #body="sort">
+                <tbody>
+                <tr v-for="(value, index) in sort.values" :key="`${index}-${value.id}`">
+                    <td>{{ value.id }}</td>
+                    <td>{{ value.name }}</td>
+                    <td>{{ value.quantity }}</td>
+                    <td v-if="value.product_img.length > 0">
+                        <img :src="value.product_img[0].url" style="width: 50px; height: 50px">
+                    </td>
+                    <td v-else>
+                        <img src="../../../../public/assets/customer/fashi/img/no-image.jpg" alt=""
+                             style="width: 50px; height: 50px">
+                    </td>
+                    <td>{{ value.promotion }}</td>
+                    <td>{{ value.slug }}</td>
+                    <td>{{ value.categoryName }}</td>
+                    <td>{{ value.productTypeName }}</td>
+                    <td>{{ value.created_at | myDate }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <router-link
+                                :to="{name: 'edit-product', params:{id: value.id}}"
+                                class="btn btn-outline-warning">Edit
+                            </router-link>
+                            <button
+                                @click="deleteProduct(value.id, index)"
+                                class="btn btn-outline-danger">Delete
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </template>
+        </sorted-table>
+        <div class="d-flex justify-content-center">
+            <pagination style="width: auto" class="text-center mb-3" :data="products" @pagination-change-page="getResults"></pagination>
+        </div>
     </div>
 </template>
 
 <script>
-    // import ('../../../../node_modules/admin-lte/dist/css/adminlte.min.css');
-    // import ('../../../../node_modules/admin-lte/dist/js/adminlte.js');
-    // import ('../../../../node_modules/admin-lte/plugins/fontawesome-free/css/all.css');
     export default {
         name: "Product",
         data() {
@@ -64,7 +143,7 @@
                 categories: [],
                 productType: null,
                 category: null,
-                products: [],
+                products: {},
                 form: new Form({
                     id: '',
                     idCategory: -1,
@@ -79,36 +158,34 @@
                     promotion: '',
                 }),
                 categoryId: '',
+                itemPerPage: 2,
+                numPerPageList: [
+                    2,
+                    3,
+                    5
+                ]
             }
         },
         methods: {
-            openProduct(){
-                this.editMode = false;
-                this.form.reset();
-            },
-            addProduct() {
-                if (this.idCategory < 0){
-                    this.idCategory = null;
+
+            getAllProduct(itemPerPage) {
+                if (this.$store.state.search != null){
+                    this.search();
+                }else {
+                    axios.get('/api/getAllProductPaging/'+ itemPerPage)
+                    .then(response => {
+                        console.log(response.data);
+                        this.products = response.data;
+                    })
                 }
-                this.form.post('/api/admin/product', this.form)
-                .then(function (response) {
-                    console.log(response);
-                    Toast.fire({
-                        icon: 'success',
-                        title: response.data.message
-                    });
-                    $('#exampleModal').modal('hide');
-                    Fire.$emit('afterSaveChange');
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+
             },
-            getAllProduct() {
-                axios.get('/api/getAllProduct')
+            search(){
+                console.log(this.$store.state.search);
+                axios.get('/api/searchProduct/'+this.itemPerPage+'?q='+this.$store.state.search)
                 .then(response => {
                     console.log(response.data);
-                    this.products = response.data.product;
+                    this.products = response.data;
                 })
             },
             deleteProduct(id, index) {
@@ -128,9 +205,9 @@
                             'success'
                         )
                         var app = this;
-                        axios.delete('/api/admin/producttype/' + id)
+                        axios.delete('/api/admin/product/' + id)
                         .then(function (resp) {
-                            app.categories.splice(index, 1);
+                            app.products.splice(index, 1);
                             console.log(resp)
                         })
                         .catch(function (resp) {
@@ -139,6 +216,20 @@
                         });
                     }
 
+                })
+            },
+            getResults(page = 1){
+                var num = this.itemPerPage;
+                var url;
+                if (this.$store.state.search == null){
+                    url = '/api/getAllProductPaging/'+num+'?page=' + page;
+                }else {
+                    url = '/api/searchProduct/'+num+ "?q="+this.$store.state.search+'&page=' + page;
+                }
+                axios.get(url)
+                .then(response => {
+                    console.log(response.data);
+                    this.products = response.data;
                 })
             },
             getProductById(producttype) {
@@ -164,11 +255,18 @@
             }
         },
         created() {
-            this.getAllProduct();
+            this.getAllProduct(this.itemPerPage);
             // Fire.$on('afterSaveChange', ()=>{
             //     this.getAllProduct();
             // });
-            // setInterval(()=>this.getAllCategory(), 5000);
+            // setInterval(()=>this.getAllProduct(this.itemPerPage), 5000);
+            Fire.$on('search', ()=>{
+                if (this.$store.state.search != null){
+                    this.search();
+                } else {
+                    this.getAllProduct(this.itemPerPage);
+                }
+            });
         }
     }
 </script>

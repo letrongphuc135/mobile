@@ -58,7 +58,7 @@
 
                             <div class="form-group">
                                 <label>Comment Content</label>
-                                <ckeditor :config="editorConfig" v-model="form.content" name="content"></ckeditor>      
+                                <ckeditor  v-model="form.content" name="content"></ckeditor>
                                 <has-error :form="form" field="content"></has-error>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                 this.getAllComment();
             });
            
-            setInterval(()=>this.getAllCategory(), 5000);
+            //setInterval(()=>this.getAllCategory(), 5000);
         }
     }
 </script>

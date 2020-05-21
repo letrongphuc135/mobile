@@ -15,14 +15,14 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        // if(Auth::check()){
-        //     if(Auth::user()->role>0){
-        //         return $next($request);
-        //     }else {
-        //         return redirect()->route('login.admin')->with('error','ban khong co quyen vao trang nay');
-        //     }
-        // }else{
-        //      return redirect()->route('login.admin')->with('error','ban chua dang nhap');
-        // }
+        if(Auth::check()){
+            if(count(Auth::user()->role)!==0){
+                return $next($request);
+            }else {
+                return redirect()->route('login.admin')->with('error','ban khong co quyen vao trang nay');
+            }
+        }else{
+             return redirect()->route('login.admin')->with('error','ban chua dang nhap');
+        }
     }
 }

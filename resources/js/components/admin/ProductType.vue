@@ -4,20 +4,29 @@
                 data-target="#exampleModal" @click="openProductType()">Add product type
         </button>
         <h2 class="text-center mb-3">All product type</h2>
+        <div class="d-flex justify-content-end">
+            <p style="padding: 10px">Hiển thị số sản phẩm</p>
+            <select style="width: 10%" class="form-control" v-model="itemPerPage" @change="getAllProductType(itemPerPage)"
+                    :class="{ 'is-invalid': form.errors.has('idCategory') }">
+                <option v-for="(item, index) in numPerPageList" :key="index" :value="item">{{item}}</option>
+            </select>
+        </div>
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Name</th>
+                <th scope="col">Slug</th>
                 <th scope="col">Created At</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
 
-            <tr v-for="(productType, index) in productTypes" :key="`${index}-${productType.id}`">
+            <tr v-for="(productType, index) in productTypes.data" :key="`${index}-${productType.id}`">
                 <th scope="row">{{index+1}}</th>
                 <td>{{productType.name}}</td>
+                <td>{{productType.slug}}</td>
                 <td>{{productType.created_at | myDate}}</td>
                 <td>
                     <div class="btn-group">
@@ -36,7 +45,9 @@
             </tr>
             </tbody>
         </table>
-
+        <div class="d-flex justify-content-center">
+            <pagination style="width: auto" class="text-center mb-3" :data="productTypes" @pagination-change-page="getResults"></pagination>
+        </div>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -44,22 +55,30 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 v-if="editMode" class="modal-title text-success">Edit
-                            category</h5>
+                            product type</h5>
                         <h5 v-else class="modal-title text-success">Add
-                            category</h5>
+                            product type</h5>
                         <button type="button" class="close" data-dismiss="modal"
                                 aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+
                     <form @submit.prevent="editMode ? updateProductType() : addProductType()">
                         <div class="modal-body">
 
                             <div class="form-group">
-                                <label>Category name</label>
+                                <label>ProductType name</label>
                                 <input v-model="form.name" type="text" name="name"
                                        class="form-control"
                                        :class="{ 'is-invalid': form.errors.has('name') }">
+                                <has-error :form="form" field="name"></has-error>
+                            </div>
+                            <div class="form-group">
+                                <label>Product type slug</label>
+                                <input v-model="form.slug" type="text" name="name"
+                                       class="form-control"
+                                       :class="{ 'is-invalid': form.errors.has('slug') }">
                                 <has-error :form="form" field="name"></has-error>
                             </div>
                             <div class="form-group">
@@ -121,14 +140,21 @@
             return {
                 editMode: false,
                 categories: [],
-                productTypes: [],
+                productTypes: {},
                 form: new Form({
                     id: '',
                     idCategory: -1,
                     name: '',
                     status: 1,
+                    slug: '',
                     created_at: ''
                 }),
+                itemPerPage: 2,
+                numPerPageList: [
+                    2,
+                    3,
+                    10
+                ],
             }
         },
         methods: {
@@ -154,12 +180,38 @@
                     console.log(error);
                 })
             },
-            getAllProductType() {
-                axios.get('/api/admin/producttype')
+            // getAllProductType() {
+            //     axios.get('/api/admin/producttype')
+            //     .then(response => {
+            //         console.log(response.data);
+            //         this.productTypes = response.data;
+            //     })
+            // },
+            getResults(page = 1){
+                var num = this.itemPerPage;
+                var url;
+                if (this.$store.state.search == null){
+                    url = '/api/getAllProductTypePaging/'+num+'?page=' + page;
+                }else {
+                    url = '/api/search/'+num+'?page=' + page + "&q="+this.$store.state.search;
+                }
+                axios.get(url)
                 .then(response => {
                     console.log(response.data);
                     this.productTypes = response.data;
                 })
+            },
+            getAllProductType(itemPerPage) {
+                if (this.inputSearch != null){
+                    this.search();
+                } else {
+                    axios.get('/api/getAllProductTypePaging/'+ itemPerPage)
+                    .then(response => {
+                        console.log(response.data);
+                        this.productTypes = response.data;
+                    })
+                }
+
             },
             getAllCategory() {
                 axios.get('/api/admin/category')
@@ -183,7 +235,7 @@
                             'Deleted!',
                             'Your file has been deleted.',
                             'success'
-                        )
+                        );
                         var app = this;
                         axios.delete('/api/admin/producttype/' + id)
                         .then(function (resp) {
@@ -223,9 +275,9 @@
         },
         created() {
             this.getAllCategory();
-            this.getAllProductType();
+            this.getAllProductType(this.itemPerPage);
             Fire.$on('afterSaveChange', ()=>{
-                this.getAllProductType();
+                this.getAllProductType(this.itemPerPage);
             });
             // setInterval(()=>this.getAllCategory(), 5000);
         }

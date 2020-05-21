@@ -42,7 +42,7 @@
                                 <button type="submit" class="site-btn register-btn">REGISTER</button>
                             </form>
                             <div class="switch-login">
-                                <router-link to="/login-user" class="or-login">Or Login</router-link>
+                                <router-link :to="{name : 'login'}" class="or-login">Or Login</router-link>
                             </div>
                         </div>
                     </div>

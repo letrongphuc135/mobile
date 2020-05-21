@@ -27,25 +27,76 @@
 //Route::get('/product-detail', function () {
 //    return view('public/product');
 //});
+Route::get('/owl2', function () {
+    return view('public/owl');
+});
+Route::get('/home', function () {
+    return view('public/index');
+});
 
 Auth::routes();
 
 Route::get('/', 'IndexController@index');
-Route::get('/home', 'IndexController@index');
-Route::get('/admin/dashboard', 'HomeController@index')->name('admin');
-Route::get('/admin/login', 'HomeController@login')->name('login.admin');
-Route::get('/admin/email', 'HomeController@index');
-Route::get('/admin/resetpass', 'IndexController@index')->name('get.send.link.reset.admin');
+//Route::get('/home', 'IndexController@index');
+Route::get('/admin', 'HomeController@index')->name('admin');
+Route::get('/loginAdmin', function () {
+    return view('auth/login');
+});
 //Route::get('/admin/{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
-Route::get('/admin/{path}', 'HomeController@index');
+Route::get('admin/category',[
+    'as'=>'category.index',
+    'uses'=>'HomeController@index',
+    'middleware' =>'checkAcl:Manage Category'
+]);
+Route::get('admin/user',[
+    'as'=>'user.index',
+    'uses'=>'HomeController@index',
+    'middleware' =>'checkAcl:Manage User'
+]);
+Route::get('admin/role',[
+    'as'=>'role.index',
+    'uses'=>'HomeController@index',
+    'middleware' =>'checkAcl:Manage Role'
+]);
+Route::get('admin/product',[
+    'as'=>'product.index',
+    'uses'=>'HomeController@index',
+    'middleware' =>'checkAcl:Manage Product'
+]);
+Route::get('admin/producttype',[
+    'as'=>'producttype.index',
+    'uses'=>'HomeController@index',
+    'middleware' =>'checkAcl:Manage ProductType'
+]);
+Route::get('/admin/comment',[
+    'as'=>'comment.index',
+    'uses'=>'HomeController@index',
+    'middleware' =>'checkAcl:Manage Comment'
+]);
+Route::get('/admin/blog',[
+    'as'=>'blog.index',
+    'uses'=>'HomeController@index',
+    //'middleware' =>'checkAcl:Manage Comment'
+]);
+//Manage Comment
+Route::group(['prefix' => 'laravel-filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 Route::get('/admin/edit-product/{path}', 'HomeController@index');
 Route::get('/product-detail/{path}', 'IndexController@index');
 Route::get('/product-list/{path}', 'IndexController@index');
 Route::get('/product-list', 'IndexController@index');
 Route::get('/cart', 'IndexController@index');
-Route::get('/admin/edit-user/{path}', 'HomeController@index');
+Route::get('/checkout', 'IndexController@index');
+
+Route::get('/owl', 'IndexController@index');
 Route::get('/login-user', 'IndexController@index');
 Route::get('/register-user', 'IndexController@index');
+Route::post('/loginAdmin','UserController@loginAdmin')->name('admin.login');
+Route::view('/loginAdmin','admin.login')->name('login.admin');
+Route::get('/{path}', 'IndexController@index');
+Route::get('/{path}/{path2}', 'IndexController@index');
+Route::get('/{path}/{path2}/{path3}', 'IndexController@index');
 Route::get('/password-reset', 'IndexController@index')->name('get.send.link.reset');
 Route::get('/email', 'IndexController@index');
 Route::group(['prefix' => 'laravel-filemanager'], function () {
@@ -55,7 +106,7 @@ Route::group(['prefix' => 'laravel-filemanager'], function () {
 //    return view('admin.hello');
 // });
 // Route::post('loginAdmin','UserController@loginAdmin')->name('admin.login');
-//Route::view('loginAdmin','admin.login')->name('login.admin');
+// Route::view('loginAdmin','admin.login')->name('login.admin');
 
 Route::get('forget_password','Auth\ForgotPasswordController@getFormResetPassword')->name('get.reset.password');
 Route::post('forget_password','Auth\ForgotPasswordController@sendCodeResetPassword');

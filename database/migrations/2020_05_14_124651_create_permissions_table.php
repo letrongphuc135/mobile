@@ -16,7 +16,7 @@ class CreatePermissionsTable extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('dislay_name');
+            $table->string('slug');
             $table->timestamps();
         });
         Schema::create('role_permissions', function (Blueprint $table) {

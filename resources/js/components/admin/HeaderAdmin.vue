@@ -15,16 +15,16 @@
                 </li>
             </ul>
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
+            <div class="form-inline ml-3">
                 <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <input v-model="textSearch" @keyup.enter="search"  class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
+                        <button class="btn btn-navbar" type="submit" @click.prevent="search">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
                 </div>
-            </form>
+            </div>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -126,7 +126,23 @@
 
 <script>
     export default {
-        name: "Header"
+        name: "Header",
+        data(){
+            return{
+                textSearch: ""
+            }
+        },
+        methods:{
+            search(){
+                var current = this;
+                if (current.textSearch === ""){
+                    console.log("nullll");
+                    current.textSearch = null;
+                }
+                this.$store.commit('searchinit', current.textSearch);
+                Fire.$emit('search');
+            }
+        }
     }
 </script>
 

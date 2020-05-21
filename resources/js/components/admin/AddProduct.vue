@@ -1,10 +1,10 @@
 <template>
     <div>
         <h2 class="text-center mb-3">Add product</h2>
-        <form @submit.prevent="editMode ? updateProduct() : addProduct()">
+        <form @submit.prevent="addProduct">
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Product name</label>
+                    <label>Category name</label>
                     <input v-model="form.name" type="text" name="name"
                            class="form-control"
                            :class="{ 'is-invalid': form.errors.has('name') }">
@@ -16,10 +16,19 @@
 
                 </div>
                 <div class="form-group">
+                    <label>Product type slug</label>
+                    <input v-model="form.slug" type="text" name="name"
+                           class="form-control"
+                           :class="{ 'is-invalid': form.errors.has('slug') }">
+                    <has-error :form="form" field="name"></has-error>
+                </div>
+                <div class="form-group">
                     <label>Product price</label>
                     <input type="number" name="" v-model="form.price"
                            placeholder="Enter price"
+                           :class="{ 'is-invalid': form.errors.has('price') }"
                            class="form-control">
+                    <has-error :form="form" field="name"></has-error>
                 </div>
                 <div class="form-group">
                     <label>Product promotion</label>
@@ -33,6 +42,68 @@
                            placeholder="Enter quantity"
                            class="form-control">
                 </div>
+                <h3>Thông số kĩ thuật</h3>
+                <div class="form-group">
+                    <label>Product Srceen</label>
+                    <input type="text" name="category_name" v-model="form.screen"
+                           placeholder="Enter Srceen"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Operating System</label>
+                    <input type="text" name="category_name" v-model="form.operating_system"
+                           placeholder="Enter Operating System"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Rear Camera</label>
+                    <input type="text" name="category_name" v-model="form.rear_camera"
+                           placeholder="Enter Rear Camera"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Front Camera</label>
+                    <input type="text" name="category_name" v-model="form.front_camera"
+                           placeholder="Enter Front Camera"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>CPU</label>
+                    <input type="text" name="category_name" v-model="form.cpu"
+                           placeholder="Enter CPU"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>RAM</label>
+                    <input type="text" name="category_name" v-model="form.ram"
+                           placeholder="Enter RAM"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Internal memory</label>
+                    <input type="text" name="category_name" v-model="form.internal_memory"
+                           placeholder="Enter Internal memory"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Sim</label>
+                    <input type="text" name="category_name" v-model="form.sim"
+                           placeholder="Enter Sim"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Battery</label>
+                    <input type="text" name="category_name" v-model="form.battery"
+                           placeholder="Enter Battery"
+                           class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Design</label>
+                    <input type="text" name="category_name" v-model="form.design"
+                           placeholder="Enter Design"
+                           class="form-control">
+                </div>
+
                 <div class="form-group">
                     <label>Product Image</label>
                         <div>
@@ -95,25 +166,30 @@
                         </div>
                     </div>
                 </fieldset>
-
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Close
-                </button>
+                <router-link :to="{name:'admin-product'}" type="submit" class="btn btn-secondary"
+                        data-dismiss="modal" >Close
+                </router-link>
                 <button type="submit" class="btn btn-primary">Save
                     changes
                 </button>
             </div>
         </form>
+       <LoadingAnition :isLoadingAnimation="isLoading"></LoadingAnition>
     </div>
 </template>
 
 <script>
+    import LoadingAnition from "../customer/LoadingAnimation";
     export default {
         name: "AddProduct",
+        components: {
+            LoadingAnition
+        },
         data() {
             return {
+                isLoading: false,
                 listImage: [],
                 avatar: '',
                 filename: null,
@@ -128,6 +204,7 @@
                     id: '',
                     idCategory: -1,
                     name: '',
+                    slug: '',
                     status: 1,
                     created_at: '',
                     idProductType: -1,
@@ -135,6 +212,17 @@
                     quantity: '',
                     price: '',
                     promotion: '',
+                    screen:'',
+                    operating_system: '',
+                    rear_camera: '',
+                    front_camera: '',
+                    cpu: '',
+                    ram: '',
+                    internal_memory: '',
+                    sim: '',
+                    battery: '',
+                    design: '',
+
                 }),
                 categoryId: '',
                 editorConfig: {
@@ -162,7 +250,7 @@
                     reader.onload = e => {
                         current.avatar = e.target.result;
                          current.listImage.push(current.avatar);
-                    }
+                    };
                       console.log(this.avatar);
                      
                 }
@@ -172,8 +260,11 @@
                 this.avatar = "";
                 console.log("aaaaa");
                 this.listImage = [];
+                this.$refs.file.type='text';
+                this.$refs.file.type='file';
             },
             addProduct() {
+                this.isLoading = true;
                 const config = {
                     headers: {
                         'content-type': 'multipart/form-data',
@@ -191,37 +282,35 @@
                 formData.append('description',current.form.description);
                 formData.append('quantity',current.form.quantity);
                 formData.append('price',current.form.price);
+                formData.append('slug',current.form.slug);
                 formData.append('promotion',current.form.promotion);
                 formData.append('idCategory',current.form.idCategory);
                 formData.append('idProductType',current.form.idProductType);
+                formData.append('screen',current.form.screen);
+                formData.append('operating_system',current.form.operating_system);
+                formData.append('rear_camera',current.form.rear_camera);
+                formData.append('front_camera',current.form.front_camera);
+                formData.append('cpu',current.form.cpu);
+                formData.append('ram',current.form.ram);
+                formData.append('internal_memory',current.form.internal_memory);
+                formData.append('sim',current.form.sim);
+                formData.append('battery',current.form.battery);
+                formData.append('design',current.form.design);
                 formData.append('status',current.form.status);
                 axios.post('/api/admin/product',formData, config)
                 .then(function (response) {
                     console.log(response.data.message);
+                    current.isLoading = false;
                     current.$router.push({path: '/admin/product'});
                     Toast.fire({
                         icon: 'success',
                         title: "Them thanh cong"
                     });
-                   
                 })
                 .catch(function (error) {
+                    this.isLoading = false;
                     console.log(error);
                 });
-                // this.form.post('/api/admin/product', this.form,formData,config)
-                // .then(function (response) {
-                //     console.log(response.data.data);
-                //     this.data = response.data.data;
-                //     Toast.fire({
-                //         icon: 'success',
-                //         title: response.data.message
-                //     });
-                //     $('#exampleModal').modal('hide');
-                //     Fire.$emit('afterSaveChange');
-                // })
-                // .catch(function (error) {
-                //     console.log(error);
-                // })
             },
             getAllProductType(id) {
                 this.form.idProductType = -1;
@@ -237,7 +326,7 @@
                     console.log(response.data);
                     this.categories = response.data;
                 })
-            },
+            }
         },
         created() {
             this.getAllCategory();
