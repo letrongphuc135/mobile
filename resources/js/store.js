@@ -21,7 +21,14 @@ export default new Vuex.Store({
             let found  = state.cart.find(product  => product.product.id == item.product.id )
             if (found){
                 found.quantity += item.quantity;
-                state.cartCount += item.quantity;
+                if(found.quantity > item.product.quantity){
+                    found.quantity -= item.quantity;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Số lượng sản phẩm không đủ đáp ứng...',
+                        text: 'Vui lòng mua không vượt quá ' + (parseInt(item.product.quantity)) + ' sản phẩm',
+                    })
+                }
             }else{
                 state.cartCount += item.quantity;
                 state.cart.push(item);

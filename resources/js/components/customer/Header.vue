@@ -82,26 +82,25 @@
 
                         <!--Cart order -->
                         <div class="ps-cart" v-if="this.$store.state.auth"><a class="ps-cart__toggle"
-                                                href="#"><span><i>{{this.$store.state.cartCount}}</i></span><i
+                                                href="#"><span><i>{{this.$store.state.cart.length}}</i></span><i
                             class="ps-icon-shopping-cart"></i></a>
                             <div class="ps-cart__listing">
                                 <div class="ps-cart__content">
                                     <div class="ps-cart-item" v-for="(item, index) in this.$store.state.cart" :key="index">
-                                        <a class="ps-cart-item__close" @click="$store.commit('removeFromCart',item)"></a>
+                                        <a class="ps-cart-item__close" @click="removeItem(item)"></a>
                                         <div class="ps-cart-item__thumbnail"><a
                                             href="product-detail.html"></a><img
                                             :src="item.product.product_img[0].url" alt=""></div>
                                         <div class="ps-cart-item__content"><a
                                             class="ps-cart-item__title" href="product-detail.html">{{item.product.name}}</a>
                                             <p>
-                                                <span>Quantity:<i>{{item.quantity}}</i></span><span>Total:<i>£176</i></span>
+                                                <span>Quantity:<i>{{item.quantity}}</i></span><span>Total:<i>{{formatTotalPrice(item.product.price, item.quantity)}}</i></span>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="ps-cart__total">
-                                    <p>Number of items:<span>36</span></p>
-                                    <p>Item Total:<span>£528.00</span></p>
+                                    <p>Item Total:<span>{{formatSubTotalPrice()}}</span></p>
                                 </div>
                                 <div class="ps-cart__footer" ><router-link class="ps-btn" style="background-color: #e7ab3c" :to="{name : 'cart'}">{{$t('viewcart')}}<i class="ps-icon-arrow-left"></i></router-link></div>
                                 <div class="ps-cart__footer"><router-link class="ps-btn" :to="{name : 'checkout'}">{{$t('checkout')}}<i class="ps-icon-arrow-left"></i></router-link></div>
@@ -129,6 +128,8 @@
 </template>
 
 <script>
+    import StringUtil from "../../utils/StringUtils"
+    const stringUtil = new StringUtil();
     export default {
         name: "Header",
         data() {
@@ -160,7 +161,31 @@
                 this.$store.commit('logout');
                 this.$router.push({name: 'home'});
 
-            }
+            },
+            removeItem(item){
+                this.$store.commit('removeFromCart',item);
+                // axios.post('/api/removeItem/'+item.product.id  +'/' + item.quantity)
+                // .then(response => {
+                //     console.log(response.data);
+                //     Fire.$emit('productDetail');
+                // })
+
+            },
+            formatTotalPrice(price, quantity) {
+                let formatedNumber = price || 0;
+                formatedNumber *= quantity;
+                return stringUtil.formatNumber(formatedNumber);
+            },
+            formatSubTotalPrice() {
+                // let formatedNumber = price || 0;
+                // formatedNumber *= quantity;
+                var total = 0;
+                for(var i = 0; i < this.$store.state.cart.length; i++ ){
+                    var item = this.$store.state.cart[i];
+                    total += item.product.price * item.quantity;
+                }
+                return stringUtil.formatNumber(total);
+            },
         },
 
         created() {

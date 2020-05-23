@@ -46,6 +46,11 @@ Vue.filter('myDate', function (created) {
     return moment(created).format('L');
 });
 
+Vue.filter('chartDate', function (created) {
+    moment.locale();
+    return moment(created).format('DD-MM');
+});
+
 Vue.component('pagination', require('laravel-vue-pagination'));
 // import jQuery from "../../public/assets/customer/fashi/js/jquery-3.3.1.min.js"
 // import jQuery from 'jquery';
@@ -53,15 +58,16 @@ Vue.component('pagination', require('laravel-vue-pagination'));
 // import 'jquery';
 // window.$ = window.jQuery = require("jquery");
 import VueAgile from 'vue-agile'
-// import isotope from 'vueisotope'
 Vue.use(VueAgile);
 window.i18n = i18n;
 
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js'
+Vue.use(Chartkick.use(Chart));
 const app = new Vue({
     el: '#app',
     router,
     i18n,
-    // isotope,
     store,
 });
 

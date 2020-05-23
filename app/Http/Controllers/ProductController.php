@@ -326,6 +326,8 @@ class ProductController extends Controller
             }
             foreach ($products as $key => $value) {
                 $value->ProductImg;
+                $value->Category;
+                $value->ProductType;
                 $products[$key] = $value;
             }
         }else{

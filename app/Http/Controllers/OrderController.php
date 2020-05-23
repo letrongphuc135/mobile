@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use Illuminate\Http\Request;
 
+use App\Models\Order;
+use App\Models\OrderDetail;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 class OrderController extends Controller
 {
     /**
@@ -15,6 +17,24 @@ class OrderController extends Controller
     public function index()
     {
         //
+        $chartOrder = [];
+        $order = Order::where('status', 0)->whereDate('created_at', '>=', Carbon::now()->subDays(7))->groupBy('created_at')->get();
+        foreach ($order as $key => $value) {
+            $quantity = 0;
+            $orderDetail = OrderDetail::where('created_at', $value->created_at)->get();
+
+            foreach ($orderDetail as $key2 => $value2){
+                $quantity += $value2->quantity;
+            }
+            //$order[$key]['orderDetail'] = $orderDetail;
+            $order[$key]['quantity'] = $quantity;
+            $order[$key] = $value;
+//            $chartOrder[$key]['createDate'] = $value->created_at;
+//            $chartOrder[$key]['quantity'] = $quantity;
+
+        }
+        //$order = $order->groupBy('created_at')->get();
+        return response()->json($order);
     }
 
     /**
@@ -81,5 +101,15 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function getAllOrderPaging($numberItem)
+    {
+        $order = Order::paginate($numberItem);
+        foreach ($order as $key => $value) {
+            $order[$key]['orderDetail'] = OrderDetail::where('idOrder', $value->id)->get();
+            $order[$key] = $value;
+        }
+        return response()->json($order);
     }
 }

@@ -23,6 +23,7 @@ Route::group(['prefix'=>'admin'],function(){
     Route::resource('product','ProductController');
     Route::resource('customer','CustomerController');
     Route::resource('cart','CartController');
+    Route::resource('order','OrderController');
     Route::post('updatePro/{id}','ProductController@update');
 });
 Route::get('getindex',function(){
@@ -56,6 +57,11 @@ Route::get('searchProductType/{num}','ProductTypeController@searchProductType');
 
 //cart, customer
 Route::get('getCustomerAddressActive','CustomerController@getCustomerAddressActive');
+Route::post('addItem/{id}/{num}','CartController@addItem');
+Route::post('removeItem/{id}/{num}','CartController@removeItem');
+
+//Order
+Route::get('getAllOrderPaging/{num}','OrderController@getAllOrderPaging');
 
 //dk,dn
 Route::post('login','UserController@loginClient');
