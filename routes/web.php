@@ -42,7 +42,6 @@ Route::get('/admin', 'HomeController@index')->name('admin');
 Route::get('/loginAdmin', function () {
     return view('auth/login');
 });
-//Route::get('/admin/{path}', 'HomeController@index')->where('path', '([A-z\d-\/_.]+)?');
 Route::get('/admin/{path}', 'HomeController@index');
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();

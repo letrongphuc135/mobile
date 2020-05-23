@@ -46,6 +46,7 @@ let routes = [
             },
             {
                 path: '/admin/order',
+                name: "order",
                 component: require('./components/admin/Order').default
             },
         ]

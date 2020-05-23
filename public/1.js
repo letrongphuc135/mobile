@@ -15,12 +15,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DashBoard",
   data: function data() {
     return {
-      chartData: [['Mon', 10], ['Tue', 20]]
+      chartData: [['2020-05-02 15:24:05', 10], ['2020-05-02 15:24:05', 20]],
+      order: [],
+      chartOrder: [],
+      test: [['Sun', 32], ['Mon', 46], ['Tue', 28]]
     };
+  },
+  methods: {
+    getOrder: function getOrder() {
+      var _this = this;
+
+      axios.get('/api/admin/order').then(function (response) {
+        console.log(response.data);
+        _this.chartData = response.data;
+
+        for (var i = 0; i < _this.chartData.length; i++) {
+          _this.order = [];
+
+          _this.order.push(_this.chartData[i].created_at);
+
+          _this.order.push(_this.chartData[i].quantity);
+
+          console.log("created_at" + _this.chartData[i].created_at);
+          console.log("quantity" + _this.chartData[i].quantity);
+
+          _this.chartOrder.push(_this.order);
+        }
+      });
+    }
+  },
+  created: function created() {
+    this.getOrder();
   }
 });
 
@@ -43,7 +73,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [_c("column-chart", { attrs: { data: _vm.chartData, max: 50 } })],
+    [
+      _c("h3", [_vm._v("Số lượng sản phẩm khách hàng đã đặt")]),
+      _vm._v(" "),
+      _c("column-chart", { attrs: { data: _vm.chartOrder, max: 50 } })
+    ],
     1
   )
 }

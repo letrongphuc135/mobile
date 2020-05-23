@@ -114,6 +114,17 @@
                 for(var i = 0; i < this.$store.state.cart.length; i++){
                     var item = this.$store.state.cart[i];
                     this.$store.state.cart[i].total =  item.product.price * item.quantity;
+                    console.log("product ", this.$store.state.cart[i].product.quantity);
+                    console.log("quantity ", this.$store.state.cart[i].quantity);
+
+                    if (this.$store.state.cart[i].product.quantity < this.$store.state.cart[i].quantity){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Số lượng của sản phẩm ' + this.$store.state.cart[i].product.name + ' không đủ đáp ứng...',
+                            text: 'Vui lòng mua không vượt quá ' + (parseInt(this.$store.state.cart[i].product.quantity)) + ' sản phẩm',
+                        })
+                        return;
+                    }
                     totalNum += item.product.price * item.quantity;
                 }
                 this.$router.push({name: 'checkout'});

@@ -59,6 +59,10 @@ Route::get('searchProductType/{num}','ProductTypeController@searchProductType');
 Route::get('getCustomerAddressActive','CustomerController@getCustomerAddressActive');
 Route::post('addItem/{id}/{num}','CartController@addItem');
 Route::post('removeItem/{id}/{num}','CartController@removeItem');
+
+//Order
+Route::get('getAllOrderPaging/{num}','OrderController@getAllOrderPaging');
+
 //dk,dn
 Route::post('login','UserController@loginClient');
 Route::post('registerClient','UserController@registerClient');

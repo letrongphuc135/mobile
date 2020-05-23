@@ -518,12 +518,12 @@
                             text: 'Vui lòng mua dưới ' + (parseInt(this.productDetail.quantity) + 1) + ' sản phẩm',
                         })
                     }else {
-                        axios.post('/api/addItem/'+this.productDetail.id +'/' +this.quantity)
-                        .then(response => {
-                            console.log(response.data);
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Thêm vào giỏ hàng thành công'
                         });
-                        Fire.$emit('productDetail');
                         this.$store.commit('addToCart', {product: this.productDetail, quantity: parseInt(this.quantity), total: this.productDetail.price * this.quantity});
+
                     }
 
 

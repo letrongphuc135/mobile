@@ -46,6 +46,11 @@ Vue.filter('myDate', function (created) {
     return moment(created).format('L');
 });
 
+Vue.filter('chartDate', function (created) {
+    moment.locale();
+    return moment(created).format('DD-MM');
+});
+
 Vue.component('pagination', require('laravel-vue-pagination'));
 // import jQuery from "../../public/assets/customer/fashi/js/jquery-3.3.1.min.js"
 // import jQuery from 'jquery';

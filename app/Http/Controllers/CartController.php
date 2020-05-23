@@ -71,28 +71,28 @@ class CartController extends Controller
         $order['status'] = 0;
         DB::beginTransaction();
         try {
-//            $result = Order::create($order);
-//        $idOrder = $result->id;
+            $result = Order::create($order);
+            $idOrder = $result->id;
             $orderDetail = [];
-//        $orderDetails = [];
+            $orderDetails = [];
             foreach ($cart as $key => $value) {
-//            $orderDetail['idOrder'] = $idOrder;
+            $orderDetail['idOrder'] = $idOrder;
             $orderDetail['idProduct'] = $value['product']['id'];
                 $orderDetail['quantity'] = $value['quantity'];
-                //$product = Products::find($value['product']['id']);
-//                $product['quantity'] = $product['quantity'] - $orderDetail['quantity'];
-//                if ($product['quantity'] < 0){
-//                    DB::rollBack();
-//                    return response()->json(['status'=> 'error']);
-//                }
-//                $product->save();
+                $product = Products::find($value['product']['id']);
+                $product['quantity'] = $product['quantity'] - $orderDetail['quantity'];
+                if ($product['quantity'] < 0){
+                    DB::rollBack();
+                    return response()->json(['status'=> 'error']);
+                }
+                $product->save();
             $orderDetail['price'] = $value['product']['price'];
             $orderDetail['image'] = $value['product']['product_img'][0]['url'];
             $orderDetails[$key] = OrderDetail::create($orderDetail);
 
             }
-            //Mail::to($result->email)->send(new ShoppingMail($result, $orderDetails));
-            //return response()->json(['orderDetail'=> $orderDetail, 'cart' => $cart]);
+            Mail::to($result->email)->send(new ShoppingMail($result, $orderDetails));
+            return response()->json(['orderDetail'=> $orderDetail, 'cart' => $cart]);
             DB::commit();
         } catch (Exception $e) {
 

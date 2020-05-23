@@ -1,6 +1,7 @@
 <template>
     <div>
-        <column-chart :data="chartData" :max="50"></column-chart>
+        <h3>Số lượng sản phẩm khách hàng đã đặt</h3>
+        <column-chart :data="chartOrder" :max="50"></column-chart>
     </div>
 </template>
 
@@ -9,8 +10,31 @@
         name: "DashBoard",
         data(){
             return{
-                chartData: [['Mon', 10], ['Tue', 20]]
+                chartData: [['2020-05-02 15:24:05', 10], ['2020-05-02 15:24:05', 20]],
+                order:[],
+                chartOrder: [],
+                test: [['Sun', 32], ['Mon', 46], ['Tue', 28]]
             }
+        },
+        methods:{
+            getOrder(){
+                axios.get('/api/admin/order')
+                .then(response => {
+                    console.log(response.data);
+                    this.chartData = response.data;
+                    for(var i = 0; i < this.chartData.length; i++){
+                        this.order = [];
+                        this.order.push(this.chartData[i].created_at);
+                        this.order.push(this.chartData[i].quantity);
+                        console.log("created_at" + this.chartData[i].created_at);
+                        console.log("quantity" + this.chartData[i].quantity);
+                        this.chartOrder.push(this.order);
+                    }
+                })
+            },
+        },
+        created() {
+            this.getOrder();
         }
     }
 </script>
