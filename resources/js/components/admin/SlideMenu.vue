@@ -28,6 +28,15 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
+                        <li class="nav-item" >
+                            <router-link to="/admin/dashboard" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Dashboard
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </router-link>
+                        </li>
                         <li class="nav-item" v-for="(permission, index_permission) in user.permissions" :key="`${index_permission}-${permission.id}`">
                             <router-link :to="{ name: permission.slug}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
@@ -38,13 +47,13 @@
                             </router-link>
                         </li>
                          <li class="nav-item" >
-                            <a href="/admin/blog" class="nav-link">
+                            <router-link to="/admin/blog" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Blog
                                     <span class="right badge badge-danger">New</span>
                                 </p>
-                            </a>
+                            </router-link>
                         </li>
                         <li class="nav-item">
                             <router-link to="/admin/order" class="nav-link">

@@ -47,6 +47,7 @@ Route::get('getAllProductPaging/{num}','ProductController@getAllProductPaging');
 Route::get('getAllProduct','ProductController@getAllProduct');
 Route::get('getProductDetailById/{id}','ProductController@getProductDetailById');
 Route::get('searchProduct/{numberItem}','ProductController@searchProduct');
+Route::get('searchProductCustomer/{numberItem}','ProductController@searchProductCustomer');
 Route::get('getProductDetail/{name}','ProductController@getProductDetail');
 
 //productType
@@ -62,6 +63,7 @@ Route::post('removeItem/{id}/{num}','CartController@removeItem');
 
 //Order
 Route::get('getAllOrderPaging/{num}','OrderController@getAllOrderPaging');
+Route::get('getChartShip','OrderController@getChartShip');
 
 //dk,dn
 Route::post('login','UserController@loginClient');

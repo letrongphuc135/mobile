@@ -94,8 +94,8 @@
                                         <li>Product <span>Total</span></li>
                                         <li class="fw-normal" v-for="(cart, index) in this.$store.state.cart" :key="index">{{cart.product.name}} x {{cart.quantity}} <span>{{cart.total}}</span>
                                         </li>
-                                        <li class="fw-normal">Subtotal <span>{{this.$store.state.totalNum}}</span></li>
-                                        <li class="total-price">Total <span>$240.00</span></li>
+                                        <!--<li class="fw-normal">Subtotal <span>{{this.$store.state.totalNum}}</span></li>-->
+                                        <li class="total-price">Total <span>{{formatSubTotalPrice()}}</span></li>
                                     </ul>
                                     <div class="payment-check">
                                         <div class="pc-item">
@@ -194,6 +194,8 @@
 </template>
 
 <script>
+    import StringUtil from "../../../utils/StringUtils"
+    const stringUtil = new StringUtil();
     export default {
         name: "Checkout",
         data() {
@@ -255,6 +257,16 @@
 
                 })
             },
+            formatSubTotalPrice() {
+                // let formatedNumber = price || 0;
+                // formatedNumber *= quantity;
+                var total = 0;
+                for(var i = 0; i < this.$store.state.cart.length; i++ ){
+                    var item = this.$store.state.cart[i];
+                    total += item.product.price * item.quantity;
+                }
+                return stringUtil.formatNumber(total);
+            },
             changeAddress(item){
                this.selectedItem = item ;
             },
@@ -280,10 +292,14 @@
                 axios.post('/api/admin/cart', this.order)
                 .then(response => {
                     console.log(response.data);
-                    // Toast.fire({
-                    //     icon: 'success',
-                    //     title: response.data.message
-                    // });
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Đặt hàng thành công'
+                    });
+                    this.$router.push({name: 'home'});
+                    this.$store.commit('removeAllCart');
+
                 })
             },
             getAddressCustomer() {

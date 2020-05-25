@@ -11,25 +11,7 @@
 |
 */
 
-//Route::get('/admin', function () {
-//    return view('admin/adminmaster');
-//});
 
-//Route::get('/' , function () {
-//    return view('public/index');
-//});
-
-
-//Route::get('/product-detail/1' , function () {
-//    return view('public/product');
-//});
-//
-//Route::get('/product-detail', function () {
-//    return view('public/product');
-//});
-Route::get('/owl2', function () {
-    return view('public/owl');
-});
 Route::get('/home', function () {
     return view('public/index');
 });
@@ -78,17 +60,20 @@ Route::get('/admin/blog',[
     'uses'=>'HomeController@index',
     //'middleware' =>'checkAcl:Manage Comment'
 ]);
+Route::get('/admin/{path}', 'HomeController@index')->name('admin');
 //Manage Comment
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 Route::get('/admin/edit-product/{path}', 'HomeController@index');
-Route::get('/product-detail/{path}', 'IndexController@index');
-Route::get('/product-list/{path}', 'IndexController@index');
-Route::get('/product-list', 'IndexController@index');
+//Route::get('/product-detail/{path}', 'IndexController@index');
+//Route::get('/product-list/{path}', 'IndexController@index');
+//Route::get('/product-list', 'IndexController@index');
+Route::get('/search?keyword={path}', 'IndexController@index');
 Route::get('/cart', 'IndexController@index');
 Route::get('/checkout', 'IndexController@index');
-
+Route::get('/forget_password-admin', 'IndexController@index')->name('get.reset.password');
+Route::get('/password-reset-admin', 'IndexController@index');
 Route::get('/owl', 'IndexController@index');
 Route::get('/login-user', 'IndexController@index');
 Route::get('/register-user', 'IndexController@index');

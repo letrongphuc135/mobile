@@ -62,36 +62,37 @@ class ProductController extends Controller
         );
 
 
-    $dulieu = $request->only(['name','description', 'slug', 'quantity','price','promotion','idCategory','idProductType','status']);
+        $dulieu = $request->only(['name','description', 'slug', 'quantity','price','promotion','idCategory','idProductType','status']);
 
-    if($request->hasFile('file')){
-        $files=$request->file;
-        $product=Products::create($dulieu);
-        $idproduct=$product->id;
-        $specification = new Specifications();
-        $specification->product_id = $idproduct;
-        $specification->screen = $request->screen;
+        if($request->hasFile('file')){
+            $files=$request->file;
+            $product=Products::create($dulieu);
+            $idproduct=$product->id;
+            $specification = new Specifications();
+            $specification->product_id = $idproduct;
+            $specification->screen = $request->screen;
 //        $specification['product_id'] = $idproduct;
 //        $specification['screen'] = $request->screen;
-        $specification = $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory', 'sim', 'battery', 'design']);
-        $specification['product_id'] = $idproduct;
-        Specifications::create($specification);
-        foreach($files as $key => $value){
-            $file_type= $value->getMimeType();
-            if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
-                $file_url = ImgurService::uploadImage($value->getRealPath());
-                $product_image['url']=$file_url;
-                $product_image['idProduct']=$idproduct;
-                ProductImage::create($product_image);
-            }else{
-                return response()->json(['message' => 'file bạn chọn không phải là hình']);
+            $specification = $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory', 'sim', 'battery', 'design']);
+            $specification['product_id'] = $idproduct;
+            Specifications::create($specification);
+            foreach($files as $key => $value){
+                $file_type= $value->getMimeType();
+                if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
+                    $file_url = ImgurService::uploadImage($value->getRealPath());
+                    $product_image['url']=$file_url;
+                    $product_image['idProduct']=$idproduct;
+                    ProductImage::create($product_image);
+                }else{
+                    return response()->json(['message' => 'file bạn chọn không phải là hình']);
+                }
             }
+        }else{
+            return response()->json(['message' => 'Ban chua chon hinh']);
         }
-    }else{
-        return response()->json(['message' => 'Ban chua chon hinh']);
-    }
         return response()->json(['message' => 'Thêm thành công']);
     }
+
 
     /**
      * Display the specified resource.
@@ -343,14 +344,58 @@ class ProductController extends Controller
         return response()->json(['product'=> $products]);
     }
 
-    public function getProductByProductTypeId($productTypeId, $numberItem){
-        $products = Products::where('idProductType', $productTypeId)->paginate($numberItem);
-        if(empty($products)){
-            return response()->json(['error'=>'Khong tim thay san pham']);
+    public function searchProductCustomer($numberItem){
+        if ($sort = \Request::get('sort')) {
+            if ($search = \Request::get('keyword')) {
+                $products = Products::where(function ($query) use ($search) {
+                    $query->where('name', 'LIKE', "%$search%");
+                })->orderBy('price', $sort)->paginate($numberItem);
+                foreach ($products as $key => $value) {
+                    $value->ProductImg;
+                    $value->Category;
+                    $value->ProductType;
+                    $products[$key] = $value;
+                }
+            }
+            return response()->json(['product'=> $products]);
+        }else{
+            if ($search = \Request::get('keyword')) {
+                $products = Products::where(function ($query) use ($search) {
+                    $query->where('name', 'LIKE', "%$search%");
+                })->paginate($numberItem);
+                foreach ($products as $key => $value) {
+                    $value->ProductImg;
+                    $value->Category;
+                    $value->ProductType;
+                    $products[$key] = $value;
+                }
+                return response()->json(['product'=> $products]);
+            }
         }
-        foreach ($products as $key => $value) {
-            $value->ProductImg;
-            $products[$key]=$value;
+
+    }
+
+    public function getProductByProductTypeId($productTypeId, $numberItem){
+        if ($sort = \Request::get('sort')) {
+            $products = Products::where('idProductType', $productTypeId)->orderBy('price', $sort)->paginate($numberItem);
+            if (empty($products)) {
+                return response()->json(['error' => 'Khong tim thay san pham']);
+            }
+            foreach ($products as $key => $value) {
+                $value->ProductImg;
+                $value->Category;
+                $value->ProductType;
+                $products[$key] = $value;
+            }
+        }else{
+            $products = Products::where('idProductType', $productTypeId)->paginate($numberItem);
+            if (empty($products)) {
+                return response()->json(['error' => 'Khong tim thay san pham']);
+            }
+            foreach ($products as $key => $value) {
+                $value->ProductImg;
+                $products[$key] = $value;
+            }
         }
         return response()->json(['product'=> $products]);
     }

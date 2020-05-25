@@ -7,37 +7,36 @@
         <!-- Product Shop Section Begin -->
         <section class="product-shop spad">
             <div class="container">
-                <div class="row" style="border: 1px solid black">
-                    <div class="col-4">
-                        Tìm theo
-                    </div>
-                    <div class="col-2">
-                        <select class="sorting" >
-                            <option value="asc">Mức giá</option>
-                            <option value="desc">Giá từ cao đến thấp</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        <select class="sorting" >
-                            <option value="asc">Hệ điều hành</option>
-                            <option value="desc">Giá từ cao đến thấp</option>
-                        </select>
-                    </div>
-                    <div class="col-2">
-                        <select class="sorting" >
-                            <option value="asc">Màn hình</option>
-                            <option value="desc">Giá từ cao đến thấp</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                        <select class="sorting" >
-                            <option value="asc">Tính năng</option>
-                            <option value="desc">Giá từ cao đến thấp</option>
-                        </select>
-                    </div>
-                </div>
+                <!--<div class="row" style="border: 1px solid black">-->
+                    <!--<div class="col-4">-->
+                        <!--Tìm theo-->
+                    <!--</div>-->
+                    <!--<div class="col-2">-->
+                        <!--<select class="sorting" >-->
+                            <!--<option value="asc">Mức giá</option>-->
+                            <!--<option value="desc">Giá từ cao đến thấp</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-2">-->
+                        <!--<select class="sorting" >-->
+                            <!--<option value="asc">Hệ điều hành</option>-->
+                            <!--<option value="desc">Giá từ cao đến thấp</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="col-2">-->
+                        <!--<select class="sorting" >-->
+                            <!--<option value="asc">Màn hình</option>-->
+                            <!--<option value="desc">Giá từ cao đến thấp</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-2">-->
+                        <!--<select class="sorting" >-->
+                            <!--<option value="asc">Tính năng</option>-->
+                            <!--<option value="desc">Giá từ cao đến thấp</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="row">
-
                     <div class="col-lg-12 order-1 order-lg-2">
                         <div class="product-show-option">
                             <div class="row">
@@ -47,13 +46,13 @@
                                             <option value="asc">Giá từ thấp đến cao</option>
                                             <option value="desc">Giá từ cao đến thấp</option>
                                         </select>
-                                        <select class="p-show">
-                                            <option value="">Show:</option>
-                                        </select>
+                                        <!--<select class="p-show">-->
+                                            <!--<option value="">Show:</option>-->
+                                        <!--</select>-->
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-md-5 text-right">
-                                    <p>Show 01- 09 Of 36 Product</p>
+                                    <!--<p>Show 01- 09 Of 36 Product</p>-->
                                 </div>
                             </div>
                         </div>
@@ -116,7 +115,7 @@
     const stringUtil = new StringUtil();
     import LoadingAnition from "../../customer/LoadingAnimation";
     export default {
-        name: "ShopProdutcList",
+        name: "ShopProductList",
         components: {Section, LoadingAnition},
         data(){
             return{
@@ -140,26 +139,26 @@
             }
         },
         methods:{
-            getProductBySort(){
-                this.isLoading = true;
-                axios.get('/api/getProductByCategoryId/'+ this.path.category.id+'/'+this.itemPerPage+"?sort="+this.sort)
-                .then(response => {
-                    console.log(response.data.product.data);
-                    this.products = response.data.product.data;
-                    this.isLoading = false;
-                    if (response.data.product.current_page < response.data.product.last_page) {
-                        this.moreExists = true;
-                        this.nextPage = response.data.product.current_page + 1;
-                    }else{
-                        this.moreExists = false;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-                console.log();
-                console.log(this.sort);
-            },
+            // getProductBySort(){
+            //     this.isLoading = true;
+            //     axios.get('/api/getProductByCategoryId/'+ this.path.category.id+'/'+this.itemPerPage+"?sort="+this.sort)
+            //     .then(response => {
+            //         console.log(response.data.product.data);
+            //         this.products = response.data.product.data;
+            //         this.isLoading = false;
+            //         if (response.data.product.current_page < response.data.product.last_page) {
+            //             this.moreExists = true;
+            //             this.nextPage = response.data.product.current_page + 1;
+            //         }else{
+            //             this.moreExists = false;
+            //         }
+            //     })
+            //     .catch(function (error) {
+            //         console.log(error);
+            //     });
+            //     console.log();
+            //     console.log(this.sort);
+            // },
             getSlug(){
                 Fire.$emit('offLoading');
                 this.path.category = null;

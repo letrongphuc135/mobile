@@ -264,7 +264,6 @@
                 this.$refs.file.type='file';
             },
             addProduct() {
-                this.isLoading = true;
                 const config = {
                     headers: {
                         'content-type': 'multipart/form-data',
@@ -298,7 +297,7 @@
                 formData.append('design',current.form.design);
                 formData.append('status',current.form.status);
                 current.isLoading = true;
-                this.form.post('/api/admin/product',formData, config)
+                axios.post('/api/admin/product',formData, config)
                 .then(function (response) {
                     console.log(response.data.message);
                     current.isLoading = false;
@@ -309,11 +308,7 @@
                     });
                 })
                 .catch(function (error) {
-                    current.isLoading = false;
-                    Toast.fire({
-                        icon: 'error',
-                        title: "Thêm thất bại"
-                    });
+                    this.isLoading = false;
                     console.log(error);
                 });
             },

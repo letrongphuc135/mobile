@@ -64,6 +64,10 @@ window.i18n = i18n;
 import Chartkick from 'vue-chartkick'
 import Chart from 'chart.js'
 Vue.use(Chartkick.use(Chart));
+
+import VueNumberInput from '@chenfengyuan/vue-number-input';
+Vue.use(VueNumberInput);
+
 const app = new Vue({
     el: '#app',
     router,

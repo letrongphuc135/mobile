@@ -6,7 +6,7 @@
                 <div class="row"  style="width: 100%">
                     <div class="col-lg-12">
                         <div class="breadcrumb-text product-more">
-                            <a href="./home.html" style="position: relative;"><i class="fa fa-home"></i> Home</a>
+                            <router-link to="/home" style="position: relative;"><i class="fa fa-home"></i> Home</router-link>
                             <a href="#">Giỏ hàng</a>
                         </div>
                     </div>
@@ -40,11 +40,7 @@
                                     </td>
                                     <td class="p-price first-row">{{formatPrice(item.product.price)}}</td>
                                     <td class="qua-col first-row">
-                                        <div class="quantity">
-                                            <div class="pro-qty" >
-                                                <input type="number" value=1 v-model="item.quantity">
-                                            </div>
-                                        </div>
+                                        <number-input  v-model="item.quantity" :min="1" :max="item.product.quantity" inline center controls></number-input>
                                     </td>
                                     <td class="total-price first-row">{{formatTotalPrice(item.product.price, item.quantity)}}</td>
                                     <td class="close-td first-row" @click="$store.commit('removeFromCart',item)"><i class="ti-close"></i></td>
@@ -54,17 +50,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <div class="cart-buttons">
-                                    <router-link to="/home" class="primary-btn continue-shop">Continue shopping</router-link>
-                                    <a href="#" class="primary-btn up-cart">Update cart</a>
-                                </div>
-                                <div class="discount-coupon">
-                                    <h6>Discount Codes</h6>
-                                    <form action="#" class="coupon-form">
-                                        <input type="text" placeholder="Enter your codes">
-                                        <button type="submit" class="site-btn coupon-btn">Apply</button>
-                                    </form>
-                                </div>
+
                             </div>
                             <div class="col-lg-4 offset-lg-4">
                                 <div class="proceed-checkout">

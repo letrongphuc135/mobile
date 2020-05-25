@@ -81,10 +81,6 @@ class CartController extends Controller
                 $orderDetail['quantity'] = $value['quantity'];
                 $product = Products::find($value['product']['id']);
                 $product['quantity'] = $product['quantity'] - $orderDetail['quantity'];
-                if ($product['quantity'] < 0){
-                    DB::rollBack();
-                    return response()->json(['status'=> 'error']);
-                }
                 $product->save();
             $orderDetail['price'] = $value['product']['price'];
             $orderDetail['image'] = $value['product']['product_img'][0]['url'];
@@ -92,8 +88,8 @@ class CartController extends Controller
 
             }
             Mail::to($result->email)->send(new ShoppingMail($result, $orderDetails));
-            return response()->json(['orderDetail'=> $orderDetail, 'cart' => $cart]);
             DB::commit();
+            return response()->json(['orderDetail'=> $orderDetail, 'cart' => $cart]);
         } catch (Exception $e) {
 
             DB::rollBack();

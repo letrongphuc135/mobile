@@ -1,57 +1,88 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[1],{
 
-/***/ "./public/assets/customer/js/mainjs.js":
-/*!*********************************************!*\
-  !*** ./public/assets/customer/js/mainjs.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/DashBoard.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/DashBoard.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-window.jQuery(document).ready(function ($) {
-  $('ul li a').click(function (event) {
-    // var type = $(this).attr('data-type');
-    var type = $(this).data('filter');
-    console.log(type); //var ten_loai = $(this).text();
-    // $('.title').text(ten_loai);
-    // type = '.'+type;
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-    $('.item-filter').isotope({
-      itemSelector: '.isotop'
-    });
-    $('.item-filter').isotope({
-      filter: type
-    });
-  });
-  $('.content').isotope({
-    itemSelector: 'img'
-  });
-  $('ul li').click(function (event) {
-    // var type = $(this).attr('data-type');
-    var type = $(this).data('type'); // console.log(type);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "DashBoard",
+  data: function data() {
+    return {
+      chartData: [['2020-05-02 15:24:05', 10], ['2020-05-02 15:24:05', 20]],
+      order: [],
+      chartOrder: [],
+      chartShip: []
+    };
+  },
+  methods: {
+    getOrder: function getOrder() {
+      var _this = this;
 
-    var ten_loai = $(this).text();
-    $('.title').text(ten_loai);
-    type = '.' + type;
-    $('.content').isotope({
-      filter: type
-    });
-  });
-  $('.owl-carousel').owlCarousel({
-    loop: true,
-    margin: 10,
-    nav: true,
-    responsive: {
-      0: {
-        items: 1
-      },
-      600: {
-        items: 3
-      },
-      1000: {
-        items: 5
-      }
+      axios.get('/api/admin/order').then(function (response) {
+        console.log(response.data);
+        _this.chartData = response.data;
+
+        for (var i = 0; i < _this.chartData.length; i++) {
+          _this.order = [];
+
+          _this.order.push(moment__WEBPACK_IMPORTED_MODULE_0___default()(_this.chartData[i].created_at).format('DD-MM'));
+
+          _this.order.push(_this.chartData[i].quantity);
+
+          console.log("created_at" + moment__WEBPACK_IMPORTED_MODULE_0___default()(_this.chartData[i].created_at).format('DD-MM'));
+          console.log("quantity" + _this.chartData[i].quantity);
+
+          _this.chartOrder.push(_this.order);
+        }
+      });
+    },
+    getShip: function getShip() {
+      var _this2 = this;
+
+      axios.get('/api/getChartShip').then(function (response) {
+        console.log(response.data);
+        _this2.chartData = response.data;
+
+        for (var i = 0; i < _this2.chartData.length; i++) {
+          _this2.order = [];
+
+          _this2.order.push(moment__WEBPACK_IMPORTED_MODULE_0___default()(_this2.chartData[i].created_at).format('DD-MM'));
+
+          _this2.order.push(_this2.chartData[i].quantity);
+
+          console.log("created_at" + moment__WEBPACK_IMPORTED_MODULE_0___default()(_this2.chartData[i].created_at).format('DD-MM'));
+          console.log("quantity" + _this2.chartData[i].quantity);
+
+          _this2.chartShip.push(_this2.order);
+        }
+      });
     }
-  });
+  },
+  created: function created() {
+    this.getOrder();
+    this.getShip();
+  }
 });
 
 /***/ }),
@@ -71,15 +102,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h3", [_vm._v("Số lượng sản phẩm khách hàng đã đặt")]),
-      _vm._v(" "),
-      _c("column-chart", { attrs: { data: _vm.chartOrder, max: 50 } })
-    ],
-    1
-  )
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      { staticClass: "form-group col-sm" },
+      [
+        _c("h4", [_vm._v("Số lượng sản phẩm khách hàng đã đặt trong 7 ngày")]),
+        _vm._v(" "),
+        _c("column-chart", { attrs: { data: _vm.chartOrder, max: 50 } })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "form-group col-sm" },
+      [
+        _c("h4", [_vm._v("Số lượng sản phẩm đã vận chuyển trong 7 ngày")]),
+        _vm._v(" "),
+        _c("column-chart", { attrs: { data: _vm.chartShip, max: 50 } })
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

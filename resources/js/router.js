@@ -3,6 +3,16 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 let routes = [
     {
+        path: '/forget_password-admin',
+        name: "admin-forget-password",
+        component: require('./components/admin/auth/Email').default
+    },
+    {
+        path: '/password-reset-admin',
+        name: "admin-password-reset",
+        component: require('./components/admin/auth/ResetPassWord').default
+    },
+    {
         path: '/admin',
         component: require('./components/views/AdminMaster').default,
         redirect: {path: "/admin/category"},
@@ -69,6 +79,11 @@ let routes = [
                 name: "admin-order",
                 component: require('./components/admin/Order').default
             },
+            {
+                path: '/admin/email',
+                name: "admin-email",
+                component: require('./components/admin/auth/ResetPassWord').default
+            },
         ]
     },
 
@@ -97,12 +112,6 @@ let routes = [
                 name: "register",
                 component: require('./components/customer/auth/Register').default
             },
-            // {
-            //     path: "/product-detail",
-            //     name: "product-detail",
-            //     component: require(
-            //         './components/customer/productDetail/ProductDetail').default
-            // },
             {
                 path: "/:slugCategory/:slugProductType/:slug",
                 name: "product-detail",
@@ -110,10 +119,10 @@ let routes = [
                     './components/customer/productDetail/ProductDetail').default
             },
             {
-                path: "/product-list",
-                name: "product-list",
+                path: "/search?keyword=:key",
+                name: "search",
                 component: require(
-                    './components/customer/listProduct/ShopProdutcList').default
+                    './components/customer/listProduct/SearchList').default
             },
             {
                 path: "/cart",
@@ -131,12 +140,6 @@ let routes = [
                 component: require('./components/customer/home/Owl').default
             },
             {
-                path: "/:slugCategory",
-                name: "product-category",
-                component: require(
-                    './components/customer/listProduct/ShopProdutcList').default
-            },
-            {
                 path: "/:slugCategory/:slugProductType",
                 name: "product-productType",
                 component: require(
@@ -152,6 +155,12 @@ let routes = [
                 name: "password-reset",
                 component: require('./components/customer/auth/ResetPassWord').default,
                 props: true
+            },
+            {
+                path: "/:slugCategory",
+                name: "product-category",
+                component: require(
+                    './components/customer/listProduct/ShopProdutcList').default
             },
         ]
     },

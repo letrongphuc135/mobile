@@ -56,8 +56,8 @@ export default new Vuex.Store({
             this.commit('saveData');
         },
 
-        removeAllCart(){
-            state.cart = null;
+        removeAllCart(state){
+            state.cart = [];
             totalNum = 0;
             cartCount = 0;
             this.commit('saveData');

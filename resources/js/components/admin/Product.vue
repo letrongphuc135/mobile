@@ -204,10 +204,11 @@
                             'Your file has been deleted.',
                             'success'
                         )
-                        var app = this;
+                        //var app = this;
                         axios.delete('/api/admin/product/' + id)
                         .then(function (resp) {
-                            app.products.splice(index, 1);
+                            // app.products.splice(index, 1);
+                            Fire.$emit('saveProduct');
                             console.log(resp)
                         })
                         .catch(function (resp) {
@@ -247,7 +248,7 @@
                         title: 'update successfully'
                     });
                     $('#exampleModal').modal('hide');
-                    Fire.$emit('afterSaveChange');
+                    Fire.$emit('saveProduct');
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -256,9 +257,9 @@
         },
         created() {
             this.getAllProduct(this.itemPerPage);
-            // Fire.$on('afterSaveChange', ()=>{
-            //     this.getAllProduct();
-            // });
+            Fire.$on('saveProduct', ()=>{
+                this.getAllProduct(this.itemPerPage);
+            });
             // setInterval(()=>this.getAllProduct(this.itemPerPage), 5000);
             Fire.$on('search', ()=>{
                 if (this.$store.state.search != null){

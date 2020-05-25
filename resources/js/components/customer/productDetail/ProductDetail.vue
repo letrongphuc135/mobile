@@ -13,23 +13,6 @@
                         <div class="col-lg-12">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <!--<div class="product-pic-zoom">-->
-                                        <!--<img class="product-big-img" :src="mainImage" style="min-width: 70%"-->
-                                             <!--alt="">-->
-                                        <!--<div class="zoom-icon">-->
-                                            <!--<i class="fa fa-search-plus"></i>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                    <!--<div class="product-thumbs mt-3">-->
-                                        <!--<div  class="product-thumbs-track ps-slider">-->
-                                            <!--<div class="col-lg-3 slide-img" v-for="(img, index) in productDetail.product_img" :key="index">-->
-                                                <!--<img style="width: 150px"-->
-                                                    <!--:src="img.url"-->
-                                                     <!--@click.prevent="switchImage"-->
-                                                    <!--alt="">-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
                                     <agile class="main" ref="main" :options="options1" :as-nav-for="asNavFor1">
                                         <div><img :src="mainImage"/></div>
                                     </agile>
@@ -55,10 +38,6 @@
                                             <span>(5)</span>
                                         </div>
                                         <div class="pd-desc">
-                                            <!--<p>Lorem ipsum dolor sit amet, consectetur ing elit, sed-->
-                                                <!--do eiusmod tempor sum dolor-->
-                                                <!--sit amet, consectetur adipisicing elit, sed do mod-->
-                                                <!--tempor</p>-->
                                             <h3 class="price">{{formatPrice(productDetail.price)}}
                                                 <span>{{formatPrice(productDetail.price)}}</span>
                                             </h3>
@@ -82,27 +61,18 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="quantity">
-                                            <div class="pro-qty" >
-                                                <input type="number" value=1 v-model="quantity">
-                                            </div>
-                                            <button class="primary-btn pd-cart"  @click="addToCart(productDetail)">Add To Cart</button>
-
+                                        <div style="margin-bottom: 20px">
+                                            <number-input style="top: 15px" v-model="quantity" :min="1" :max="productDetail.quantity" inline center controls></number-input>
+                                            <button class="primary-btn pd-cart" style="margin-left: 10px"  @click="addToCart(productDetail)">Add To Cart</button>
                                         </div>
-                                        <!--<ul class="pd-tags">-->
-                                            <!--<li><span>CATEGORIES</span>: More Accessories, Wallets &-->
-                                                <!--Cases-->
-                                            <!--</li>-->
-                                            <!--<li><span>TAGS</span>: Clothing, T-shirt, Woman</li>-->
-                                        <!--</ul>-->
-                                        <!--<div class="pd-share">-->
-                                            <!--<div class="p-code">Sku : 00012</div>-->
-                                            <!--<div class="pd-social">-->
-                                                <!--<a href="#"><i class="ti-facebook"></i></a>-->
-                                                <!--<a href="#"><i class="ti-twitter-alt"></i></a>-->
-                                                <!--<a href="#"><i class="ti-linkedin"></i></a>-->
-                                            <!--</div>-->
+
+                                        <!--<div class="quantity">-->
+                                            <!--<number-input v-model="quantity" :min="1" :max="10" inline controls></number-input>-->
+                                            <!--&lt;!&ndash;<div class="pro-qty" >&ndash;&gt;-->
+
+                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+
                                         <!--</div>-->
                                         <div style="border-radius: 20px; border: 1px solid black">
                                             <div style="padding: 5px; margin-left: 5px; font-size: 16px; color: black; font-weight: bold" >Khuyến mãi</div>
@@ -143,11 +113,7 @@
                                                         <read-more style="font-size: 14px;" more-str="Đọc thêm" :text="productDetail.description" less-str="Thu gọn" :max-chars=500>
                                                             <div v-html="productDetail.description"></div>
                                                         </read-more>
-
                                                     </div>
-                                                    <!--<div class="col-lg-5">-->
-                                                    <!--<img src="../../../../../public/assets/customer/fashi/img/product-single/tab-desc.jpg" alt="">-->
-                                                    <!--</div>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -279,11 +245,11 @@
                                                     <form @submit.prevent="postCommment" class="comment-form">
                                                         <div class="row">
                                                             <div class="col-lg-6">
-                                                                <input type="text"
+                                                                <input type="text" disabled
                                                                        placeholder="Name" v-bind:value="this.$store.state.auth.name" readonly> 
                                                             </div>
                                                             <div class="col-lg-6">
-                                                                <input type="text"
+                                                                <input type="text" disabled
                                                                        placeholder="Email" v-bind:value="this.$store.state.auth.email" readonly> 
                                                             </div>
                                                             <div class="col-lg-12">
@@ -403,7 +369,6 @@
                     ]
 
                 },
-
                 slides: [
                     'https://images.unsplash.com/photo-1453831362806-3d5577f014a4?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
                     'https://images.unsplash.com/photo-1496412705862-e0088f16f791?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=1600&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ',
@@ -533,6 +498,20 @@
             switchImage(index){
                 this.$refs.thumbnails.goTo(index);
                 this.mainImage = this.slides[index].url;
+            },
+
+            spinner() {
+                //  SPINNER
+                $("#spinner").spinner();
+
+                //  INPUT ONLY NUMBERS
+                $('#spinner').keyup(function () {
+                    this.value = this.value.replace(/[^0-9]/g,'');
+                });
+            },
+            maxLengthCheck(object) {
+                if (object.value.length > object.maxLength)
+                    object.value = object.value.slice(0, object.maxLength)
             }
 
         },
@@ -546,80 +525,28 @@
             Fire.$on('productDetail', ()=>{
                 this.getProductDetail();
             });
+            this.spinner();
+            window.onload = spinner;
         }
     }
 </script>
 
 <style scoped>
-.slide-img{
-    padding: 5px;
-    border: 3px solid rgb(199, 199, 199);
-    margin-right: 30px;
-}
+    /*input[type="number"] {*/
+        /*outline: none;*/
+        /*-moz-appearance: textfield;*/
+    /*}*/
+    /*input[type=number]::-webkit-inner-spin-button,*/
+    /*input[type=number]::-webkit-outer-spin-button {*/
+        /*-webkit-appearance: none;*/
+        /*appearance: none;*/
+    /*}*/
+
 ul.a {
     list-style-type: circle;
     margin-left: 30px;
 }
-#preloader {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 999999;
-    background: #000;
-}
 
-.loader2 {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -13px;
-    margin-left: -13px;
-    border-radius: 60px;
-    animation: loader 0.8s linear infinite;
-    -webkit-animation: loader 0.8s linear infinite;
-}
-@keyframes loader2 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-        border: 4px solid #f44336;
-        border-left-color: transparent;
-    }
-    50% {
-        -webkit-transform: rotate(180deg);
-        transform: rotate(180deg);
-        border: 4px solid #673ab7;
-        border-left-color: transparent;
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-        border: 4px solid #f44336;
-        border-left-color: transparent;
-    }
-}
-
-@-webkit-keyframes loader2 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        border: 4px solid #f44336;
-        border-left-color: transparent;
-    }
-    50% {
-        -webkit-transform: rotate(180deg);
-        border: 4px solid #673ab7;
-        border-left-color: transparent;
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        border: 4px solid #f44336;
-        border-left-color: transparent;
-    }
-}
 
 .main {
     margin-bottom: 30px;

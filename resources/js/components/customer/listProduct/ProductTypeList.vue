@@ -7,25 +7,53 @@
         <!-- Product Shop Section Begin -->
         <section class="product-shop spad">
             <div class="container">
+                <!--<div class="row" style="border: 1px solid black">-->
+                <!--<div class="col-4">-->
+                <!--Tìm theo-->
+                <!--</div>-->
+                <!--<div class="col-2">-->
+                <!--<select class="sorting" >-->
+                <!--<option value="asc">Mức giá</option>-->
+                <!--<option value="desc">Giá từ cao đến thấp</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--<div class="col-sm-2">-->
+                <!--<select class="sorting" >-->
+                <!--<option value="asc">Hệ điều hành</option>-->
+                <!--<option value="desc">Giá từ cao đến thấp</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--<div class="col-2">-->
+                <!--<select class="sorting" >-->
+                <!--<option value="asc">Màn hình</option>-->
+                <!--<option value="desc">Giá từ cao đến thấp</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--<div class="col-sm-2">-->
+                <!--<select class="sorting" >-->
+                <!--<option value="asc">Tính năng</option>-->
+                <!--<option value="desc">Giá từ cao đến thấp</option>-->
+                <!--</select>-->
+                <!--</div>-->
+                <!--</div>-->
                 <div class="row">
-                    
+
                     <div class="col-lg-12 order-1 order-lg-2">
                         <div class="product-show-option">
                             <div class="row">
                                 <div class="col-lg-7 col-md-7">
                                     <div class="select-option">
-                                        <select class="sorting" v-model="sort">
-                                            <option value="">Default Sorting</option>
+                                        <select class="sorting" v-model="sort" @change="getAllProductByProductTypeId(path.category.id)">
                                             <option value="asc">Giá từ thấp đến cao</option>
                                             <option value="desc">Giá từ cao đến thấp</option>
                                         </select>
-                                        <select class="p-show">
-                                            <option value="">Show:</option>
-                                        </select>
+                                        <!--<select class="p-show">-->
+                                        <!--<option value="">Show:</option>-->
+                                        <!--</select>-->
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-md-5 text-right">
-                                    <p>Show 01- 09 Of 36 Product</p>
+                                    <!--<p>Show 01- 09 Of 36 Product</p>-->
                                 </div>
                             </div>
                         </div>
@@ -62,287 +90,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="https://cdn.tgdd.vn/Products/Images/42/219913/vivo-y50-tim-400x460-3-400x460.png" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Coat</div>
-                                            <a href="#">
-                                                <h5>Guangzhou sweater</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $13.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-3.jpg" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Shoes</div>
-                                            <a href="#">
-                                                <h5>Guangzhou sweater</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $34.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-3.jpg" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Shoes</div>
-                                            <a href="#">
-                                                <h5>Guangzhou sweater</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $34.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-4.jpg" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Coat</div>
-                                            <a href="#">
-                                                <h5>Microfiber Wool Scarf</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $64.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-5.jpg" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Shoes</div>
-                                            <a href="#">
-                                                <h5>Men's Painted Hat</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $44.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-6.jpg" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Shoes</div>
-                                            <a href="#">
-                                                <h5>Converse Shoes</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $34.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-7.jpg" alt="">
-                                            <div class="sale pp-sale">Sale</div>
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Towel</div>
-                                            <a href="#">
-                                                <h5>Pure Pineapple</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $64.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-8.jpg" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Coat</div>
-                                            <a href="#">
-                                                <h5>2 Layer Windbreaker</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $44.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-9.jpg" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Shoes</div>
-                                            <a href="#">
-                                                <h5>Converse Shoes</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $34.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-9.jpg" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Shoes</div>
-                                            <a href="#">
-                                                <h5>Converse Shoes</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $34.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="product-item">
-                                        <div class="pi-pic">
-                                            <img src="../../../../../public/assets/customer/fashi/img/products/product-9.jpg" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                            <div class="catagory-name">Shoes</div>
-                                            <a href="#">
-                                                <h5>Converse Shoes</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                $34.00
-                                                <span>$35.00</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
-                        <div class="loading-more">
+                        <div class="loading-more" v-show="moreExists" >
                             <i class="icon_loading"></i>
-                            <a href="#">
+                            <a style="cursor: pointer" @click="loadMore">
                                 Loading More
                             </a>
                         </div>
@@ -350,40 +103,8 @@
                 </div>
             </div>
         </section>
-        <!-- Product Shop Section End -->
+        <!--&lt;!&ndash; Product Shop Section End &ndash;&gt;-->
 
-        <!-- Partner Logo Section Begin -->
-        <div class="partner-logo">
-            <div class="container">
-                <div class="logo-carousel owl-carousel">
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="../../../../../public/assets/customer/fashi/img/logo-carousel/logo-1.png" alt="">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="../../../../../public/assets/customer/fashi/img/logo-carousel/logo-2.png" alt="">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="../../../../../public/assets/customer/fashi/img/logo-carousel/logo-3.png" alt="">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="../../../../../public/assets/customer/fashi/img/logo-carousel/logo-4.png" alt="">
-                        </div>
-                    </div>
-                    <div class="logo-item">
-                        <div class="tablecell-inner">
-                            <img src="../../../../../public/assets/customer/fashi/img/logo-carousel/logo-5.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- Partner Logo Section End -->
         <LoadingAnition :isLoading="isLoading"></LoadingAnition>
     </div>
@@ -404,7 +125,7 @@
                     category: null,
                     productType: null
                 },
-                slugProductType: this.$route.params.slugProductType,
+                slugCategory: this.$route.params.slugCategory,
                 itemPerPage: 2,
                 numPerPageList: [
                     2,
@@ -415,7 +136,7 @@
                 nextPage: 0,
                 isLoading: true,
                 moreExists : false,
-                sort: 0
+                sort: 'asc',
             }
         },
         methods:{
@@ -450,8 +171,7 @@
             },
             getAllProductByProductTypeId(id) {
                 this.isLoading = true;
-                // this.form.idProductType = -1;
-                axios.get('/api/getProductByProductTypeId/'+ id+'/'+this.itemPerPage)
+                axios.get('/api/getProductByProductTypeId/'+ id+'/'+this.itemPerPage+"?sort="+this.sort)
                 .then(response => {
                     console.log(response.data.product.data);
                     this.products = response.data.product.data;
@@ -472,35 +192,35 @@
             formatPrice(price) {
                 let formatedNumber = price || 0;
                 return stringUtil.formatNumber(formatedNumber);
-            }
-        },
+            },
 
-        loadMore : async function(){
-            console.log("loadmore");
-            console.log("nextpage", this.nextPage);
-            var id = this.path.category.id;
+            loadMore : async function(){
+                console.log("loadmore");
+                console.log("nextpage", this.nextPage);
+                var id = this.path.productType.id;
 
-            axios.get('/api/getProductByProductTypeId/'+ id+'/'+this.itemPerPage + '?page=' + this.nextPage)
-            .then(response => {
-                console.log(response.data.product);
-                this.isLoading = false;
-                if (response.data.product.current_page < response.data.product.last_page) {
-                    this.moreExists = true;
-                    this.nextPage = response.data.product.current_page + 1;
-                }else{
-                    this.moreExists = false;
-                }
-                var current = this;
+                axios.get('/api/getProductByProductTypeId/'+ id+'/'+this.itemPerPage + '?page=' + this.nextPage+"&sort="+this.sort)
+                .then(response => {
+                    console.log(response.data.product);
+                    this.isLoading = false;
+                    if (response.data.product.current_page < response.data.product.last_page) {
+                        this.moreExists = true;
+                        this.nextPage = response.data.product.current_page + 1;
+                    }else{
+                        this.moreExists = false;
+                    }
+                    var current = this;
 
-                response.data.product.data.forEach(data => {
-                    console.log(data);
-                    current.products.push(data);
-                    current.test.push(data);
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+                    response.data.product.data.forEach(data => {
+                        console.log(data);
+                        current.products.push(data);
+                        current.test.push(data);
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            },
         },
 
         beforeRouteUpdate ( to, from , next ) {
