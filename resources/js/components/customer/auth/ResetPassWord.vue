@@ -74,6 +74,7 @@
         },
         methods: {
             restPassword(){
+                var current=this;
                 this.form.post('/api/password_reset', this.form)
                 .then(function (response) {
                     console.log(response);
@@ -81,7 +82,7 @@
                         icon: 'success',
                         title: response.data.message
                     });
-                     //current.$router.push({path: '/login-user'});
+                     current.$router.push({path: '/login-user'});
                 })
                 .catch(function (error) {
                     console.log(error);

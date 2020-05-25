@@ -9,6 +9,7 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Title</th>
+                <th scope="col">Slug</th>
                 <th scope="col">Content</th>
                 <th scope="col">Image</th>
                 <th scope="col">Created At</th>
@@ -20,7 +21,8 @@
             <tr v-for="(blog, index) in blogs" :key="`${index}-${blog.id}`">
                 <th scope="row">{{index+1}}</th>
                 <td>{{blog.title}}</td>
-                <td v-html="blog.content">{{blog.content}}</td>
+                <td>{{blog.slug}}</td>
+                <td ><read-more more-str="" :text="blog.content" :max-chars=20></read-more></td>
                 <td v-if="blog.image.length > 0">
                         <img :src="blog.image" style="width: 50px; height: 50px">
                     </td>
@@ -71,8 +73,13 @@
                                     class="form-control">    
                             </div>
                             <div class="form-group">
+                                <input type="text" name="slug" v-model="form.slug"
+                                    placeholder="Enter Slug"
+                                    class="form-control">    
+                            </div>
+                            <div class="form-group">
                                 <label>Blog Content</label>
-                                <ckeditor  v-model="form.content" name="content"></ckeditor>
+                                <ckeditor :config="editorConfig"  v-model="form.content" name="content"></ckeditor>
                                 <has-error :form="form" field="content"></has-error>
                             </div>
                             <div class="form-group">
@@ -124,9 +131,18 @@
                 form: new Form({
                     id: '',
                     title:'',
+                    slug:'',
                     content:'',
                 }),
                 // error: null,
+                 editorConfig: {
+                    // The configuration of the editor.
+                    filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+                    filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+                    filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+                    filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token=',
+                    autoEmbed_widget: 'customEmbed'
+                }
                 
             }
         },
@@ -178,6 +194,7 @@
                 this.file = image;
                 formData.append('file',image);
                 formData.append('title',current.form.title);
+                formData.append('slug',current.form.slug);
                 formData.append('content',current.form.content);
                 console.log(formData);
                 axios.post('/api/addBlog',formData, config)
@@ -207,6 +224,7 @@
                 let formData = new FormData();
                 this.file = image;
                 formData.append('file',image);
+                formData.append('slug',current.form.slug);
                 formData.append('title',current.form.title);
                 formData.append('content',current.form.content);
                 console.log(formData);

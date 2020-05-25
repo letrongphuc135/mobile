@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 let routes = [
     {
-        path: '/forget_password-admin',
+        path: '/forget-password-admin',
         name: "admin-forget-password",
         component: require('./components/admin/auth/Email').default
     },
@@ -111,6 +111,12 @@ let routes = [
                 path: "/register-user",
                 name: "register",
                 component: require('./components/customer/auth/Register').default
+            },
+            {
+                path: "/blog/:slug",
+                name: "blog-detail",
+                component: require(
+                    './components/customer/Blog').default
             },
             {
                 path: "/:slugCategory/:slugProductType/:slug",

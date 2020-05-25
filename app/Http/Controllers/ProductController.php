@@ -13,6 +13,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Services\ImgurService;
 use File;
 use Validator;
+use DB;
 class ProductController extends Controller
 {
     /**
@@ -23,8 +24,7 @@ class ProductController extends Controller
     public function index()
     {
         $product=Products::where('status',1)->paginate(5);
-//        return view('admin.pages.product.list',compact('product'));
-         return response()->json($product);
+        return response()->json($product);
     }
 
     /**
@@ -36,8 +36,7 @@ class ProductController extends Controller
     {
         $category=Categories::where('status',1)->get();
         $producttype=ProductTypes::where('status',1)->get();
-//        return view('admin.pages.product.add',compact('category','producttype'));
-         return response()->json(['category'=>$category,'producttype'=>$producttype]);
+        return response()->json(['category'=>$category,'producttype'=>$producttype]);
     }
 
     /**
@@ -60,37 +59,33 @@ class ProductController extends Controller
                 'unique' => 'Tên đã được sử dụng'
             ]
         );
+            $dulieu = $request->only(['name','description', 'slug', 'quantity','price','promotion','idCategory','idProductType','status']);
 
-
-        $dulieu = $request->only(['name','description', 'slug', 'quantity','price','promotion','idCategory','idProductType','status']);
-
-        if($request->hasFile('file')){
-            $files=$request->file;
-            $product=Products::create($dulieu);
-            $idproduct=$product->id;
-            $specification = new Specifications();
-            $specification->product_id = $idproduct;
-            $specification->screen = $request->screen;
-//        $specification['product_id'] = $idproduct;
-//        $specification['screen'] = $request->screen;
-            $specification = $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory', 'sim', 'battery', 'design']);
-            $specification['product_id'] = $idproduct;
-            Specifications::create($specification);
-            foreach($files as $key => $value){
-                $file_type= $value->getMimeType();
-                if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
-                    $file_url = ImgurService::uploadImage($value->getRealPath());
-                    $product_image['url']=$file_url;
-                    $product_image['idProduct']=$idproduct;
-                    ProductImage::create($product_image);
-                }else{
-                    return response()->json(['message' => 'file bạn chọn không phải là hình']);
+            if($request->hasFile('file')){
+                $files=$request->file;
+                $product=Products::create($dulieu);
+                $idproduct=$product->id;
+                $specification = new Specifications();
+                $specification->product_id = $idproduct;
+                $specification->screen = $request->screen;
+                $specification = $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory', 'sim', 'battery', 'design']);
+                $specification['product_id'] = $idproduct;
+                Specifications::create($specification);
+                foreach($files as $key => $value){
+                    $file_type= $value->getMimeType();
+                    if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
+                        $file_url = ImgurService::uploadImage($value->getRealPath());
+                        $product_image['url']=$file_url;
+                        $product_image['idProduct']=$idproduct;
+                        ProductImage::create($product_image);
+                    }else{
+                        return response()->json(['message' => 'file bạn chọn không phải là hình']);
+                    }
                 }
+            }else{
+                return response()->json(['message' => 'Ban chua chon hinh']);
             }
-        }else{
-            return response()->json(['message' => 'Ban chua chon hinh']);
-        }
-        return response()->json(['message' => 'Thêm thành công']);
+            return response()->json(['message' => 'Thêm thành công']);
     }
 
 
@@ -115,10 +110,6 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-//        $category = Categories::where('status',1)->get();
-//        $producttype = ProductTypes::where('status',1)->get();
-//        $product = Products::find($id);
-//        return response()->json(['category' => $category, 'producttype' => $producttype, 'product' => $product],200);
     }
 
     /**
@@ -130,7 +121,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        
         $this->validate($request,
             [
                 'name' => 'required|min:2|max:255',
@@ -155,30 +146,29 @@ class ProductController extends Controller
                 'promotion' => 'Giá khuyến mại',
             ]
         );
-
-        $product = Products::find($id);
-        $idproduct=$product->id;
-        $data = $request->all();
-        $image=ProductImage::where('idProduct',$id)->get();
-        if($request->hasFile('file')){
-            foreach ($image as $key => $giatri) {
-                $giatri->delete();
-            }
-            $files= $request->file;
-            foreach($files as $value){
-                $file_type= $value->getMimeType();
-                if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
-                    $file_url = ImgurService::uploadImage($value->getRealPath());
-                    $product_image['url']=$file_url;
-                    $product_image['idProduct']=$idproduct;
-                    ProductImage::create($product_image);
-                }else{
-                    return response()->json(['message'=>'File bạn chon không phải là hình ảnh']);
+            $product = Products::find($id);
+            $idproduct=$product->id;
+            $data = $request->all();
+            $image=ProductImage::where('idProduct',$id)->get();
+            if($request->hasFile('file')){
+                foreach ($image as $key => $giatri) {
+                    $giatri->delete();
+                }
+                $files= $request->file;
+                foreach($files as $value){
+                    $file_type= $value->getMimeType();
+                    if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
+                        $file_url = ImgurService::uploadImage($value->getRealPath());
+                        $product_image['url']=$file_url;
+                        $product_image['idProduct']=$idproduct;
+                        ProductImage::create($product_image);
+                    }else{
+                        return response()->json(['message'=>'File bạn chon không phải là hình ảnh']);
+                    }
                 }
             }
-        }
-        $product->update($data);
-        return response()->json(['message' => 'Đã sửa thành công']);
+            $product->update($data);
+            return response()->json(['message' => 'Đã sửa thành công']);
     }
 
     /**
@@ -189,72 +179,42 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product =Products::find($id);
-        $specification = Specifications::where('product_id', $id);
-        $specification->delete();
-        $image=ProductImage::where('idProduct',$id)->get();
-        if(count($product->ProductImg)===0){
-             if($product->delete()){
-             return response()->json(['result' => 'Đã xóa thành công loại sản phẩm có id '.$id],200);
-             }
-         }else{
-             foreach ($image as $key => $value) {
-                 $value->delete();
-             }
-             if($product->delete()){
-             return response()->json(['result' => 'Đã xóa thành công loại sản phẩm có id '.$id],200);
-             }
-         }
+            $product =Products::find($id);
+            $specification = Specifications::where('product_id', $id);
+            $specification->delete();
+            $image=ProductImage::where('idProduct',$id)->get();
+            if(count($product->ProductImg)===0){
+                if($product->delete()){
+                return response()->json(['result' => 'Đã xóa thành công loại sản phẩm có id '.$id],200);
+                }
+            }else{
+                foreach ($image as $key => $value) {
+                    $value->delete();
+                }
+                if($product->delete()){
+                return response()->json(['result' => 'Đã xóa thành công loại sản phẩm có id '.$id],200);
+                }
+            }
     }
     public function getProductDetail($slug){
-        $productdetail=Products::where('slug', $slug)->get();
+        $productdetail=Products::where('slug', $slug)->with('Category')->with('ProductType')->with('ProductImg')->with('Specification')->get();
         if(empty($productdetail)){
             return response()->json(['error'=>'Khong tim thay san pham']);
         }
-
-        foreach ($productdetail as $key => $value) {
-            $value->Category;
-            $value->ProductType;
-            $value->ProductImg;
-            $value->Specification;
-            $data[$key]=$value;
-        }
-//        $productdetail->ProductImg;
-        //$productdetail->Category;
-//        $productdetail->ProductType;
-//        $productdetail->Specification;
-
         return response()->json(['product'=> $productdetail]);
     }
 
     public function getProductDetailById($id){
-        $productdetail=Products::where('id', $id)->get();
+        $productdetail=Products::where('id', $id)->with('Category')->with('ProductType')->with('ProductImg')->with('Specification')->get();
         if(empty($productdetail)){
             return response()->json(['error'=>'Khong tim thay san pham']);
         }
-
-        foreach ($productdetail as $key => $value) {
-            $value->Category;
-            $value->ProductType;
-            $value->ProductImg;
-            $value->Specification;
-            $data[$key]=$value;
-        }
-
         return response()->json($productdetail);
     }
 
     public function getAllProduct(){
-        $product = Products::all();
-        $data=[];
-        foreach ($product as $key => $value) {
-            $value->Category;
-            $value->ProductType;
-            $value->ProductImg;
-
-            $data[$key]=$value;
-        }
-        return response()->json(['product'=> $data]);
+        $product = Products::with('Category')->with('ProductType')->with('ProductImg')->get();
+        return response()->json(['product'=> $product]);
     }
 
     public function getAllProductPaging($numberItem)
@@ -310,13 +270,8 @@ class ProductController extends Controller
 
     }
     public function getProductImgByProduct(){
-        $product = Products::all();
-        $data=[];
-        foreach ($product as $key => $value) {
-            $value->ProductImg;
-            $data[$key]=$value;
-        }
-        return response()->json(['product'=>$data]);
+        $product = Products::with('ProductImg')->get();
+        return response()->json(['product'=>$product]);
     }
 
     public function getProductByCategoryId($categoryId,  $numberItem){

@@ -83,6 +83,7 @@ Route::get('getAllComment','CommentController@getAllComment');
 Route::delete('deleteComment/{id}','CommentController@deleteComment');
 //forget_password
 Route::post('forget_password','Auth\ForgotPasswordController@sendCodeResetPassword');
+Route::post('forget_password_admin','Auth\ForgotPasswordController@sendCodeResetPasswordAdmin');
 Route::post('password_reset','Auth\ForgotPasswordController@saveResetPassword');
 //phan quyen
 Route::get('getAllRole','UserController@getAllRole');
@@ -101,3 +102,5 @@ Route::post('addBlog','BlogController@addBlog');
 Route::post('editBlog/{id}','BlogController@editBlog');
 Route::delete('deleteBlog/{id}','BlogController@deleteBlog');
 Route::get('getBlogById/{id}','BlogController@getBlogById');
+Route::get('getTreeBlog','BlogController@getTreeBlog');
+Route::get('getBlogBySlug/{slug}','BlogController@getBlogBySlug');

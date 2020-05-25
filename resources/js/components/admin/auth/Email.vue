@@ -60,7 +60,7 @@
         methods: {
             sendMail(){
                 var current = this;
-                this.form.post('/api/forget_password', this.form)
+                this.form.post('api/forget_password_admin', this.form)
                 .then(function (response) {
                     console.log(response);
                     Toast.fire({

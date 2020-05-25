@@ -104,7 +104,13 @@ class UserController extends Controller
   }
   public function getAllUser(){
     $user=User::with('role')->get();
-    return response()->json(['user'=>$user]);
+    $data=[];
+    foreach($user as $key =>$value){
+      if(count($value->role)!==0){
+        $data[$key]=$value;
+      }
+    }
+    return response()->json(['user'=>$data]);
   }
   public function getAllRole(){
     $roles=Role::with('permissions')->get();
@@ -167,6 +173,29 @@ class UserController extends Controller
     return response()->json(['user'=>$data]);
   }
   public function editUser(Request $request,$id){
+    $this->validate($request,
+    [
+      'name'=>'required|min:2|max:255',
+      'email'=>'required|email',
+      'password'=>'required|min:6|max:255',
+      're_password'=>'required|same:password',
+      'role'=>'required',
+    ],
+    [
+      'name.required'=>'Tên không được bỏ trống',
+      'name.min'=>'Tên phải có tối thiểu 2 ký tự',
+      'name.max'=>'Tên phải có tối đa 255 ký tự',
+      'email.required'=>'Email không được bỏ trống',
+      'email.email'=>'Phải có đúng định dạng email',
+      'email.unique'=>'E  mail nay da duoc su dung',
+      'password.required'=>'Mật khẩu không được bỏ trống',
+      'password.min'=>'Mật Khẩu phải có tối thiểu 6 ký tự',
+      'password.max'=>'Mật khẩu phải có tối đa 255 ký tự',
+      're_password.required'=>'Trường này không được bỏ trống',
+      're_password.same'=>'Nhập mật khẩu không đúng với trường mật khẩu',
+      'role.required'=>'Trường này không được bỏ trống',
+    ]
+  );
     try{
       DB::beginTransaction();
       $user=User::where('id',$id)->update([
