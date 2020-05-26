@@ -193,7 +193,7 @@
                                     <!--<li><a href="#">Kid's</a></li>-->
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
+                            <li><a href="/list-blog">Blog</a></li>
                             <li><a href="./contact.html">Contact</a></li>
 
                         </ul>

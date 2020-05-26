@@ -119,6 +119,12 @@ let routes = [
                     './components/customer/Blog').default
             },
             {
+                path: "/list-blog",
+                name: "list-blog",
+                component: require(
+                    './components/customer/ListBlog').default
+            },
+            {
                 path: "/:slugCategory/:slugProductType/:slug",
                 name: "product-detail",
                 component: require(
