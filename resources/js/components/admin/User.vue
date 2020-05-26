@@ -6,7 +6,7 @@
         <h2 class="text-center mb-3">All User</h2>
         <div class="d-flex justify-content-end">
             <p style="padding: 10px">Hiển thị số sản phẩm</p>
-            <select style="width: 10%" class="form-control" v-model="itemPerPage" @change="getAllProductType(itemPerPage)"
+            <select style="width: 10%" class="form-control" v-model="itemPerPage" @change="getAllUser(itemPerPage)"
                     :class="{ 'is-invalid': form.errors.has('idCategory') }">
                 <option v-for="(item, index) in numPerPageList" :key="index" :value="item">{{item}}</option>
             </select>
@@ -23,7 +23,7 @@
             </thead>
             <tbody>
 
-            <tr v-for="(user, index) in users" :key="`${index}-${user.id}`">
+            <tr v-for="(user, index) in users.data" :key="`${index}-${user.id}`">
                 <th scope="row">{{index+1}}</th>
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
@@ -46,7 +46,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
-            <pagination style="width: auto" class="text-center mb-3" :data="productTypes" @pagination-change-page="getResults"></pagination>
+            <pagination style="width: auto" class="text-center mb-3" :data="users" @pagination-change-page="getResults"></pagination>
         </div>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -95,7 +95,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Role</label>
-                                <select class="form-control" id="exampleFormControlSelect1" v-model="form.role"
+                                <select class="form-control" id="exampleFormControlSelect1" v-model="form.roleId" name="role"
                                         :class="{ 'is-invalid': form.errors.has('role') }">
                                     <option :value=-1>----- Select a role -----</option>
                                     <option v-for="(role, index_role) in roles" :key="index_role" :value="role.id">{{role.name}}</option>
@@ -124,7 +124,7 @@
         data() {
             return {
                 editMode: false,
-                users:[],
+                users:{},
                 roles:[],
                 form: new Form({
                     id: '',
@@ -132,7 +132,8 @@
                     email: '',
                     password: '',
                     re_password: '',
-                    role:-1,
+                    role:[],
+                    roleId: -1,
                 }),
                 itemPerPage: 2,
                 numPerPageList: [
@@ -150,10 +151,10 @@
         
             },
             getAllUser() {
-                axios.get('/api/getAllUser')
+                axios.get('/api/getAllUser/'+this.itemPerPage)
                 .then(response => {
-                    console.log(response.data.user);
-                    this.users = response.data.user;
+                    console.log(response.data);
+                    this.users = response.data;
                 })
             },
              getUserById(user) {
@@ -168,6 +169,20 @@
                 .then(response => {
                     console.log(response.roles);
                     this.roles = response.data.roles;
+                })
+            },
+            getResults(page = 1){
+                var num = this.itemPerPage;
+                var url;
+                if (this.$store.state.search == null){
+                    url = '/api/getAllUser/'+num+'?page=' + page;
+                }else {
+                    url = '/api/search/'+num+'?page=' + page + "&q="+this.$store.state.search;
+                }
+                axios.get(url)
+                .then(response => {
+                    console.log(response.data);
+                    this.users = response.data;
                 })
             },
             addUser() {

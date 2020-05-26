@@ -14,7 +14,7 @@
                                 York - Hotline: 804-377-3580 - 804-399-3580</p>
                         </div>
                         <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
-                            <div class="header__actions">
+                            <div class="header__actions" style="width: 40%">
                                 <div class="login" v-if="this.$store.state.auth != null" >
                                     <a href="#">{{this.$store.state.auth.name}}</a>
                                     <a href="#" @click="logout">logout</a>
@@ -36,83 +36,6 @@
                     </div>
                 </div>
             </div>
-            <!--<nav class="navigation">-->
-                <!--<div class="container-fluid">-->
-                    <!--<div class="navigation__column left">-->
-                        <!--<div class="header__logo"><a class="ps-logo" href="index.html"><img-->
-                            <!--src="images/logo.png" alt=""></a></div>-->
-                    <!--</div>-->
-                    <!--<div class="navigation__column center">-->
-                        <!--<ul class="main-menu menu">-->
-                            <!--&lt;!&ndash; <li class="menu-item menu-item-has-children dropdown" v-for="(category, index) in categories" :key="index"><a href="index.html">{{category.name}}</a>-->
-                               <!--<ul class="sub-menu" >-->
-                                   <!--<li class="menu-item" v-for="(productType, indexPro) in category.product_type" :key="indexPro"><a href="">{{productType.name}}</a></li>-->
-
-                               <!--</ul>ss-->
-                           <!--</li> &ndash;&gt;-->
-                            <!--<li class="menu-item menu-item-has-children has-mega-menu"-->
-                                <!--v-for="(category, index) in categories" :key="index">><router-link :to="{name:'product-category', params:{slugCategory: category.slug}}">{{category.name}}</router-link>-->
-                                <!--<div class="mega-menu" v-if="category.product_type.length > 0">-->
-                                    <!--<div class="mega-wrap">-->
-                                        <!--<div class="mega-column">-->
-                                            <!--&lt;!&ndash;v-for="(productType, indexPro) in category.product_type" :key="indexPro"&ndash;&gt;-->
-                                            <!--<ul class="mega-item" v-for="(productType, indexPro) in category.product_type"-->
-                                                <!--:key="indexPro" v-if="indexPro % 2 == 0">-->
-                                                <!--<li><router-link :to="{name:'product-productType', params:{slugCategory: category.slug, slugProductType : productType.slug}}">{{productType.name}}</router-link></li>-->
-                                            <!--</ul>-->
-                                        <!--</div>-->
-                                        <!--<div class="mega-column">-->
-                                            <!--&lt;!&ndash;v-for="(productType, indexPro) in category.product_type" :key="indexPro"&ndash;&gt;-->
-                                            <!--<ul class="mega-item" v-for="(productType, indexPro) in category.product_type"-->
-                                                <!--:key="indexPro" v-if="indexPro % 2 !=0">-->
-                                                <!--<li><router-link :to="{name:'product-productType', params:{slugCategory: category.slug, slugProductType : productType.slug}}" >{{productType.name}}</router-link></li>-->
-                                            <!--</ul>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-
-                                <!--</div>-->
-
-                            <!--</li>-->
-
-                        <!--</ul>-->
-                    <!--</div>-->
-                    <!--<div class="navigation__column right">-->
-                        <!--<form class="ps-search&#45;&#45;header" action="do_action" method="post">-->
-                            <!--<input class="form-control" type="text" placeholder="Search Product…">-->
-                            <!--<button><i class="ps-icon-search"></i></button>-->
-                        <!--</form>-->
-
-                        <!--&lt;!&ndash;&lt;!&ndash;Cart order &ndash;&gt;&ndash;&gt;-->
-                        <!--<div class="ps-cart" v-if="this.$store.state.auth"><a class="ps-cart__toggle"-->
-                                                <!--href="#"><span><i>{{this.$store.state.cart.length}}</i></span><i-->
-                            <!--class="ps-icon-shopping-cart"></i></a>-->
-                            <!--<div class="ps-cart__listing">-->
-                                <!--<div class="ps-cart__content">-->
-                                    <!--<div class="ps-cart-item" v-for="(item, index) in this.$store.state.cart" :key="index">-->
-                                        <!--<a class="ps-cart-item__close" @click="removeItem(item)"></a>-->
-                                        <!--<div class="ps-cart-item__thumbnail"><a-->
-                                            <!--href="product-detail.html"></a><img-->
-                                            <!--:src="item.product.product_img[0].url" alt=""></div>-->
-                                        <!--<div class="ps-cart-item__content"><a-->
-                                            <!--class="ps-cart-item__title" href="product-detail.html">{{item.product.name}}</a>-->
-                                            <!--<p>-->
-                                                <!--<span>Quantity:<i>{{item.quantity}}</i></span><span>Total:<i>{{formatTotalPrice(item.product.price, item.quantity)}}</i></span>-->
-                                            <!--</p>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="ps-cart__total">-->
-                                    <!--<p v-if="this.$store.state.cart.length > 0">Item Total:<span>{{formatSubTotalPrice()}}</span></p>-->
-                                    <!--<p v-else><span>Chưa có sản phẩm trong giỏ hàng</span></p>-->
-                                <!--</div>-->
-                                <!--<div v-if="this.$store.state.cart.length > 0" class="ps-cart__footer" ><router-link class="ps-btn" style="background-color: #e7ab3c" :to="{name : 'cart'}">{{$t('viewcart')}}<i class="ps-icon-arrow-left"></i></router-link></div>-->
-                                <!--<div v-if="this.$store.state.cart.length > 0"class="ps-cart__footer"><router-link class="ps-btn" :to="{name : 'checkout'}">{{$t('checkout')}}<i class="ps-icon-arrow-left"></i></router-link></div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="menu-toggle"><span></span></div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</nav>-->
         </header>
         <header class="header-section">
 
@@ -184,7 +107,7 @@
                 <div class="container">
                     <nav class="nav-menu mobile-menu d-flex justify-content-center">
                         <ul>
-                            <li><router-link to="/home">Home</router-link></li>
+                            <li><router-link to="/home">{{$t('home')}}</router-link></li>
                             <li v-for="(category, index) in categories" :key="index"><router-link :to="{name:'product-category', params:{slugCategory: category.slug}}">{{category.name}}</router-link>
                                 <ul class="dropdown">
                                     <li v-for="(productType, indexPro) in category.product_type"
@@ -193,8 +116,8 @@
                                     <!--<li><a href="#">Kid's</a></li>-->
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./blog.html">{{$t('blog')}}</a></li>
+                            <li><a href="./contact.html">{{$t('contact')}}</a></li>
 
                         </ul>
                     </nav>

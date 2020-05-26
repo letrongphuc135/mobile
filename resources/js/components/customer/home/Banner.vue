@@ -10,52 +10,82 @@
                          data-gap="30"
                          data-radio="100%">
                         <div class="ps-masonry">
+                            <!--<div class="row">-->
+                                <!--<div class="col-md-8"  >-->
+                                    <!--<div class="row" style="margin-bottom: 30px;">-->
+                                        <!--<div class="col-md-6">-->
+                                            <!--<div class="grid-item__content-wrapper" ><a-->
+                                                <!--class="ps-offer"-->
+                                                <!--href="product-detail.html"><img -->
+                                                <!--src="https://cdn.tgdd.vn/2020/04/banner/800-300-800x300-31.png"-->
+                                                <!--alt=""></a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-md-6">-->
+                                            <!--<div class="grid-item__content-wrapper"><a-->
+                                                <!--class="ps-offer"-->
+                                                <!--href="product-detail.html"><img-->
+                                                <!--src="https://cdn.tgdd.vn/2020/04/banner/pk-304-800-300-800x300-1.png"-->
+                                                <!--alt=""></a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="row">-->
+                                        <!--<div class="col-md-6">-->
+                                            <!--<div class="grid-item__content-wrapper"><a-->
+                                                <!--class="ps-offer"-->
+                                                <!--href="product-detail.html"><img-->
+                                                <!--src="https://cdn.tgdd.vn/2020/04/banner/a51-800-300-800x300.png"-->
+                                                <!--alt=""></a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-md-6">-->
+                                            <!--<div class="grid-item__content-wrapper"><a-->
+                                                <!--class="ps-offer"-->
+                                                <!--href="product-detail.html"><img-->
+                                                <!--src="https://cdn.tgdd.vn/2020/04/banner/a9new2f-800-300-800x300.png"-->
+                                                <!--alt=""></a>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-4">-->
+                                    <!--<div class="grid-item__content-wrapper"><a class="ps-offer"-->
+                                                                               <!--href="product-detail.html"><img-->
+                                        <!--src="https://cdn.cellphones.com.vn/media/wysiwyg/mobile/realme/realme-6i-09.jpg"-->
+                                        <!--alt=""></a>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             <div class="row">
-                                <div class="col-md-8"  >
-                                    <div class="row" style="margin-bottom: 30px;">
-                                        <div class="col-md-6">
-                                            <div class="grid-item__content-wrapper" ><a
-                                                class="ps-offer"
-                                                href="product-detail.html"><img 
-                                                src="https://cdn.tgdd.vn/2020/04/banner/800-300-800x300-31.png"
-                                                alt=""></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="grid-item__content-wrapper"><a
-                                                class="ps-offer"
-                                                href="product-detail.html"><img
-                                                src="https://cdn.tgdd.vn/2020/04/banner/pk-304-800-300-800x300-1.png"
-                                                alt=""></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="grid-item__content-wrapper"><a
-                                                class="ps-offer"
-                                                href="product-detail.html"><img
-                                                src="https://cdn.tgdd.vn/2020/04/banner/a51-800-300-800x300.png"
-                                                alt=""></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="grid-item__content-wrapper"><a
-                                                class="ps-offer"
-                                                href="product-detail.html"><img
-                                                src="https://cdn.tgdd.vn/2020/04/banner/a9new2f-800-300-800x300.png"
-                                                alt=""></a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="col-md-8">
+                                    <vueper-slides :dragging-distance="50" autoplay >
+                                        <vueper-slide
+                                            v-for="(slide, i) in slides"
+                                            :key="i"
+                                            :image="slide.image"
+                                            :title="slide.title"
+                                            :content="slide.content"
+                                            @click.native="getData()"
+                                            :link="slide.link" />
+                                    </vueper-slides>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="grid-item__content-wrapper"><a class="ps-offer"
-                                                                               href="product-detail.html"><img
-                                        src="https://cdn.cellphones.com.vn/media/wysiwyg/mobile/realme/realme-6i-09.jpg"
+
+                                <div class="col-md-4" style="height: 100px">
+                                    <div class="grid-item__content-wrapper"><a
+                                        class="ps-offer"
+                                        href="product-detail.html"><img
+                                        src="https://cdn.tgdd.vn/2020/04/banner/a9new2f-800-300-800x300.png"
+                                        alt=""></a>
+                                    </div>
+                                    <div style="margin-top: 15px"><a
+                                        class="ps-offer"
+                                        href="product-detail.html"><img style="height: 130px; width: 100%"
+                                        src="https://cdn.tgdd.vn/2020/04/banner/a9new2f-800-300-800x300.png"
                                         alt=""></a>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -66,11 +96,30 @@
 </template>
 
 <script>
+    import { VueperSlides, VueperSlide } from 'vueperslides'
+    import 'vueperslides/dist/vueperslides.css'
     export default {
         name: "Banner",
+        components: { VueperSlides, VueperSlide },
         data() {
             return {
-                banners:[]
+                banners:[],
+                slides: [
+                    {
+                        // You can also provide a URL for the image.
+                        image: 'https://i.imgur.com/u9NFnNO.png',
+                        link: ''
+                    },
+                    {
+                        // You can also provide a URL for the image.
+                        image: 'https://i.imgur.com/ENJcSuq.jpg',
+                    },
+                    {
+                        // You can also provide a URL for the image.
+                        image: 'https://i.imgur.com/n7waVIu.png',
+                    },
+                    // Other slides.
+                ]
             }
         },
         methods: {
@@ -81,7 +130,9 @@
                     this.banners = response.data.banner;
                 })
             },
-        
+            getData(){
+                console.log("abc");
+            }
         },
         created() {
             this.getAllBanner();
@@ -90,5 +141,6 @@
 </script>
 
 <style scoped>
+
 
 </style>

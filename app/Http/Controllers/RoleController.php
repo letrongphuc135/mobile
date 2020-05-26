@@ -32,7 +32,7 @@ class RoleController extends Controller
             $roleCreate = Role::create([
               'name' => $request->name,
             ]);
-            $roleCreate->permissions()->attach($request->permissions);
+            $roleCreate->permissions()->attach($request->rolePermissions);
             DB::commit();
             return response()->json(['message'=>'Thêm thanh cong']);
           }catch(Exception $exception){
@@ -57,7 +57,7 @@ class RoleController extends Controller
             ]);
             DB::table('role_permissions')->where('role_id',$id)->delete();
             $roleCreate=Role::find($id);
-            $roleCreate->permissions()->attach($request->permission);
+            $roleCreate->permissions()->attach($request->rolePermissions);
             DB::commit();
             return response()->json(['message'=>'Sửa thành công']);
           }catch(Exception $exception){

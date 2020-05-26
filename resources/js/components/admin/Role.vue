@@ -4,13 +4,13 @@
                 data-target="#exampleModal" @click="openRole()">Add Role
         </button>
         <h2 class="text-center mb-3">All Role</h2>
-        <div class="d-flex justify-content-end">
-            <p style="padding: 10px">Hiển thị số quyền</p>
-            <select style="width: 10%" class="form-control" v-model="itemPerPage" @change="getAllProductType(itemPerPage)"
-                    :class="{ 'is-invalid': form.errors.has('idCategory') }">
-                <option v-for="(item, index) in numPerPageList" :key="index" :value="item">{{item}}</option>
-            </select>
-        </div>
+        <!--<div class="d-flex justify-content-end">-->
+            <!--<p style="padding: 10px">Hiển thị số quyền</p>-->
+            <!--<select style="width: 10%" class="form-control" v-model="itemPerPage" @change="getAllProductType(itemPerPage)"-->
+                    <!--:class="{ 'is-invalid': form.errors.has('idCategory') }">-->
+                <!--<option v-for="(item, index) in numPerPageList" :key="index" :value="item">{{item}}</option>-->
+            <!--</select>-->
+        <!--</div>-->
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -43,9 +43,9 @@
             </tr>
             </tbody>
         </table>
-        <div class="d-flex justify-content-center">
-            <pagination style="width: auto" class="text-center mb-3" :data="productTypes" @pagination-change-page="getResults"></pagination>
-        </div>
+        <!--<div class="d-flex justify-content-center">-->
+            <!--<pagination style="width: auto" class="text-center mb-3" :data="productTypes" @pagination-change-page="getResults"></pagination>-->
+        <!--</div>-->
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
              aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -73,7 +73,7 @@
                             </div>
                             <label>Permission</label>
                             <div v-for="(permis, index_permission) in allPermissions" :key="index_permission" >
-                                 <input type="checkbox" v-model="form.permissions" :value="permis.id" >
+                                 <input type="checkbox" v-model="form.rolePermissions" :value="permis.id" >
                                  <label class="form-check-label">{{permis.name}}</label>
                             </div>
                         </div>
@@ -104,7 +104,8 @@
                 form: new Form({
                     id:'',
                     name:'',
-                    permissions: []
+                    permissions: [],
+                    rolePermissions: []
                 }),
                 itemPerPage: 2,
                 numPerPageList: [

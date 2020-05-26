@@ -68,6 +68,9 @@ Vue.use(Chartkick.use(Chart));
 import VueNumberInput from '@chenfengyuan/vue-number-input';
 Vue.use(VueNumberInput);
 
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
+
 const app = new Vue({
     el: '#app',
     router,

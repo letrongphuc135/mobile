@@ -24,5 +24,8 @@
         "internal_memory": "Bộ nhớ trong",
         "battery": "pin",
         "design": "Thiết kế"
-    }
+    },
+    "home": "Trang chủ",
+    "blog": "Tin tức",
+    "contact": "Liên lạc"
 }

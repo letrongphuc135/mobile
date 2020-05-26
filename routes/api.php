@@ -45,6 +45,7 @@ Route::get('getProductByCategoryId/{id}/{num}','ProductController@getProductByCa
 Route::get('getProductByProductTypeId/{id}/{num}','ProductController@getProductByProductTypeId');
 Route::get('getAllProductPaging/{num}','ProductController@getAllProductPaging');
 Route::get('getAllProduct','ProductController@getAllProduct');
+Route::get('getRandomProduct','ProductController@getRandomProduct');
 Route::get('getProductDetailById/{id}','ProductController@getProductDetailById');
 Route::get('searchProduct/{numberItem}','ProductController@searchProduct');
 Route::get('searchProductCustomer/{numberItem}','ProductController@searchProductCustomer');
@@ -71,7 +72,7 @@ Route::post('registerClient','UserController@registerClient');
 Route::post('registerAdmin','UserController@registerAdmin');
 Route::get('logout','UserController@logout');
 Route::get('checklogin','UserController@checklogin');
-Route::get('getAllUser','UserController@getAllUser');
+Route::get('getAllUser/{num}','UserController@getAllUser');
 
 
 //Comment

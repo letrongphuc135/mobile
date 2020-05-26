@@ -219,10 +219,6 @@ class ProductController extends Controller
             $value->Specification;
             $data[$key]=$value;
         }
-//        $productdetail->ProductImg;
-        //$productdetail->Category;
-//        $productdetail->ProductType;
-//        $productdetail->Specification;
 
         return response()->json(['product'=> $productdetail]);
     }
@@ -246,6 +242,18 @@ class ProductController extends Controller
 
     public function getAllProduct(){
         $product = Products::all();
+        $data=[];
+        foreach ($product as $key => $value) {
+            $value->Category;
+            $value->ProductType;
+            $value->ProductImg;
+
+            $data[$key]=$value;
+        }
+        return response()->json(['product'=> $data]);
+    }
+    public function getRandomProduct(){
+        $product = Products::inRandomOrder()->limit(4)->get();
         $data=[];
         foreach ($product as $key => $value) {
             $value->Category;

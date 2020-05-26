@@ -8,7 +8,7 @@
                         <div class="col-lg-6">
                             <h4>Biiling Details</h4>
                             <div class="place-order">
-                                <h4>Your Order</h4>
+                                <h4>Your Address</h4>
                                 <div class="order-total">
                                     <div class="order-table">
                                         <div class="checkout-address">
@@ -84,9 +84,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="checkout-content">
-                                <input type="text" placeholder="Enter Your Coupon Code">
-                            </div>
+
                             <div class="place-order">
                                 <h4>Your Order</h4>
                                 <div class="order-total">

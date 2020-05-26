@@ -167,7 +167,6 @@
             }
         },
         methods: {
-
             getAllProduct(itemPerPage) {
                 if (this.$store.state.search != null){
                     this.search();

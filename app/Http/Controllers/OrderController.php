@@ -25,14 +25,10 @@ class OrderController extends Controller
             foreach ($orderDetail as $key2 => $value2){
                 $quantity += $value2->quantity;
             }
-            //$order[$key]['orderDetail'] = $orderDetail;
             $order[$key]['quantity'] = $quantity;
             $order[$key] = $value;
-//            $chartOrder[$key]['createDate'] = $value->created_at;
-//            $chartOrder[$key]['quantity'] = $quantity;
 
         }
-        //$order = $order->groupBy('created_at')->get();
         return response()->json($order);
     }
 

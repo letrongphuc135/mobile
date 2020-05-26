@@ -44,7 +44,7 @@
             <template #body="sort">
                 <tbody>
                 <tr v-for="(value, index) in sort.values" :key="`${index}-${value.id}`">
-                    <td>{{ value.id }}</td>
+                    <td disabled="true">{{ value.id }}</td>
                     <td>{{ value.code_order }}</td>
                     <td>{{ value.name }}</td>
                     <td>{{ value.phone }}</td>
