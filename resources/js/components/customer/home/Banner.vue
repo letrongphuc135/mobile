@@ -124,10 +124,10 @@
         },
         methods: {
             getAllBanner() {
-                axios.get('/api/getBanner')
+                axios.get('/api/getAllBlog')
                 .then(response => {
                     console.log(response.data);
-                    this.banners = response.data.banner;
+                    this.blogs = response.data.blog;
                 })
             },
             getData(){

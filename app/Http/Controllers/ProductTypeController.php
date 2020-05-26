@@ -17,8 +17,6 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-//        $producttype = ProductTypes::paginate(5);
-        // return view('admin.pages.producttype.list',compact('producttype'));
         $producttype = ProductTypes::where('status', 1)->get();
         return response()->json($producttype);
     }
@@ -30,9 +28,6 @@ class ProductTypeController extends Controller
      */
     public function create()
     {
-//        $category=Categories::where('status',1)->get();
-//        // return view('admin.pages.producttype.list',compact('producttype'));
-//        return response()->json($producttype);
     }
 
     /**
@@ -43,19 +38,6 @@ class ProductTypeController extends Controller
      */
     public function store(Request $request)
     {
-//         $validator = Validator::make($request->all(),
-//            [
-//                'name' => 'required|min:2|max:255',
-//            ],
-//            [
-//                'name.required' => 'Tên loại sản phẩm không được bỏ trống',
-//                'name.min' => 'Tên loại sản phẩm tối thiểu có 2 ký tự',
-//                'name.max' => 'Tên loại sản phẩm tối đa có 255 ký tự',
-//            ]
-//        );
-//        if($validator->fails()){
-//            return response()->json(['error'=>'true', 'message'=>$validator->errors()],200);
-//        }
         $this->validate($request,
             [
                 'name' => 'required|min:2|max:255|unique:producttype',

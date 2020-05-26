@@ -24,7 +24,7 @@
                             <h2>Reset Password</h2>
                              <form @submit.prevent="restPassword">
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">New Password</label>
 
                                     <div class="col-md-6">
                                         <input id="password" type="password" class="form-control" v-model="form.password" required>
@@ -74,6 +74,7 @@
         },
         methods: {
             restPassword(){
+                var current=this;
                 this.form.post('/api/password_reset', this.form)
                 .then(function (response) {
                     console.log(response);
@@ -81,7 +82,7 @@
                         icon: 'success',
                         title: response.data.message
                     });
-                     //current.$router.push({path: '/login-user'});
+                     current.$router.push({path: '/loginAdmin'});
                 })
                 .catch(function (error) {
                     console.log(error);

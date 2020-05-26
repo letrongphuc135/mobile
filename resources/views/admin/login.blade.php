@@ -56,7 +56,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
-                                    <a class="btn btn-link" href="{{route('get.reset.password')}}" >
+                                    <a class="btn btn-link" href="{{route('get.reset.password.admin')}}" >
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                             </div>
