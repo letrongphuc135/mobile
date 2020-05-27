@@ -154,9 +154,11 @@ class CategoryController extends Controller
         $product = Products::where('idCategory', $id)->get();
         if (count($category->productType) === 0) {
             $category->delete();
-            return response()->json(['success' => 'Xoa thanh cong']);
+            $status = 1;
+            return response()->json(['status' => $status]);
         } else {
-            return response()->json(['error' => 'Xoa that bai. Mot truong khac dang su dung truong nay xin vui long kiem tra lai', 'productType' => $productType, 'product' => $product]);
+            $status = 0;
+            return response()->json(['status' => $status]);
         }
     }
 

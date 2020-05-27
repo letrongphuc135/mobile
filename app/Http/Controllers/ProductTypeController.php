@@ -127,12 +127,14 @@ class ProductTypeController extends Controller
         $producttype = ProductTypes::find($id);
         if (count($producttype->product) === 0) {
             if ($producttype->delete()) {
-                return response()->json(['result' => 'Đã xóa thành công loại sản phẩm có id ' . $id], 200);
+                $status = 1;
+                return response()->json(['status' => $status]);
             } else {
                 return response()->json(['result' => 'Đã xóa không thành công loại sản phẩm có id ' . $id], 200);
             }
         } else {
-            return response() > json(['error' => 'Xoa that bai. Mot san pham su dung truong nay xin vui long kiem tra lai']);
+            $status = 0;
+            return response()->json(['status' => $status]);
         }
     }
 

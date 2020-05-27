@@ -187,15 +187,17 @@
                 </div>
             </div>
         </div>
-        <LoadingAnition :isLoading="isLoading"></LoadingAnition>
+        <LoadingAnition :isLoadingAnimation="isLoading"></LoadingAnition>
     </div>
 </template>
 
 <script>
+    import LoadingAnition from "../../customer/LoadingAnimation";
     import StringUtil from "../../../utils/StringUtils"
     const stringUtil = new StringUtil();
     export default {
         name: "Checkout",
+        components:{LoadingAnition},
         data() {
             return {
                 checkChange: true,
@@ -282,6 +284,7 @@
                 this.checkChange = true;
             },
             checkout(){
+                this.isLoading = true;
                 this.order.customer = this.selectedItem;
                 this.order.cart = this.$store.state.cart;
                 this.order.totalNum = this.$store.state.totalNum;
@@ -290,7 +293,7 @@
                 axios.post('/api/admin/cart', this.order)
                 .then(response => {
                     console.log(response.data);
-
+                    this.isLoading = false;
                     Toast.fire({
                         icon: 'success',
                         title: 'Đặt hàng thành công'

@@ -14,51 +14,7 @@
                 <option v-for="(item, index) in numPerPageList" :key="index" :value="item">{{item}}</option>
             </select>
         </div>
-        <!--<table class="table table-bordered table-hover">-->
-            <!--<thead>-->
-            <!--<tr>-->
-                <!--<th scope="col">Id</th>-->
-                <!--<th scope="col">Name</th>-->
-                <!--<th scope="col">Quantity</th>-->
-                <!--<th scope="col">Image</th>-->
-                <!--<th scope="col">Promotion</th>-->
-                <!--<th scope="col">Category</th>-->
-                <!--<th scope="col">Product type</th>-->
-                <!--<th scope="col">Created At</th>-->
-                <!--<th scope="col">Action</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
 
-            <!--<tr v-for="(product, index) in products" :key="`${index}-${product.id}`">-->
-                <!--<th scope="row">{{index+1}}</th>-->
-                <!--<td>{{product.name}}</td>-->
-                <!--<td>{{product.quantity}}</td>-->
-                <!--<td v-if="product.product_img.length > 0">-->
-                    <!--<img :src="product.product_img[0].url" style="width: 50px; height: 50px">-->
-                <!--</td>-->
-                <!--<td v-else>-->
-                    <!--<img src="../../../../public/assets/customer/fashi/img/no-image.jpg" alt="" style="width: 50px; height: 50px">-->
-                <!--</td>-->
-                <!--<td>{{product.promotion}}</td>-->
-                <!--<td>{{product.category.name}}</td>-->
-                <!--<td>{{product.product_type.name}}</td>-->
-                <!--<td>{{product.created_at | myDate}}</td>-->
-                <!--<td>-->
-                    <!--<div class="btn-group">-->
-                        <!--<router-link-->
-                            <!--:to="{name: 'edit-product', params:{id: product.id}}"-->
-                            <!--class="btn btn-outline-warning">Edit-->
-                        <!--</router-link>-->
-                        <!--<button-->
-                            <!--@click="deleteProductType(product.id, index)"-->
-                            <!--class="btn btn-outline-danger">Delete-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-        <!--</table>-->
         <sorted-table :values="products.data" class="table table-bordered table-hover">
             <thead>
             <tr>

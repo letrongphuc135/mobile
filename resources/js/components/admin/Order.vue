@@ -34,6 +34,9 @@
                     <sort-link name="slug">Total Price</sort-link>
                 </th>
                 <th scope="col" style="text-align: left; width: 10rem;">
+                    <sort-link name="slug">Status</sort-link>
+                </th>
+                <th scope="col" style="text-align: left; width: 10rem;">
                     <sort-link name="created_at">Created at</sort-link>
                 </th>
                 <th scope="col" style="text-align: left; width: 10rem;">
@@ -49,6 +52,8 @@
                     <td>{{ value.name }}</td>
                     <td>{{ value.phone }}</td>
                     <td>{{ value.total_price }}</td>
+                    <td v-if="value.status == 0" style="color: red">Đang chờ xử lí</td>
+                    <td v-else style="color: green">Đang giao</td>
                     <td>{{ value.created_at }}</td>
                     <td>
                         <div class="btn-group">
@@ -58,14 +63,14 @@
                                 data-toggle="modal"
                                 @click="getOrderById(value)">Show detail
                             </button>
-                            <button
+                            <button v-if="value.status == 0"
                                 class="btn btn-outline-success"
-                                @click="getOrderById(value)">Send to ship
+                                @click="sendDelivery(value.id)">Send to ship
                             </button>
-                            <button
-                                @click="deleteCategroy(value.id, index)"
-                                class="btn btn-outline-danger">Delete
-                            </button>
+                            <!--<button-->
+                                <!--@click="deleteCategroy(value.id, index)"-->
+                                <!--class="btn btn-outline-danger">Delete-->
+                            <!--</button>-->
                         </div>
                     </td>
                 </tr>
@@ -153,9 +158,9 @@
                             <button type="button" class="btn btn-secondary"
                                     data-dismiss="modal">Close
                             </button>
-                            <button type="submit" class="btn btn-primary">Save
-                                changes
-                            </button>
+                            <!--<button type="submit" class="btn btn-primary">Save-->
+                                <!--changes-->
+                            <!--</button>-->
                         </div>
                     </form>
                 </div>
@@ -221,6 +226,16 @@
                         this.orders = response.data;
                     })
                 }
+            },
+            sendDelivery(id){
+                axios.get('/api/sendDelivery/' + id)
+                .then(response => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: response.data.message
+                    });
+                    Fire.$emit('afterSaveChange');
+                })
             },
             deleteCategroy(id, index) {
                 Swal.fire({

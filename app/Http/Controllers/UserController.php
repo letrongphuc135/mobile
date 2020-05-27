@@ -115,11 +115,29 @@ class UserController extends Controller
     public function getAllUser($numberItem)
     {
 
+//        $user=User::with('role')->get();
+//        $data=[];
+//        foreach($user as $key =>$value){
+//            if(count($value->role)!==0){
+//                $data[$key]=$value;
+//                foreach ($value->role as $key2 => $value2) {
+//                    $roleId = $value2->id;
+//                    $data[$key]['roleId'] = $roleId;
+//                }
+//            }
+//        }
+//        return response()->json(['user'=>$data]);
+
         $user = User::with('role')->paginate($numberItem);
         foreach ($user as $key => $value) {
-            foreach ($value->role as $key2 => $value2) {
-                $roleId = $value2->id;
-                $user[$key]['roleId'] = $roleId;
+            if (count($value->role) !== 0) {
+                $user[$key] = $value;
+                foreach ($value->role as $key2 => $value2) {
+                    $roleId = $value2->id;
+                    $user[$key]['roleId'] = $roleId;
+                }
+            }else{
+
             }
         }
         return response()->json($user);

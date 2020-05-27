@@ -1,8 +1,10 @@
 <template>
     <div>
-        <button class="btn btn-outline-success float-right" data-toggle="modal"
-                data-target="#exampleModal" @click="openBlog()">Add Blog
-        </button>
+        <router-link to="/admin/add-blog">
+            <button class="btn btn-outline-success float-right" data-toggle="modal"
+                    data-target="#exampleModal">Add blog
+            </button>
+        </router-link>
         <h2 class="text-center mb-3">All comment</h2>
         <table class="table table-bordered table-hover">
             <thead>
@@ -27,18 +29,16 @@
                         <img :src="blog.image" style="width: 50px; height: 50px">
                     </td>
                 <td v-else>
-                    <img src="../../../../public/assets/customer/fashi/img/no-image.jpg" alt=""
-                            style="width: 50px; height: 50px">
+                    <img src="../../../../../public/assets/customer/fashi/img/no-image.jpg" alt=""
+                         style="width: 50px; height: 50px">
                 </td>
                 <td>{{blog.created_at | myDate}}</td>
                 <td>
                     <div class="btn-group">
-                        <button
-                            class="btn btn-outline-warning"
-                            data-target="#exampleModal"
-                            data-toggle="modal"
-                            @click="getBlogById(blog)">Edit
-                        </button>
+                        <router-link
+                            :to="{name: 'edit-blog', params:{id: blog.id}}"
+                            class="btn btn-outline-warning">Edit
+                        </router-link>
                         <button
                             @click="deleteBlog(blog.id, index)"
                             class="btn btn-outline-danger">Delete
@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Blog Content</label>
-                                <ckeditor :config="editorConfig"  v-model="form.content" name="content"></ckeditor>
+                                <ckeditor :config="editorConfig"  v-model="form.content"></ckeditor>
                                 <has-error :form="form" field="content"></has-error>
                             </div>
                             <div class="form-group">
@@ -147,11 +147,11 @@
             }
         },
         methods: {
-            openBlog(){
-                this.editMode = false;
-                this.form.reset();
-                this.clearImage();
-            },
+            // openBlog(){
+            //     this.editMode = false;
+            //     this.form.reset();
+            //     this.clearImage();
+            // },
              getImage(e){
                 let image =  this.$refs.file.files[0];
                 var current = this;
@@ -181,68 +181,8 @@
                     this.Image = this.blogData.image;
                 });
             },
-            addBlog(e){
-                this.isLoading = true;
-                const config = {
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    }
-                };
-                var current = this;
-                let image =this.$refs.file.files[0];
-                let formData = new FormData();
-                this.file = image;
-                formData.append('file',image);
-                formData.append('title',current.form.title);
-                formData.append('slug',current.form.slug);
-                formData.append('content',current.form.content);
-                console.log(formData);
-                axios.post('/api/addBlog',formData, config)
-                .then(function (response) {
-                    console.log(response.data.message);
-                    Toast.fire({
-                        icon: 'success',
-                        title: "Them thanh cong"
-                    });
-                     $('#exampleModal').modal('hide');
-                     Fire.$emit('loadBlog');
-                })
-                .catch(function (error) {
-                    this.isLoading = false;
-                    console.log(error);
-                });
-            },
-            updateBlog() {
-                this.isLoading = true;
-                const config = {
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    }
-                };
-                var current = this;
-                let image =this.$refs.file.files[0];
-                let formData = new FormData();
-                this.file = image;
-                formData.append('file',image);
-                formData.append('slug',current.form.slug);
-                formData.append('title',current.form.title);
-                formData.append('content',current.form.content);
-                console.log(formData);
-                axios.post('/api/editBlog/'+this.form.id,formData, config)
-                .then(function (response) {
-                    console.log(response.data.message);
-                    Toast.fire({
-                        icon: 'success',
-                        title: "Them thanh cong"
-                    });
-                     $('#exampleModal').modal('hide');
-                    Fire.$emit('loadBlog');
-                })
-                .catch(function (error) {
-                    this.isLoading = false;
-                    console.log(error);
-                });
-            },
+
+
             getAllBlog() {
                 axios.get('/api/getAllBlog')
                 .then(response => {
@@ -269,8 +209,9 @@
                         var app = this;
                         axios.delete('/api/deleteBlog/' + id)
                         .then(function (resp) {
-                            app.comments.splice(index, 1);
-                            console.log(resp)
+                            Fire.$emit('loadBlog');
+                            console.log(resp);
+
                         })
                         .catch(function (resp) {
                             console.log(resp)

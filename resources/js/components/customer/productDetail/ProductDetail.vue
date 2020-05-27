@@ -63,7 +63,7 @@
                                         </div>
                                         <div style="margin-bottom: 20px">
                                             <number-input style="top: 15px" v-model="quantity" :min="1" :max="productDetail.quantity" inline center controls></number-input>
-                                            <button class="primary-btn pd-cart" style="margin-left: 10px"  @click="addToCart(productDetail)">Add To Cart</button>
+                                            <button class="primary-btn pd-cart" style="margin-left: 10px"  @click="addToCart(productDetail)">{{$t('addToCart')}}</button>
                                         </div>
 
                                         <!--<div class="quantity">-->

@@ -66,6 +66,7 @@ Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 Route::get('/admin/edit-product/{path}', 'HomeController@index');
+Route::get('/admin/edit-blog/{path}', 'HomeController@index');
 //Route::get('/product-detail/{path}', 'IndexController@index');
 //Route::get('/product-list/{path}', 'IndexController@index');
 //Route::get('/product-list', 'IndexController@index');

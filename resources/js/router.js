@@ -72,7 +72,17 @@ let routes = [
             {
                 path: '/admin/blog',
                 name: 'admin-blog',
-                component: require('./components/admin/Blog').default
+                component: require('./components/admin/blog/Blog').default
+            },
+            {
+                path: '/admin/add-blog',
+                name: 'add-blog',
+                component: require('./components/admin/blog/AddBlog').default
+            },
+            {
+                path: '/admin/edit-blog/:id',
+                name: 'edit-blog',
+                component: require('./components/admin/blog/EditBlog').default
             },
             {
                 path: '/admin/order',

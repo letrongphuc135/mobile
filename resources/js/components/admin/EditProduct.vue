@@ -320,16 +320,16 @@
                 formData.append('idCategory',current.form.idCategory);
                 formData.append('idProductType',current.form.idProductType);
                 formData.append('status',current.form.status);
-                formData.append('screen',current.form.screen);
-                formData.append('operating_system',current.form.operating_system);
-                formData.append('rear_camera',current.form.rear_camera);
-                formData.append('front_camera',current.form.front_camera);
-                formData.append('cpu',current.form.cpu);
-                formData.append('ram',current.form.ram);
-                formData.append('internal_memory',current.form.internal_memory);
-                formData.append('sim',current.form.sim);
-                formData.append('battery',current.form.battery);
-                formData.append('design',current.form.design);
+                formData.append('screen',current.form.specification.screen);
+                formData.append('operating_system',current.form.specification.operating_system);
+                formData.append('rear_camera',current.form.specification.rear_camera);
+                formData.append('front_camera',current.form.specification.front_camera);
+                formData.append('cpu',current.form.specification.cpu);
+                formData.append('ram',current.form.specification.ram);
+                formData.append('internal_memory',current.form.specification.internal_memory);
+                formData.append('sim',current.form.specification.sim);
+                formData.append('battery',current.form.specification.battery);
+                formData.append('design',current.form.specification.design);
                 formData.append('_method', 'PUT');
                  console.log(formData);
                 axios.post('/api/admin/product/'+this.form.id,formData,config)

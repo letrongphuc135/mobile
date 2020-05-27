@@ -174,7 +174,7 @@
                         title: response.data.message
                     });
                     $('#exampleModal').modal('hide');
-                    Fire.$emit('afterSaveChange');
+                    Fire.$emit('loadProductType');
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -222,28 +222,38 @@
             },
             deleteProductType(id, index) {
                 Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Bạn có muốn xoá?',
+                    text: "Bạn không thể khôi phục lại dữ liệu này",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Đồng ý xoá'
                 }).then((result) => {
                     if (result.value) {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        );
                         var app = this;
                         axios.delete('/api/admin/producttype/' + id)
-                        .then(function (resp) {
-                            app.categories.splice(index, 1);
-                            console.log(resp)
+                        .then(function (response) {
+                            if(response.data.status == 1){
+                                // app.productTypes.splice(index, 1);
+                                console.log(response);
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Xoá thành công.',
+                                    'success'
+                                );
+                                Fire.$emit('loadProductType');
+                            }else {
+                                Swal.fire(
+                                    'Lỗi!',
+                                    'Xoá thất bại. Một trường khác đang sử dụng trường này vui lòng kiểm tra lại',
+                                    'error'
+                                );
+                            }
+
                         })
                         .catch(function (resp) {
-                            alert("Could not delete company");
+                            // alert("Could not delete company");
                             console.log(resp)
                         });
                     }
@@ -266,7 +276,7 @@
                         title: 'update successfully'
                     });
                     $('#exampleModal').modal('hide');
-                    Fire.$emit('afterSaveChange');
+                    Fire.$emit('loadProductType');
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -276,7 +286,7 @@
         created() {
             this.getAllCategory();
             this.getAllProductType(this.itemPerPage);
-            Fire.$on('afterSaveChange', ()=>{
+            Fire.$on('loadProductType', ()=>{
                 this.getAllProductType(this.itemPerPage);
             });
             // setInterval(()=>this.getAllCategory(), 5000);

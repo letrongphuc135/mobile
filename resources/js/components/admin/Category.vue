@@ -249,20 +249,30 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        );
+
                         var app = this;
                         axios.delete('/api/admin/category/' + id)
                         .then(function (resp) {
-                            app.categories.data.splice(index, 1);
-                            console.log(resp)
+                            if(resp.data.status == 1){
+                                // app.productTypes.splice(index, 1);
+                                console.log(resp);
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Xoá thành công.',
+                                    'success'
+                                );
+                                Fire.$emit('afterSaveChange');
+                            }else {
+                                Swal.fire(
+                                    'Lỗi!',
+                                    'Xoá thất bại. Một trường khác đang sử dụng trường này vui lòng kiểm tra lại',
+                                    'error'
+                                );
+                            }
                         })
                         .catch(function (resp) {
-                            alert("Could not delete company");
-                            console.log(resp)
+                            // alert("Could not delete company");
+                            // console.log(resp)
                         });
                     }
 

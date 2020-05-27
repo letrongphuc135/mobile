@@ -1,6 +1,9 @@
 <template>
-    <div>
-        {{blogs.content}}
+
+    <div class="container">
+        <div v-html="blogs.content">
+            {{blogs.content}}
+        </div>
     </div>
 </template>
 
@@ -9,15 +12,12 @@
         name: "Blog",
         data() {
             return {
-                blogs:'',
+                blogs: '',
             }
         },
         methods: {
             getBlogBySlug() {
-                Fire.$emit('onloadblog');
                 this.isLoading = true;
-                // var myCookie = document.cookie;
-                // console.log("myCookie" + myCookie);
                 var slug = this.$route.params.slug;
                 axios.get('/api/getBlogBySlug/' + slug)
                 .then(response => {
@@ -25,13 +25,10 @@
                     this.blogs = response.data.blog;
                 })
             },
-        
+
         },
         created() {
             this.getBlogBySlug();
-            Fire.$on('onloadblog', ()=>{
-                this.getBlogBySlug();
-            });
         }
     }
 </script>

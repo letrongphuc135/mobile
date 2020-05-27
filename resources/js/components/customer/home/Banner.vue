@@ -123,19 +123,18 @@
             }
         },
         methods: {
-            getAllBanner() {
+            getAllBlog() {
                 axios.get('/api/getAllBlog')
                 .then(response => {
-                    console.log(response.data);
+                    console.log(response.data.blog);
                     this.blogs = response.data.blog;
+
                 })
             },
-            getData(){
-                console.log("abc");
-            }
+
         },
         created() {
-            this.getAllBanner();
+            this.getAllBlog();
         }
     }
 </script>

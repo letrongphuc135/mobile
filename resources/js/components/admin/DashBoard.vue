@@ -5,7 +5,7 @@
             <column-chart :data="chartOrder" :max="50"></column-chart>
         </div>
         <div class="form-group col-sm">
-            <h4>Số lượng sản phẩm đã vận chuyển trong 7 ngày</h4>
+            <h4>Số lượng sản phẩm đang vận chuyển trong 7 ngày</h4>
             <column-chart :data="chartShip" :max="50"></column-chart>
         </div>
     </div>

@@ -32,6 +32,11 @@ class OrderController extends Controller
         return response()->json($order);
     }
 
+    public function sendDelivery($id){
+        $order = Order::where('id', $id)->update(array('status' => 1));
+        return response()->json(['message' => 'Cập nhật thành công'], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -37,7 +37,7 @@
                     <!--</div>-->
                 <!--</div>-->
                 <div class="row">
-                    <div class="col-lg-12 order-1 order-lg-2">
+                    <div class="col-lg-12 order-1 order-lg-2" v-if="products.length > 0">
                         <div class="product-show-option">
                             <div class="row">
                                 <div class="col-lg-7 col-md-7">
@@ -98,6 +98,9 @@
                                 Loading More
                             </a>
                         </div>
+                    </div>
+                    <div class="col-lg-12 order-1 order-lg-2" v-else>
+                        <h3>Không tìm thấy sản phẩm nào</h3>
                     </div>
                 </div>
             </div>

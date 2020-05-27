@@ -23,7 +23,7 @@
             </thead>
             <tbody>
 
-            <tr v-for="(user, index) in users.data" :key="`${index}-${user.id}`">
+            <tr v-for="(user, index) in users" :key="`${index}-${user.id}`">
                 <th scope="row">{{index+1}}</th>
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
@@ -154,7 +154,7 @@
                 axios.get('/api/getAllUser/'+this.itemPerPage)
                 .then(response => {
                     console.log(response.data);
-                    this.users = response.data;
+                    this.users = response.data.user;
                 })
             },
              getUserById(user) {

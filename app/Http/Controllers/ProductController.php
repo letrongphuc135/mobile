@@ -146,29 +146,32 @@ class ProductController extends Controller
                 'promotion' => 'Giá khuyến mại',
             ]
         );
-            $product = Products::find($id);
-            $idproduct=$product->id;
-            $data = $request->all();
-            $image=ProductImage::where('idProduct',$id)->get();
-            if($request->hasFile('file')){
-                foreach ($image as $key => $giatri) {
-                    $giatri->delete();
-                }
-                $files= $request->file;
-                foreach($files as $value){
-                    $file_type= $value->getMimeType();
-                    if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
-                        $file_url = ImgurService::uploadImage($value->getRealPath());
-                        $product_image['url']=$file_url;
-                        $product_image['idProduct']=$idproduct;
-                        ProductImage::create($product_image);
-                    }else{
-                        return response()->json(['message'=>'File bạn chon không phải là hình ảnh']);
-                    }
+        $product = Products::find($id);
+        $idproduct=$product->id;
+        $data = $request->only(['name','description', 'slug', 'quantity','price','promotion','idCategory','idProductType','status']);
+        $dulieu= $request->only(['screen', 'operating_system', 'rear_camera', 'front_camera', 'cpu', 'ram', 'internal_memory', 'sim', 'battery', 'design']);
+        $specification=Specifications::where('product_id',$id)->first();
+        $image=ProductImage::where('idProduct',$id)->get();
+        if($request->hasFile('file')){
+            foreach ($image as $key => $giatri) {
+                $giatri->delete();
+            }
+            $files= $request->file;
+            foreach($files as $value){
+                $file_type= $value->getMimeType();
+                if($file_type == 'image/png'|| $file_type=='image/jpg'|| $file_type=='image/jpeg'||$file_type=='image/gif'){
+                    $file_url = ImgurService::uploadImage($value->getRealPath());
+                    $product_image['url']=$file_url;
+                    $product_image['idProduct']=$idproduct;
+                    ProductImage::create($product_image);
+                }else{
+                    return response()->json(['message'=>'File bạn chon không phải là hình ảnh']);
                 }
             }
-            $product->update($data);
-            return response()->json(['message' => 'Đã sửa thành công']);
+        }
+        $specification->update($dulieu);
+        $product->update($data);
+        return response()->json(['message' =>'cap nhat thanh cong']);
     }
 
     /**

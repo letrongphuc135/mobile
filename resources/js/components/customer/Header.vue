@@ -116,8 +116,8 @@
                                     <!--<li><a href="#">Kid's</a></li>-->
                                 </ul>
                             </li>
-                            <li><a href="./blog.html">{{$t('blog')}}</a></li>
-                            <li><a href="./contact.html">{{$t('contact')}}</a></li>
+                            <li><a href="#">{{$t('blog')}}</a></li>
+                            <li><a href="#">{{$t('contact')}}</a></li>
 
                         </ul>
                     </nav>

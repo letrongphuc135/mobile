@@ -11,11 +11,11 @@
                     <div class="row" >
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 " v-for="(blog, index) in blogs" :key="`${index}-${blogs.id}`">
                             <div class="ps-post">
-                                <div class="ps-post__thumbnail"><a class="ps-post__overlay"
-                                                                   href="blog-detail.html"></a><img  style="width: 450px;height: 400px;"
+                                <div class="ps-post__thumbnail" style="width: 430px;height: 100%"><router-link class="ps-post__overlay"
+                                                                             :to="{ name: 'blog-detail', params: { slug: blog.slug} }"></router-link><img
                                     :src="blog.image"></div>
-                                <div class="ps-post__content"><a class="ps-post__title"
-                                                                 href="blog-detail.html">{{blog.title}}</a>
+                                <div class="ps-post__content"><router-link class="ps-post__title"
+                                                                           :to="{ name: 'blog-detail', params: { slug: blog.slug} }">{{blog.title}}</router-link>
                                     <p class="ps-post__meta"><span>By:<a class="mr-5"
                                                                          ></a></span>
                                         -<span class="ml-5">{{blog.created_at}}</span></p>

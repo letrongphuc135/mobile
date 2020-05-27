@@ -24,7 +24,8 @@
         "internal_memory": "internal_memory",
         "battery": "battery",
         "design": "design"
-    }
+    },
+    "addToCart": "Add to cart"
 
 
 }
