@@ -16,7 +16,7 @@
                         <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
                             <div class="header__actions">
                                 <div class="login" v-if="this.$store.state.auth != null" >
-                                    <a href="#">{{this.$store.state.auth.name}}</a>
+                                    <router-link :to="{name: 'order-customer'}">{{this.$store.state.auth.name}}</router-link>
                                     <a href="#" @click="logout">logout</a>
                                 </div>
                                 <div class="login" v-else >

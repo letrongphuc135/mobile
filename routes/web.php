@@ -72,6 +72,7 @@ Route::get('/admin/edit-product/{path}', 'HomeController@index');
 Route::get('/search?keyword={path}', 'IndexController@index');
 Route::get('/cart', 'IndexController@index');
 Route::get('/blog/{path}', 'IndexController@index');
+Route::get('/order-customer', 'IndexController@index');
 Route::get('/checkout', 'IndexController@index');
 Route::get('/forget-password-admin', 'IndexController@index')->name('get.reset.password.admin');
 Route::get('/password-reset-admin', 'IndexController@index')->name('get.send.link.reset.admin');

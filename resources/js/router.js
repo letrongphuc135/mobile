@@ -142,6 +142,11 @@ let routes = [
                 component: require('./components/customer/cart/Cart').default
             },
             {
+                path: "/order-customer",
+                name: "order-customer",
+                component: require('./components/customer/OrderCustomer').default
+            },
+            {
                 path: "/checkout",
                 name: "checkout",
                 component: require('./components/customer/cart/Checkout').default

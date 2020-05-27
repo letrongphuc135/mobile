@@ -63,7 +63,9 @@ Route::post('removeItem/{id}/{num}','CartController@removeItem');
 
 //Order
 Route::get('getAllOrderPaging/{num}','OrderController@getAllOrderPaging');
+Route::get('getAllOrderOfAccount','OrderController@getAllOrderOfAccount');
 Route::get('getChartShip','OrderController@getChartShip');
+Route::delete('deleteOrder/{id}','OrderController@deleteOrder');
 
 //dk,dn
 Route::post('login','UserController@loginClient');

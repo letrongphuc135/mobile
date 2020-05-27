@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Auth;
 use Carbon\Carbon;
 class OrderController extends Controller
 {
@@ -126,5 +127,35 @@ class OrderController extends Controller
             $order[$key] = $value;
         }
         return response()->json($order);
+    }
+    public function getAllOrderOfAccount(){
+        if(Auth::check()){
+            $user_id=Auth::user()->id;
+            $order=Order::where('idUser',$user_id)->get();
+            $data=[];
+            foreach($order as $key =>$value){
+                $value->OrderDetail;
+                foreach ($value->OrderDetail as $key1 => $value1){
+                    $value1->Product;
+                }
+                $data[$key]=$value;
+            }
+            return response()->json($data);
+        }
+    }
+    public function deleteOrder($id){
+        $order=Order::find($id);
+        if(count($order->OrderDetail)===0){
+            $order->delete();
+            return response()->json(['success' => 'Xoa thanh cong']);
+        }
+        else{
+            foreach($order->OrderDetail as $value){
+                $value->delete();
+            }
+            $order->delete();
+            return response()->json(['success' => 'Xoa thanh cong']);
+        }
+        return response()->json(['message' => 'Xoa thất bại']);
     }
 }
